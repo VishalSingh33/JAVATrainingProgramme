@@ -1,0 +1,45 @@
+==============================================================================
+//service 
+   Optional < Course > findCoursebyId(Long id);
+
+
+//serviceImpl
+   @Override
+   public Optional < Course > findCoursebyId(Long id) {
+		return courseDao.findById(id);
+}
+
+
+//controller
+//get single course by id
+	@GetMapping("/courses/{courseId}")
+	public Optional<Course> findCoursebyId(@PathVariable String courseId)
+	{
+	return this.courseService.findCoursebyId(Long.parseLong(courseId));
+	}
+
+===================================================================================
+======================================================================================
+
+//service 
+   public Course findCoursebyId(Long courseId);
+
+
+//serviceImpl
+   @Override
+   public Course findCoursebyId(Long courseId) {
+   return this.courseDao.findById(courseId).orElse(null);
+ 	}
+}
+
+
+//controller
+//get single course by id
+	@GetMapping("/courses/{courseId}")
+	public Course findCoursebyId(@PathVariable String courseId)
+	{
+	return this.courseService.findCoursebyId(Long.parseLong(courseId));
+	}
+
+=====================================================================================
+
