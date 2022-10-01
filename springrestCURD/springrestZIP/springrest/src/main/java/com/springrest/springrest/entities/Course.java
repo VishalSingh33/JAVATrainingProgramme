@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "zmployees")
+@Table(name = "zmpvistable")
 public class Course {
 	
 	@Id
