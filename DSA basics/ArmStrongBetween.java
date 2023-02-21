@@ -1,5 +1,3 @@
-package com.zyapaar.analytics.properties;
-
 import java.util.*;
 
 public class ArmStrongBetween {
