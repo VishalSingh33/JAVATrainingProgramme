@@ -1,0 +1,66 @@
+management.endpoints.web.exposure.include: '*'
+server:
+  port: 9090
+logging:
+  file:
+    path: /home/ltb/web/logs
+spring:
+  application.name: user-service
+  cloud.config.uri: http://localhost:7010
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  # data:
+  #   mongodb:
+  #     uri: mongodb://root:root@192.168.7.41:30001/?authSource=admin&readPreference=primary&ssl=false
+  #     database: zypr_dev
+  #     auto-index-creation: true
+  datasource:
+    url: jdbc:postgresql://192.168.7.41:5432/postgres
+    hikari.schema: pgdb
+    username: user
+    password: admin
+    driverClassName: org.postgresql.Driver
+  jpa:
+    # properties:
+    #   hibernate:
+    #     dialect=org.hibernate.dialect.PostgreSQL9Dialect
+    # database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+app:
+  api:
+    company-logo-upload: http://localhost:7019/api/v1/uploads/COMPANY
+    award-logo-upload: http://localhost:7019/api/v1/uploads/AWARD
+    remove-logo: http://localhost:7019/api/v1/remove/file
+    identity-validation: http://identify-service/api/v1/validate/identity
+# identity-validation: http://localhost:9095/api/v1.1/validate/identity
+    identity-verification: http://localhost:9095/api/v1.1/verify/identity
+    product-map: http://store-service/api/v1/store/productMap
+    product-names: http://store-service/api/v1/store/productNames
+  topic:
+    signup-phase-one: dev-signup-phase-one_1_4
+    company-registration: dev-company-registration_1_4
+    user-registration: dev-user-personal-detail_1_4
+    company-wise-industry: dev-company-wise-industry_1_4
+    email-notification: dev_email_notifications_1_4
+    team-request-event: dev_team_request_events_1_4
+  size:
+    image: 3145728
+  param:
+    file-url: fileUrl
+  paging:
+    awards-size: 5
+    connection-size: 8
+    recommendation-size: 5
+    profile-viewer: 8
+    user-connection: 5
+    user-industry: 5
+    followy-size: 10

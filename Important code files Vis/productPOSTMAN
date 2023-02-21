@@ -1,0 +1,56 @@
+ :to create pagination function in database
+ 
+ CREATE OR REPLACE FUNCTION user_GetRowsByPageNumberAndSize(
+   PageNumber INTEGER = NULL,
+   PageSize INTEGER = null 
+ )
+ RETURNS SETOF pgdb.employees AS
+ $BODY$
+ DECLARE
+  PageOffset INTEGER :=0;
+ BEGIN
+ PageOffset := ((PageNumber-1) * PageSize);
+    RETURN QUERY
+   SELECT *
+   FROM pgdb.employees
+   ORDER BY created_date DESC
+   OFFSET PageOffset
+   FETCH NEXT PageSize ROWS ONLY;
+   END;
+   $BODY$
+   LANGUAGE plpgsql;	
+  
+  select * from admin_api_route aar where uri ilike '%ana%'
+  
+  
+  select * from emlg_getrowsbypagenumberandsize(1,10)
+select * from desig_GetRowsByPageNumberAndSize(1,10)
+select * from kci_getrowsbypagenumberandsize(1,10)
+select * from kcus_getrowsbypagenumberandsize(1,10)
+select * from pm_getrowsbypagenumberandsize(1,10)
+select * from user_getrowsbypagenumberandsize(1,10)
+select * from gstf_getrowsbypagenumberandsize(1,10)
+=================================================================================================================
+:this sql query is fetch data from diff tables and imp thing is here we are getting list of images  [array_to_string(ep.logo ,'##') productLogo]
+
+@Query(
+    nativeQuery = true,
+    value = " select  ep.id as productId, e.name as companyName , array_to_string(ep.logo ,'##') productLogo, " + 
+		" array_to_string(e.keyword_buys_id  ,'##') keywordBuysId, array_to_string(e.keyword_sells_id  ,'##') keywordSellsId , " + 
+		" CASE e.type WHEN 1 THEN 'PROPRIETORSHIP' " + 
+		" WHEN 2 THEN 'PARTNERSHIP_LLP' " + 
+		" WHEN 3 THEN 'SERVICE_PROVIDER' " + 
+		" WHEN 4 THEN 'WORKS_CONTRACT' " + 
+		" WHEN 5 THEN 'TRUST' " + 
+		" WHEN 6 THEN 'SOCIETIES' " + 
+		" WHEN 7 THEN 'ASSOCIATIONS_CLUB' " + 
+		" WHEN 8 THEn 'BANK_FINANCIAL_INSTITUTATION' " + 
+		" WHEN 9 THEN 'EDUCATION_INSTUATION' " + 
+		" WHEN 10 THEN 'GOVERNMENT_PUBLIC_SECTOR_Undertaking' " + 
+		" WHEN 11 THEN 'OTHERS' " + 
+		" END  type, u.user_name as userName " + 
+		" FROM entities e  INNER JOIN entity_products ep  ON ep.entities_id  = e.id " + 
+		" INNER join users u on u.id = ep.user_id where u.id = :userId " )
+  List<IproductCatalogue> getproductCatalogue(String userId, Pageable paging);  
+  
+  =================================================================================================================

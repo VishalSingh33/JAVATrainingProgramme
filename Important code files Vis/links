@@ -1,0 +1,57 @@
+https://www.interviewbit.com/java-string-interview-questions/
+
+https://practice.geeksforgeeks.org/explore?page=2&category[]=Sorting&sortBy=submissions
+
+https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/
+
+https://www.codingninjas.com/codestudio/library/strings
+
+//for threading
+https://www3.ntu.edu.sg/home/ehchua/programming/java/j5e_multithreading.html
+https://www.geeksforgeeks.org/top-20-java-multithreading-interview-questions-answers/
+https://www.interviewbit.com/multithreading-interview-questions/
+
+
+https://www.interviewbit.com/java-programming-interview-questions/
+https://codescracker.com/java/program/java-program-check-prime.htm
+https://www.javatpoint.com/java-programs#java-basic-programs
+https://takeuforward.org/interviews/most-trusted-90-days-roadmap-to-placement-guaranteed/
+love babbar 450 dsa questions sheet
+roadmap.sh for different roadmaps
+
+======================================================================================================
+import java.util.*;
+
+    public class Main {
+    public static void main(String[] args){
+      
+      
+      String str = "this is not righ ttime to start a converssssssation";
+      char[] arr = str.toCharArray();
+        int [] fr = new int [arr.length];  
+        int visited = -1;  
+        for(int i = 0; i < arr.length; i++){  
+            int count = 1;  
+            for(int j = i+1; j < arr.length; j++){  
+                if(arr[i] == arr[j]){  
+                    count++;  
+                    //To avoid counting same element again  
+                    fr[j] = visited;  
+                }  
+            }  
+            if(fr[i] != visited)  
+                fr[i] = count;  
+        }  
+  
+        //Displays the frequency of each element present in array  
+        System.out.println("---------------------------------------");  
+        System.out.println(" Element | Frequency");  
+        System.out.println("---------------------------------------");  
+        for(int i = 0; i < fr.length; i++){  
+            if(fr[i] != visited && arr[i] != ' ' )  
+                System.out.println("    " + arr[i] + "    |    " + fr[i]);  
+        }  	
+		
+  }
+}
+=================================================================================================

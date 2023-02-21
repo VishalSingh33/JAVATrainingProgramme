@@ -1,0 +1,112 @@
+Check status: http://192.168.7.41:8083/connectors/todo_test_connector_21_jun_1/status
+kafka address: http://192.168.7.41:9021
+
+
+https://docs.confluent.io/debezium-connect-postgres-source/current/postgres_source_connector_config.html#auto-topic-creation
+
+https://blog.flant.com/debezium-cdc-for-apache-kafka/
+
+https://docs.confluent.io/platform/current/connect/references/restapi.html
+
+https://debezium.io/documentation/reference/stable/connectors/postgresql.html
+
+Kafka
+https://www.confluent.io/blog/introducing-kafka-streams-stream-processing-made-simple/
+
+
+Consumer
+https://docs.confluent.io/platform/current/clients/consumer.html
+
+https://docs.confluent.io/platform/current/installation/configuration/consumer-configs.html
+
+
+tasks.max= (default 1) else we can increase.
+
+
+
+!---------------------------------------------------------------------------------------------------!
+
+ metrics.sample.window.ms
+ 
+ commit.interval.ms
+ 
+ cache.max.bytes.buffering
+ 
+ enable.auto.commit trur, commit.interval.ms 
+
+ 
+ 
+ ref: 
+ 
+ 
+ 
+ ----------------------------------------------------------------------------
+ 
+1. https://github.com/skshukla/MyDebeziumApplication/blob/main/src/main/java/com/example/sachin/myDebezium/MyDebeziumApplication.java
+
+2. https://www.youtube.com/watch?v=hoG-0Ncr8jM
+
+
+1 & 2 both related. 
+
+https://kafka.apache.org/documentation/#brokerconfigs_log.flush.interval.ms
+https://docs.confluent.io/platform/current/installation/configuration/consumer-configs.html
+https://kafka.apache.org/10/documentation/streams/developer-guide/config-streams.html
+https://kafka.apache.org/090/documentation.html (nn)
+https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html (nn)
+
+
+------------------------------
+ 
+
+18/07
+
+imp: https://stackoverflow.com/questions/72497354/kafka-streams-how-to-emit-the-final-result-in-an-aggregation-window-with-suppre
+
+imp:comment: https://stackoverflow.com/questions/54758081/kafka-streamthe-final-result-emit-immediately
+https://stackoverflow.com/questions/58571651/suppress-triggers-events-only-when-new-events-are-received-on-the-stream
+https://stackoverflow.com/questions/60822669/kafka-sessionwindow-with-suppress-only-sends-final-event-when-there-is-a-steady
+https://stackoverflow.com/questions/72497354/kafka-streams-how-to-emit-the-final-result-in-an-aggregation-window-with-suppre
+
+Finally, we see a depiction of the suppress operator in line 7 of Metrics App with Alerts. Suppress doesn’t change the type of the stream, so the result type is still a KTable, which is again depicted as of time 14 to the right. As you can see in the event view, Suppress doesn’t emit anything until a window closes, so it emits the (final) result for w10 at time 14.
+
+Since w12 is still open, nothing has been emitted, and it’s therefore missing from the tabular view. As you can see, the rows that Suppress produces is a subset of the rows that count produces at any point in time. That is, if a row is present in the suppress result, it is present with exactly the same value in the count result. This follows from the definition of a final result. As long as any value can still change in the count result, it will be missing from the suppress result.
+
+https://www.confluent.io/blog/kafka-streams-take-on-watermarks-and-triggers/#metrics-apps-with-alerts (what time is it? 2nd last para)
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-424%3A+Allow+suppression+of+intermediate+events+based+on+wall+clock+time
+
+https://stackoverflow.com/questions/56377897/kafka-stream-how-to-send-an-alert-if-no-event-has-been-received-for-a-given-ke
+https://stackoverflow.com/questions/38935904/how-to-send-final-kafka-streams-aggregation-result-of-a-time-windowed-ktable 
+(you sent days back!)
+
+
+For struct{id=xxx}
+https://stackoverflow.com/questions/63466567/how-to-rename-primary-key-when-using-debezium-and-kafka-connect-jdbc-sink-connec
+https://stackoverflow.com/questions/54418451/debezium-change-of-topic-name-gives-the-error-cross-database-references
+https://stackoverflow.com/questions/63466567/how-to-rename-primary-key-when-using-debezium-and-kafka-connect-jdbc-sink-connec
+https://docs.confluent.io/cloud/current/connectors/transforms/insertfield.html
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+25/july
+
+https://databricks.com/blog/2021/10/12/native-support-of-session-window-in-spark-structured-streaming.html
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+27/july
+
+https://docs.confluent.io/kafka-connect-jdbc/current/sink-connector/sink_config_options.html : connection.url 
+jdbc:mysql://localhost/db_name
+
+https://docs.confluent.io/cloud/current/connectors/cc-postgresql-sink.html
+https://stackoverflow.com/questions/55422416/kafka-connect-jdbc-connector-query-incrementing-mode-chokes-with-large-dataset
+
+https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/
+
+
+
+
+	

@@ -1,0 +1,110 @@
+POST
+http://192.168.7.41:8083/connectors
+
+dev_notification_v2_15_6
+
+dev_page_suggestion_pg_v1.1_16_6
+
+pgdb.192.168.7.41.public.pages
+
+192.168.7.74.pgdb.public.pages
+
+
+
+{
+    "name": "todo-test-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "database.hostname": "192.168.7.41.postgres.database.azure.com", //IP address/ hostname of postgresql server
+        "database.port": "5432",
+        "database.user": "admin",//postgres
+        "database.password": "admin",//1234 //role pending
+        "database.dbname": "pgdb",
+        "database.server.name": "pgdb.public.pages",//check
+        "plugin.name": "wal2json",
+        "table.whitelist": "public.pages"
+    }
+}
+
+
+
+{
+  "name": "pg-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "wal2json",
+    "database.hostname": "192.168.7.41",//.postgres.database.azure.com
+    "database.port": "5432",
+    "database.user": "admin",
+    "database.password": "user",
+    "database.dbname" : "pgdb",
+    "database.server.name": "pgdb.public.pages", //instead of pgdb here, logical server name is required. 
+    "table.include.list": "public.pages",
+    "heartbeat.interval.ms": "5000",
+    "slot.name": "dbname_debezium", //default debezium
+    "publication.name": "dbname_publication", //default dbz_publication
+    "transforms": "AddPrefix",
+    "transforms.AddPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.AddPrefix.regex": "pg-dev.public.(.*)",
+    "transforms.AddPrefix.replacement": "data.cdc.dbname"
+  }
+}
+
+publication.name is the name of the PostgreSQL publication that the connector uses. If it doesn’t exist, Debezium will attempt to create it. The connector will fail with an error if the connector user does not have the necessary privileges (thus, you better create the publication as a superuser before starting the connector for the first time).
+
+REf: https://dzone.com/articles/change-data-capture-architecture-using-debezium-po
+
+https://access.redhat.com/documentation/en-us/red_hat_integration/2020.q1/html/debezium_user_guide/debezium-connector-for-postgresql#topic-names
+
+https://blog.flant.com/debezium-cdc-for-apache-kafka/
+
+https://docs.confluent.io/debezium-connect-postgres-source/current/postgres_source_connector_config.html
+
+
+https://docs.confluent.io/platform/current/kafka-rest/api.html#consumer-group-v3
+https://docs.confluent.io/platform/current/clients/consumer.html
+
+_consumer_offsets 
+
+auto.offset.reset (default-latest, we can keep earliest or we can set it to none-manually)
+
+auto.commit.interval.ms (if crashed while rebalance postition. then reset to last committed offset and will read all again after that)
+
+{
+enable.auto.commit (reduce auto-commit to reduce duplicate data, disable auto-commit when commiting API directly)
+Therefore, enable.auto.commit=false
+But if commit is not done, then process will become time consuming,so
+
+fetch.min.bytes- controls how much data is returned in each fetch. 
+Broker will hold fetch unit enough data is there or
+fertch.max.wait.ms expires.
+
+or we can user asynchronous commit
+but don't use this!
+}
+
+core configuration:
+
+always give group.id (unless don't need to store offselts in kafka)
+
+session.timeout.ms (default 10 sec) (disadvantage of long session period: longer time for coordinator to find out consumer has crashed)
+
+heartbeat.interval.ms (default 3 sec) (how often consumer will send heartbeat to coordinator and for consumer to know when rebalance is needed, low heartbeat intrval mean faster rebalance)
+
+max.poll.interval.ms (default 300 sec) (maximum time allowed between calls to consumers before consumer process is assumed to fail)
+
+max.poll.records(number of records that are handled on every loop)
+
+Offset managemenr:
+
+1. auto-commit
+2. offset reset policy
+
+enable.auto.commit(default)(auto-commit offsets in interval of auto.commit.interval.ms (default 5 sec))
+
+auto.offset.reset(default-latest, we can keep earliest or we can set it to none-manually)
+
+kafka-consumer-groups (to get list of active groups in cluster including kafka distribution)
+bin/kafka-consumer-groups --bootsrap-server host:9092 --list
+
+
