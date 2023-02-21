@@ -54,3 +54,21 @@ select * from gstf_getrowsbypagenumberandsize(1,10)
   List<IproductCatalogue> getproductCatalogue(String userId, Pageable paging);  
   
   =================================================================================================================
+ 
+   :this queries has use of union and using null as coloumns to replace or match above coloumns 
+  
+    SELECT ss.status,ss.mobile_no as signUpMobileNo, u.id,u.full_name fullName ,u.mobile_no mobileNo ,u.created_on createdOn, 
+   u.updated_on updatedOn, CASE e.nature_of_business WHEN 1 THEN'MANUFACTURING'WHEN 2 THEN'TRADER'WHEN 3 THEN'PUBLIC_LIMITED_COMPANY' 
+   WHEN 4 THEN'PVT_LIMITED_COMPANY'WHEN 5 THEN'FREELANCER'WHEN 6 THEN'NON_PROFIT_ORGANIZATION' WHEN 7 THEN'OTHERS' 
+   END AS natureOfBusiness,e.pincode,e.city, 
+   CASE e.type WHEN 1 THEN'PROPRIETORSHIP'WHEN 2 THEN'PARTNERSHIP_LLP'WHEN 3 THEN'SERVICE_PROVIDER'WHEN 4 
+   THEN'WORKS_CONTRACT'WHEN 5 THEN'TRUST'WHEN 6 THEN'SOCIETIES'WHEN 7 THEN'ASSOCIATIONS_CLUB'WHEN 8 THEN'BANK_FINANCIAL_INSTITUTATION' 
+   WHEN 9 THEN'EDUCATION_INSTUATION'WHEN 10 THEN'GOVERNMENT_PUBLIC_SECTOR_Undertaking' WHEN 11 THEN'OTHERS' END AS type, 
+   e.identity_number identityNo from users u left join entities e on u.id = e.user_id left 
+   join signup_status ss on u.mobile_no = ss.mobile_no WHERE ss.status ilike '%REG%' 
+   and (u.updated_on between :from and :to or (:from is null and :to is null))
+   union 
+   SELECT ss.status, ss.mobile_no as signUpMobileNo, 
+   null as id, null as fullName ,null as mobileNo ,null as createdOn ,null as updatedOn, 
+   null as natureOfBusiness,null as pincode,null as city,null as type , null as identityNo 
+   from signup_status ss WHERE (ss.status = 'NEW' OR ss.status = 'SIGNUP') 
