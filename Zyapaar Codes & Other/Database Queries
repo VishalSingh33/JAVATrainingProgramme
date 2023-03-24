@@ -53,7 +53,7 @@ select * from gstf_getrowsbypagenumberandsize(1,10)
 		" INNER join users u on u.id = ep.user_id where u.id = :userId " )
   List<IproductCatalogue> getproductCatalogue(String userId, Pageable paging);  
   
-  =================================================================================================================
+  =====================================================================================================================================
  
    :this queries has use of union and using null as coloumns to replace or match above coloumns 
   
@@ -72,3 +72,51 @@ select * from gstf_getrowsbypagenumberandsize(1,10)
    null as id, null as fullName ,null as mobileNo ,null as createdOn ,null as updatedOn, 
    null as natureOfBusiness,null as pincode,null as city,null as type , null as identityNo 
    from signup_status ss WHERE (ss.status = 'NEW' OR ss.status = 'SIGNUP') 
+   
+   =======================================================================================================================================
+   
+	     select cr.id as chatRoomId, 
+	case 
+	when receiver_id = :userId then sender_id 
+	when sender_id = :userId then receiver_id end as id, 
+	u.full_name as fullName, u.img as profileImg, 
+	u.title as profileTitle, cr.updated_on as updatedOn, 
+	case 
+	when uc.id is null then false 
+	when uc.id is not null then true end as isConnected 
+	from chat_room cr 
+	inner join users u on 
+	case 
+	when receiver_id = :userId then sender_id = u.id 
+	when sender_id = :userId then receiver_id = u.id end 
+	left join user_connection uc on  ((uc.from_user_id = :userId and uc.to_user_id = u.id) 
+	or (uc.to_user_id = :userId and uc.from_user_id =u.id)) and uc.status = 'accept' 
+	left join block_user bu on 	((bu.from_user_id = u.id and bu.to_user_id = :userId) 
+	or (bu.to_user_id = u.id and bu.from_user_id = :userId)) 
+	and bu.status = :status and bu.origin = :origin 
+	where bu.id is null  and (receiver_id = :userId or sender_id = :userId ) 
+	and cr.created_on <> cr.updated_on  order by cr.updated_on desc 
+	
+===================================================================================================================
+
+	select ir.id as chatRoomId,  case when receiver_id = :userId then sender_id 
+	when sender_id = :userId then receiver_id end as id,  :userId as myId, 
+	u.full_name as fullName, u.img as profileImg, 
+	u.title as profileTitle,ir.updated_on as updatedOn from inquire_room ir 
+	inner join users u on case 	when ir.receiver_id = :userId then ir.sender_id = u.id 
+	when ir.sender_id = :userId then ir.receiver_id = u.id end  left join block_user bu on 
+	((bu.from_user_id = u.id and bu.to_user_id = :userId) 
+	or (bu.to_user_id = u.id and bu.from_user_id = :userId)) 
+	and bu.status = :status and bu.origin = :origin  where bu.id is null and 
+	(receiver_id = :userId or sender_id = :userId ) and ir.created_on <> ir.updated_on 
+	order by ir.updated_on desc 
+	
+===================================================================================================================
+
+	  SELECT COUNT(cm.id) FROM chat_message cm  WHERE cm.message ->> 'sender_id' = :senderId 
+	  AND cm.message ->> 'receiver_id' = :receiverId AND cm.message ->> 'status' = 'RECEIVED'
+	  
+===================================================================================================================
+	  
+	  
+	
