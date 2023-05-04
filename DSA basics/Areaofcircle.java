@@ -1,5 +1,4 @@
-package javaapplication1;
-
+//package javaapplication1;
 public class Areaofcircle {
 //METHOD
     void circlearea(int a ) {
