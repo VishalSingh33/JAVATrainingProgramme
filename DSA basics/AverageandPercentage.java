@@ -1,5 +1,3 @@
-package com.zyapaar.analytics.properties;
-
 import java.util.Arrays;
 import java.util.Scanner;
 

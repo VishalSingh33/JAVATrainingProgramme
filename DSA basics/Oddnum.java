@@ -1,5 +1,3 @@
-package javaapplication1;
-
 public class Oddnum {
 
     public static void main(String[] args) {

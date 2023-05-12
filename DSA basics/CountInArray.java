@@ -1,8 +1,6 @@
-package com.zyapaar.analytics.properties;
-
 import java.util.*;
 
-public class FindCount {
+public class CountInArray {
 	public static void main(String[] args) {
 
 		String str = "this it tips";

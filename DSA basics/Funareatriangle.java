@@ -1,5 +1,3 @@
-package javaapplication1;
-
 public class Funareatriangle {
 //method
     void areaoftriangle(int a , int b) {

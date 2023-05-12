@@ -1,5 +1,3 @@
-package javaapplication1;
-
 public class Arearectangle {
 //method
  void rectangle(int length , int breadth) {

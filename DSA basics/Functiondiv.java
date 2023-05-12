@@ -1,5 +1,3 @@
-package javaapplication1;
-
 public class Functiondiv {
 //method
     void division(int a  , int b) {

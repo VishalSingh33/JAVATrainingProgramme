@@ -1,5 +1,3 @@
-package RunCal;
-
 import calpackage.calforpackage;
 
 public class RunCal {

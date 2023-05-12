@@ -14,6 +14,7 @@
                 System.out.println(i);
             }
         }
+    }
        public static void main(String[] args)
        {
            //creating object of thread class
@@ -23,4 +24,3 @@
         t2.start();
     }
 }
-

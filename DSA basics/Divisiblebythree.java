@@ -1,5 +1,3 @@
-package javaapplication1;
-
 public class Divisiblebythree {
 
     public static void main(String[] args) {

@@ -1,5 +1,3 @@
-package javaapplication1;
-
 public class Evennum {
 
     public static void main(String[] args) {

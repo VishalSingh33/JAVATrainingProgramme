@@ -1,7 +1,4 @@
-package com.zyapaar.analytics.properties;
-
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class SwapFirstandLastDigit {
     public static void main(String[] args) {

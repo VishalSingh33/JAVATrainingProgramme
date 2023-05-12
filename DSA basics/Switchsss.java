@@ -1,5 +1,3 @@
-package javaapplication1;
-
 import java.util.Scanner;
 
 public class Switchsss {
@@ -36,7 +34,7 @@ break;
 
 default:
 System.out.println("INVALID PRATICE");
-break
+break;
 }
 
 }
