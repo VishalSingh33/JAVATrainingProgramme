@@ -8,18 +8,17 @@ class ContainerWithMostWater {
         int maxArea = 0;
         int left = 0;
         int right = height.length - 1;
-        
+
         while (left < right) {
             int area = Math.min(height[left], height[right]) * (right - left);
             maxArea = Math.max(maxArea, area);
-            
+
             if (height[left] < height[right]) {
-                left++;  // Move the left pointer towards the center
+                left++; // Move the left pointer towards the center
             } else {
                 right--; // Move the right pointer towards the center
             }
         }
-        
         return maxArea;
     }
 
@@ -27,7 +26,7 @@ class ContainerWithMostWater {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int height[] = new int[n];
-        for(int i = 0 ; i < n ; i++) {
+        for (int i = 0; i < n; i++) {
             height[i] = scanner.nextInt();
         }
         scanner.close();
