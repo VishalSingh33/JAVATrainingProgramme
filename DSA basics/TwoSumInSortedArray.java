@@ -13,16 +13,13 @@ class TwoSumInSortedArray {
         int k = sc.nextInt();
 
         boolean res = twoSumInSortedArray(n, arr, k);
-
         String ans = (res) ? "Present" : "Not Present";
-
         System.out.println(ans);
-
     }
 
     static boolean twoSumInSortedArray(int n, int[] arr, int k) {
 
-         int left = 0;
+        int left = 0;
         int right = arr.length - 1;
 
         while (left < right) {
