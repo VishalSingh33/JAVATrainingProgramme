@@ -1,0 +1,53 @@
+management.endpoints.web.exposure.include: '*'
+server:
+  port: 8090
+logging:
+  file:
+    path: /home/ltb/web/logs
+spring:
+  application.name: fruitShake-service
+#   cloud.config.uri: http://localhost:7010
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  datasource:
+    url: jdbc:mysql://localhost:3306
+    hikari.schema: localschema
+    username: root
+    password: your_password
+    driverClassName: com.mysql.cj.jdbc.Driver 
+    # org.postgresql.Driver  jdbc:postgresql://192.168.7.41:5432/postgres
+  jpa:
+    # properties:
+    #   hibernate:
+    #     dialect=org.hibernate.dialect.PostgreSQL9Dialect
+    # database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
+app:
+  api:
+    # states: http://store-service/api/v1/store/states/
+  topic:
+    # signup-phase-one: dev-signup-phase-one_1_4
+  store:
+    # user-overview: user-overview
+  paging:
+    connection-size: 8
+    recommendation-size: 5
+    profile-viewer: 8
+    user-connection: 5
+    user-industry: 8
+    followy-size: 10
+    user-initial: 10
+  size:
+    image: 3145728
+

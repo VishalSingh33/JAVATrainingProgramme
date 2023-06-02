@@ -1,0 +1,49 @@
+package com.example.fruitShake.controller;
+
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.fruitShake.dto.AddBookUSerRequestDto;
+import com.example.fruitShake.entities.Books;
+
+@Validated
+@CrossOrigin("*")
+@RequestMapping("/api/v1")
+public interface BookController {
+
+	@GetMapping(value = "/book")
+	public ResponseEntity<Books> getAllBooks(@RequestParam(required = false) String bookName,
+			@RequestParam(required = false) String status);
+
+	@PostMapping(value = "/createBook")
+	public ResponseEntity<Books> addBook(@RequestBody AddBookUSerRequestDto addBook);
+
+	@PutMapping(value = "/updateBook")
+	public ResponseEntity<Optional<Books>> updateBook(@RequestHeader("Z-BOOKID") String bookId,
+			@RequestBody AddBookUSerRequestDto updateBook);
+
+	@DeleteMapping(value = "/deleteBook")
+	public ResponseEntity<Optional<Books>> deleteBook(@RequestHeader("Z-BOOKID") String bookId);
+
+	// @GetMapping(value = "/unblock")
+	// public ResponseEntity<Response> unBlockUser(@RequestHeader("Z-AUTH-USERID")
+	// String fromUserId,
+	// @RequestBody BlockUserDto blockUserDto);
+
+	// @GetMapping(value = "/blocked/users")
+	// public ResponseEntity<Response>
+	// blockedUserList(@RequestHeader("Z-AUTH-USERID") String fromUserId,
+	// @RequestBody ListingRequest listingRequest);
+
+}
