@@ -15,27 +15,30 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.fruitShake.dto.AddBookRequestDto;
+import com.example.fruitShake.dto.AddBookRequestDto; 
 import com.example.fruitShake.entities.BookUsers;
 import com.example.fruitShake.entities.Books;
+import com.example.fruitShake.entities.DrinkBar;
+import com.example.fruitShake.entities.DrinkCustomer;
+import com.example.fruitShake.entities.DrinkOrdered;
 // import com.example.fruitShake.entities.Books;
 import com.example.fruitShake.entities.Users;
 
 @Validated
 @CrossOrigin("*")
 @RequestMapping("/api/v1")
-public interface BookUserController {
+public interface DrinkOrderedController {
 
-	@GetMapping(value = "/getAllUsers")
-	public ResponseEntity<List<Users>> getUsersAllDetails();
+	@GetMapping(value = "/getAllDrinks")
+	public ResponseEntity<List<DrinkBar>> getAllDrinks();
 
-	@GetMapping(value = "/getAllBooks")
-	public ResponseEntity<List<Books>> getBookAllDetails();
+	@GetMapping(value = "/getAllDrinkCUstomer")
+	public ResponseEntity<List<DrinkCustomer>> getAllDrinkCUstomer();
 
-	@PostMapping(value = "/issue/{userId}/{bookId}")
-	public ResponseEntity<BookUsers> issueBooktoUsers(String bookId, String userId);
+	@PostMapping(value = "/order/{cId}/{dId}")
+	public ResponseEntity<DrinkOrdered> createDrinkOrder(String cId, String dId);
 
-	@PutMapping(value = "/returned/{userId}/{bookId}")
-	public ResponseEntity<BookUsers> bookReturn(String bookId, String userId);
+	@PutMapping(value = "/updateOrder/{cId}/{dId}")
+	public ResponseEntity<DrinkOrdered> updateDrinkOrder(String cId, String dId);
 
 }

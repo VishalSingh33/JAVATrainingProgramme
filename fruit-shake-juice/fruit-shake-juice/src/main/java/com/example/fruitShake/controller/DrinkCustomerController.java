@@ -16,26 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.fruitShake.dto.AddBookRequestDto;
+import com.example.fruitShake.dto.DrinkCusRequestDto;
 import com.example.fruitShake.entities.BookUsers;
 import com.example.fruitShake.entities.Books;
+import com.example.fruitShake.entities.DrinkBar;
+import com.example.fruitShake.entities.DrinkCustomer;
 // import com.example.fruitShake.entities.Books;
 import com.example.fruitShake.entities.Users;
 
 @Validated
 @CrossOrigin("*")
 @RequestMapping("/api/v1")
-public interface BookUserController {
+public interface DrinkCustomerController {
 
-	@GetMapping(value = "/getAllUsers")
-	public ResponseEntity<List<Users>> getUsersAllDetails();
+	@GetMapping(value = "/getAllDrinkCus")
+	public ResponseEntity<DrinkCustomer> getAllDrinkCus(@RequestParam(required = false) String cName,
+	@RequestParam(required = false) String cPhoneNo);
 
-	@GetMapping(value = "/getAllBooks")
-	public ResponseEntity<List<Books>> getBookAllDetails();
+	@PostMapping(value = "/create")
+	public ResponseEntity<DrinkCustomer> createDrinkCustomer(@RequestBody DrinkCusRequestDto addDrinkCus);
 
-	@PostMapping(value = "/issue/{userId}/{bookId}")
-	public ResponseEntity<BookUsers> issueBooktoUsers(String bookId, String userId);
+	@PutMapping(value = "/update/{dId}/{cId}")
+	public ResponseEntity<Optional<DrinkCustomer>> updateDrinkCustomer(@RequestHeader("Z-DCUSID") String cId,
+	@RequestBody DrinkCusRequestDto updateDrinkCus);
 
-	@PutMapping(value = "/returned/{userId}/{bookId}")
-	public ResponseEntity<BookUsers> bookReturn(String bookId, String userId);
+	@DeleteMapping(value = "/deleteDrinkCus")
+	public ResponseEntity<Optional<DrinkCustomer>> deleteDrinkCus(@RequestHeader("Z-DCUSID") String cId);
 
 }

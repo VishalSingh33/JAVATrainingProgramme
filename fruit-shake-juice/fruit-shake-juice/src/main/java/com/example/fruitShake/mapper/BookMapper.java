@@ -6,7 +6,6 @@ import org.hibernate.id.uuid.UuidGenerator;
 import org.springframework.web.bind.annotation.Mapping;
 
 import com.example.fruitShake.dto.AddUserRequestDto;
-import com.example.fruitShake.dto.AddBookResponceDto;
 import com.example.fruitShake.entities.Books;
 
 import jakarta.persistence.MappedSuperclass;

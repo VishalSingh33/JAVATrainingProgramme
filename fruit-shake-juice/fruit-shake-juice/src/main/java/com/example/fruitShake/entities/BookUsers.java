@@ -13,6 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import lombok.NoArgsConstructor;
 import com.example.fruitShake.dto.BookStatus;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Data
 @AllArgsConstructor
@@ -24,13 +26,16 @@ public class BookUsers {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "book_user_uuid", columnDefinition = "BINARY(16)")
+    @Id
     private UUID Id;
    
-    @Column(name = "book_id", nullable = false)
-    private String bookId;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Books bookId;
 
-    @Column(name = "user_id", nullable = false)
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users userId;
 
     @Column(name = "issued_date")
     private OffsetDateTime issuedDate;

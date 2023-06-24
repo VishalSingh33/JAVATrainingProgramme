@@ -1,20 +1,22 @@
 package com.example.fruitShake.dto;
 
 import java.time.OffsetDateTime;
-import com.example.fruitShake.entities.Books;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.example.fruitShake.entities.Books;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddBookUSerRequestDto {
+public class DrinkCusRequestDto {
 
-  private String bookName;
-  private String status;
+  private String cName;
+  private String cPhoneNo;
+  private String cAddress;
   private OffsetDateTime createdOn;
   private OffsetDateTime updatedOn;
 

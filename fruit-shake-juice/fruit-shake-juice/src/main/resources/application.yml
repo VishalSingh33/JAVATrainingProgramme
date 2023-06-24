@@ -3,7 +3,7 @@ server:
   port: 8090
 logging:
   file:
-    path: /home/ltb/web/logs
+    # path: /home/ltb/web/logs
 spring:
   application.name: fruitShake-service
 #   cloud.config.uri: http://localhost:7010
@@ -16,21 +16,20 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
   datasource:
-    url: jdbc:mysql://localhost:3306
+    url: jdbc:mysql://localhost:3306/mysql
     hikari.schema: localschema
     username: root
-    password: your_password
+    password: 
     driverClassName: com.mysql.cj.jdbc.Driver 
     # org.postgresql.Driver  jdbc:postgresql://192.168.7.41:5432/postgres
   jpa:
-    # properties:
-    #   hibernate:
-    #     dialect=org.hibernate.dialect.PostgreSQL9Dialect
-    # database-platform: org.hibernate.dialect.PostgreSQLDialect
-    database: postgresql
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+   properties:
+    hibernate.dialect: org.hibernate.dialect.MySQLDialect
+  database-platform: org.hibernate.dialect.MySQLDialect
+  database: mysql
+  show-sql: true
+  hibernate:
+    ddl-auto: update
 
 
 app:

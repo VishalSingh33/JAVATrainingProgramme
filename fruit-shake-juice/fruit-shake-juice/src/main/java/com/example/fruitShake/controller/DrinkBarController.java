@@ -15,25 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.fruitShake.dto.AddBookRequestDto;
+import com.example.fruitShake.dto.DrinkBarRequestDto;
 import com.example.fruitShake.entities.Books;
+import com.example.fruitShake.entities.DrinkBar;
 
 @Validated
 @CrossOrigin("*")
 @RequestMapping("/api/v1")
-public interface BookController {
+public interface DrinkBarController {
 
-	@GetMapping(value = "/book")
-	public ResponseEntity<Books> getAllBooks(@RequestParam(required = false) String bookName,
+	@GetMapping(value = "/drinkBar")
+	public ResponseEntity<DrinkBar> getAllDrinks(@RequestParam(required = false) String dName,
 			@RequestParam(required = false) String status);
 
-	@PostMapping(value = "/createBook")
-	public ResponseEntity<Books> addBook(@RequestBody AddBookRequestDto addBook);
+	@PostMapping(value = "/createDrinks")
+	public ResponseEntity<DrinkBar> addDrinks(@RequestBody DrinkBarRequestDto addDrinks);
 
-	@PutMapping(value = "/updateBook")
-	public ResponseEntity<Optional<Books>> updateBook(@RequestHeader("Z-BOOKID") String bookId,
-			@RequestBody AddBookRequestDto updateBook);
+	@PutMapping(value = "/updateDrinks")
+	public ResponseEntity<Optional<DrinkBar>> updateDrinks(@RequestHeader("Z-DRINKID") String dId,
+			@RequestBody DrinkBarRequestDto updateDrinks);
 
-	@DeleteMapping(value = "/deleteBook")
-	public ResponseEntity<Optional<Books>> deleteBook(@RequestHeader("Z-BOOKID") String bookId);
+	@DeleteMapping(value = "/deleteDrinks")
+	public ResponseEntity<Optional<DrinkBar>> deleteDrinks(@RequestHeader("Z-DRINKID") String dId);
 
 }

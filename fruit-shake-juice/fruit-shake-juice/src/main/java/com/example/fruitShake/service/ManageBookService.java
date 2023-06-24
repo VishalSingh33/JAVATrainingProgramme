@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
-import com.example.fruitShake.dto.AddBookUSerRequestDto;
+import com.example.fruitShake.dto.AddBookRequestDto;
 import com.example.fruitShake.dto.BookStatus;
 import com.example.fruitShake.entities.Books;
 import com.example.fruitShake.mapper.BookMapper;
@@ -37,7 +37,7 @@ public class ManageBookService implements BookService {
 	}
 
 	@Override
-	public ResponseEntity<Books> addBook(AddBookUSerRequestDto addBook) {
+	public ResponseEntity<Books> addBook(AddBookRequestDto addBook) {
 
 		// Class<UuidGenerator> bookName = UuidGenerator.class;
 		OffsetDateTime offset = new Date().toInstant().atOffset(ZoneOffset.UTC);
@@ -55,7 +55,7 @@ public class ManageBookService implements BookService {
 	}
 
 	@Override
-	public ResponseEntity<Optional<Books>> updateBook(String bookName, AddBookUSerRequestDto updateBook) {
+	public ResponseEntity<Optional<Books>> updateBook(String bookName, AddBookRequestDto updateBook) {
 
 		OffsetDateTime offset = new Date().toInstant().atOffset(ZoneOffset.UTC);
 		Optional<Books> resBook = bookRepository.findById(bookName);

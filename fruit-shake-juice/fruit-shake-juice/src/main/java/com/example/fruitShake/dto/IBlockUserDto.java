@@ -18,9 +18,6 @@
 // 	String getUserName();
 // 	String getImg();
 
-	
-
-	
 // }
 
 

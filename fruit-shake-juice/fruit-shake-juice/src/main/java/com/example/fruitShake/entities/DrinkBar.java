@@ -19,21 +19,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "books")
-public class Books {
+@Table(name = "drinks")
+public class DrinkBar {
 
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "book_uuid", columnDefinition = "BINARY(16)")
+    @Column(name = "drink_uuid", columnDefinition = "BINARY(16)")
     @Id
-    private UUID bookId;
+    private UUID dId;
 
-    // @NotNull
-    @Column(name = "book_name")
-    private String bookName;
+    @Column(name = "type")
+    private String dType;
+
+    @Column(name = "name")
+    private String dName;
     
     @Column(name = "status")
-    private String status;
+    private String dStatus;
 
 	@Column(name = "created_On", nullable = false)
 	private OffsetDateTime createdOn;

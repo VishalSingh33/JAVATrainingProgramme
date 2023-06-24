@@ -34,6 +34,6 @@ public interface UserController {
 			@RequestBody AddUserRequestDto updateUser);
 
 	@DeleteMapping(value = "/deleteUser")
-	public ResponseEntity<Optional<Users>> deleteBook(@RequestHeader("Z-BOOKID") String userId);
+	public ResponseEntity<Optional<Users>> deleteBook(@RequestHeader("Z-USERID") String userId);
 
 }

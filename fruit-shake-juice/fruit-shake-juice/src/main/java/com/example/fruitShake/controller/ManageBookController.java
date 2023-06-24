@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.fruitShake.dto.AddBookUSerRequestDto;
+import com.example.fruitShake.dto.AddBookRequestDto;
 import com.example.fruitShake.entities.Books;
 import com.example.fruitShake.service.BookService;
 
@@ -27,13 +27,13 @@ public class ManageBookController implements BookController {
 
 
 	@Override
-	public ResponseEntity<Books> addBook(AddBookUSerRequestDto addBook) {
+	public ResponseEntity<Books> addBook(AddBookRequestDto addBook) {
 
 		return bookService.addBook(addBook);
 	}
 
 	@Override
-	public ResponseEntity<Optional<Books>> updateBook(String bookId, AddBookUSerRequestDto updateBook) {
+	public ResponseEntity<Optional<Books>> updateBook(String bookId, AddBookRequestDto updateBook) {
 		
 		return bookService.updateBook(bookId, updateBook);
 	}
@@ -45,25 +45,5 @@ public class ManageBookController implements BookController {
 		return bookService.deleteBook(bookId);
 	}
 
-	// @Override
-	// public ResponseEntity<Response> blockUser(String fromUserId, BlockUserDto
-	// blockUserDto) {
-
-	// return manageBlockService.blockUser(fromUserId, blockUserDto);
-	// }
-
-	// @Override
-	// public ResponseEntity<Response> unBlockUser(String fromUserId, BlockUserDto
-	// blockUserDto) {
-
-	// return manageBlockService.unBlockUser(fromUserId, blockUserDto);
-	// }
-
-	// @Override
-	// public ResponseEntity<Response> blockedUserList(String fromUserId,
-	// ListingRequest listingRequest) {
-
-	// return manageBlockService.blockedUserList(fromUserId, listingRequest);
-	// }
 
 }
