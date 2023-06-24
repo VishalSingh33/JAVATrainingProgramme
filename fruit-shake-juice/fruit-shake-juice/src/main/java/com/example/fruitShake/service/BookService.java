@@ -1,20 +1,20 @@
-package com.example.fruitShake.service;
+// package com.example.fruitShake.service;
 
-import java.util.Optional;
+// import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 
-import com.example.fruitShake.dto.AddBookRequestDto;
-import com.example.fruitShake.entities.Books;
+// import com.example.fruitShake.dto.AddBookRequestDto;
+// import com.example.fruitShake.entities.Books;
 
-public interface BookService {
+// public interface BookService {
 
-    ResponseEntity<Books> getAllBooks(String bookName, String status);
+//     ResponseEntity<Books> getAllBooks(String bookName, String status);
 
-    ResponseEntity<Books> addBook(AddBookRequestDto addBook);
+//     ResponseEntity<Books> addBook(AddBookRequestDto addBook);
 
-    ResponseEntity<Optional<Books>> updateBook(String bookId, AddBookRequestDto updateBook);
+//     ResponseEntity<Optional<Books>> updateBook(String bookId, AddBookRequestDto updateBook);
 
-    ResponseEntity<Optional<Books>> deleteBook(String bookId);
+//     ResponseEntity<Optional<Books>> deleteBook(String bookId);
 
-}
+// }

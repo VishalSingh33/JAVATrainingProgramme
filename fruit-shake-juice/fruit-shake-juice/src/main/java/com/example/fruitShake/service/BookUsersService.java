@@ -1,21 +1,21 @@
-package com.example.fruitShake.service;
+// package com.example.fruitShake.service;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 
-import com.example.fruitShake.entities.BookUsers;
-import com.example.fruitShake.entities.Books;
-import com.example.fruitShake.entities.Users;
+// import com.example.fruitShake.entities.BookUsers;
+// import com.example.fruitShake.entities.Books;
+// import com.example.fruitShake.entities.Users;
 
-public interface BookUsersService {
+// public interface BookUsersService {
 
-    ResponseEntity<List<Users>> getUsersAllDetails();
+//     ResponseEntity<List<Users>> getUsersAllDetails();
 
-    ResponseEntity<List<Books>> getBookAllDetails();
+//     ResponseEntity<List<Books>> getBookAllDetails();
 
-    ResponseEntity<BookUsers> issueBooktoUsers(String bookId, String userId);
+//     ResponseEntity<BookUsers> issueBooktoUsers(String bookId, String userId);
 
-    ResponseEntity<BookUsers> bookReturn(String bookId, String userId);
+//     ResponseEntity<BookUsers> bookReturn(String bookId, String userId);
     
-}
+// }
