@@ -7,7 +7,7 @@ public enum DrinkPaymentMode {
   UPI("UPI"),
   WALLETS("WALLET"),
   NETBANKING("IBANKS"),
-  CASHONDELIVERY("COD"),
+  CASH("CASH"),
   ATMCARD("DEBIT/CREDIT");
 
   private final String status;

@@ -7,11 +7,11 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.GeneratedValue;
 import lombok.NoArgsConstructor;
-import com.example.fruitShake.dto.BookStatus;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,14 +28,20 @@ public class BookUsers {
     @Column(name = "book_user_uuid", columnDefinition = "BINARY(16)")
     @Id
     private UUID Id;
-   
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private Books bookId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Users userId;
+//    @ManyToOne
+//    @JoinColumn(name = "book_id", nullable = false)
+//    private Books bookId;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private Users userId;
+
+    @Column(name = "user_id", nullable = false)
+    private String userId; ;
+
+    @JoinColumn(name = "book_id", nullable = false)
+    private List<String> bookIdList;
 
     @Column(name = "issued_date")
     private OffsetDateTime issuedDate;

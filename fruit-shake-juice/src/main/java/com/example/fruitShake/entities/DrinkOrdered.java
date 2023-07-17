@@ -3,6 +3,8 @@ package com.example.fruitShake.entities;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -36,21 +38,21 @@ public class DrinkOrdered {
     // @JoinColumn(name = "dId", nullable = false)
     // private DrinkBar dId;
 
-    @OneToMany(mappedBy = "juiceCenter")
-    private List<DrinkBar> dID;
-
     // @ManyToOne
     // @JoinColumn(name = "cId", nullable = false)
     // private DrinkCustomer cId;
 
-    @ManyToMany(mappedBy = "drinksOrdered")
-    private List<DrinkCustomer> cId;
+    @Column(name = "customer_uuid", nullable = false)
+    private String cId; ;
 
-    @Column(name = "quantity", nullable = false)
-    private String quantity;
+    @Column(name = "drink_Id", nullable = false)
+    private List<String> dIdList;
 
-    @Column(name = "amount", nullable = false)
-    private String amount;
+//    @Column(name = "quantity", nullable = false)
+//    private String quantity;
+
+    @Column(name = "total_amount", nullable = false)
+    private String totalAmount;
 
     @Column(name = "payment_mode", nullable = false)
     private String paymentMode;

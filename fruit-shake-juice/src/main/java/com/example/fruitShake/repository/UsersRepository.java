@@ -9,9 +9,9 @@ import com.example.fruitShake.entities.Users;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, String> {
 
-    @Query("SELECT * FROM users"
-            + " WHERE (:userName IS NULL OR user_name ILIKE CONCAT('%',:userName,'%'))"
-            + " AND (:mobileNo IS NULL OR status=:mobileNo)")
-    Users findAll(@Param("bookId") String userName, @Param("mobileNo") String mobileNo);
+//    @Query("SELECT * FROM users"
+//            + " WHERE (:userName IS NULL OR user_name ILIKE CONCAT('%',:userName,'%'))"
+//            + " AND (:mobileNo IS NULL OR status=:mobileNo)")
+//    Users findAll(@Param("bookId") String userName, @Param("mobileNo") String mobileNo);
 
 }

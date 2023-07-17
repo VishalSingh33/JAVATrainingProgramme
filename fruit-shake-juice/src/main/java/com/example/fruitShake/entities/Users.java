@@ -45,7 +45,7 @@ public class Users {
     @Column(name = "updated_On", nullable = false)
     private OffsetDateTime updatedOn;
 
-    @OneToMany(mappedBy = "user")
-    private ArrayList<BookUsers> bookUsers = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private ArrayList<BookUsers> bookUsers = new ArrayList<>();
 
 }

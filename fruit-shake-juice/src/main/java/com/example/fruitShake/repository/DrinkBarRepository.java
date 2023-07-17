@@ -14,10 +14,10 @@ import com.example.fruitShake.entities.DrinkBar;
 @Repository
 public interface DrinkBarRepository extends JpaRepository<DrinkBar, String> {
 
-    @Query("SELECT * FROM drinks"
-            + " WHERE (:dName IS NULL OR name ILIKE CONCAT('%',:dName,'%'))"
-            + " AND (:status IS NULL OR status=:status)")
-    DrinkBar findAll(@Param("dID") String dID, @Param("status") String status);
+//    @Query("SELECT * FROM drinks"
+//            + " WHERE (:dName IS NULL OR name ILIKE CONCAT('%',:dName,'%'))"
+//            + " AND (:status IS NULL OR status=:status)")
+//    DrinkBar findAll(@Param("dID") String dID, @Param("status") String status);
 
     // @Query("UPDATE books SET status='INACTIVE', updated_date=NOW(), updated_by =
     // :curUserId WHERE id = :id")
