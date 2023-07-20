@@ -1,7 +1,6 @@
 package com.example.fruitShake.dto;
 
 import java.time.OffsetDateTime;
-import com.example.fruitShake.entities.Books;
 import lombok.Data;
 
 /**
