@@ -17,4 +17,8 @@ public class Reversedigit {
         }
         System.out.println("REVERSE OF DIGIT IS: " +sum);
     }
+
+      public static boolean isVowel(char c) {
+            return "aeiouAEIOU".indexOf(c) != -1;
+       }
 }

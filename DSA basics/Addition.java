@@ -1,17 +1,33 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Addition {
 
     public static void main(String[] args) {
 
-        public class Base {   
-            public void methodOne()
-            {    
-                System.out.print("A");     
-                methodTwo();   }  
-        public void methodTwo(){    System.out.print("B");   } } public class Derived extends Base {  @Override public void methodOne(){    super.methodOne();    System.out.print("C");   }  @Override   public void methodTwo(){    5. System.out.print("D");     super.methodTwo();       } } class Main { public static void main(String[] args) {   Base b = new Derived();             b.methodOne(); } }
+        // int maxLength = 0;
+        // int start = 0;
+        // int n = s.length();
+        // int[] charIndex = new int[256]; // Assuming ASCII characters
+        // Arrays.fill(charIndex, -1);
+
+        // for (int end = 0; end < n; end++) {
+        //     char currentChar = s.charAt(end);
+        //     if (charIndex[currentChar] != -1) {
+        //         start = Math.max(start, charIndex[currentChar] + 1);
+        //     }
+        //     charIndex[currentChar] = end;
+        //     maxLength = Math.max(maxLength, end - start + 1);
+        // }
+
+        // System.out.println(maxLength);
+        System.out.println("Hello");
     }
 }
