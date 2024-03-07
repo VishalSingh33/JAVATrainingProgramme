@@ -71,33 +71,33 @@ public class RestaurantServices {
             -> new RuntimeException("Restaurant with restaurant id: " + restaurantID + " not found!"));
 
         List<Review> reviewList = restaurant.getreviewsList();
-        if (OrderSort.RATING_ASC == order)
-        reviewList = 
-        reviewList.stream().filter(review -> review.getRating() >= min && review.getRating() <= max)
-        .sorted(Comparator.comparingInt(Review::getRating)).collect(Collectors.toList());
-        else
-        reviewList = 
-        reviewList.stream().filter(review -> review.getRating() >= min && review.getRating() <= max)
-        .sorted(Comparator.comparingInt(Review::getRating).reversed()).collect(Collectors.toList());
-        // List<Review> filteredList = new ArrayList<>();
-
-        // // Filter reviews based on rating range
-        // for (Review review : reviewList) {
-        //     int rating = review.getRating();
-        //     if (rating >= min && rating <= max) {
-        //         filteredList.add(review);
-        //     }
-        // }
-        // // Sort filtered list based on order
-        // if (OrderSort.RATING_ASC == order) {
-        //     filteredList.sort(comparator);  //If sorting order is ascending
-        // } else {
-        //     filteredList.sort(reverseComparator); //If sorting order is descending
-        // }
+        // if (OrderSort.RATING_ASC == order)
+        // reviewList = 
+        // reviewList.stream().filter(review -> review.getRating() >= min && review.getRating() <= max)
+        // .sorted(Comparator.comparingInt(Review::getRating)).collect(Collectors.toList());
+        // else
+        // reviewList = 
+        // reviewList.stream().filter(review -> review.getRating() >= min && review.getRating() <= max)
+        // .sorted(Comparator.comparingInt(Review::getRating).reversed()).collect(Collectors.toList());
+        
+        List<Review> filteredList = new ArrayList<>();
+        // Filter reviews based on rating range
+        for (Review review : reviewList) {
+            int rating = review.getRating();
+            if (rating >= min && rating <= max) {
+                filteredList.add(review);
+            }
+        }
+        // Sort filtered list based on order
+        if (OrderSort.RATING_ASC == order) {
+            filteredList.sort(comparator);  //If sorting order is ascending
+        } else {
+            filteredList.sort(reverseComparator); //If sorting order is descending
+        }
         System.out.print('[');
-        for (int i = 0; i < reviewList.size(); i++) {
-            System.out.print(reviewList.get(i));
-            if (i < reviewList.size() - 1)
+        for (int i = 0; i < filteredList.size(); i++) {
+            System.out.print(filteredList.get(i));
+            if (i < filteredList.size() - 1)
                 System.out.print(", ");
         }
         System.out.println(']');
