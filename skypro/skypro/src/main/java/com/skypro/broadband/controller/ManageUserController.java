@@ -23,6 +23,12 @@ public class ManageUserController implements UserController {
 	}
 
 	@Override
+	public ResponseEntity<User> getUserById(String id) {
+		
+		return userService.getUserById(id);
+	}
+
+	@Override
 	public ResponseEntity<User> createUser(UserDto userDto) {
 
 		return userService.createUser(userDto);
@@ -39,4 +45,5 @@ public class ManageUserController implements UserController {
 
 		userService.deleteUser(id);
 	}
+
 }

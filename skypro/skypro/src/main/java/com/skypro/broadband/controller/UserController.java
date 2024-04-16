@@ -17,7 +17,9 @@ public interface UserController {
 	public Page<User> getUsers(
 		@RequestParam(defaultValue = "0") int page,
 		@RequestParam(defaultValue = "10") int size);
-	
+
+	@GetMapping(value = "/users-status/{id}")
+	public ResponseEntity<User> getUserById(@PathVariable String id);
 
 	@PostMapping(value = "/users-status")
 	public ResponseEntity<User> createUser(@RequestBody UserDto userDto );

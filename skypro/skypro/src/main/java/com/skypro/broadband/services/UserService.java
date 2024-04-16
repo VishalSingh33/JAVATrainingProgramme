@@ -10,6 +10,8 @@ public interface UserService {
 
 	public Page<User> getUsers(int page, int size);
 
+	public ResponseEntity<User> getUserById(String id);
+
 	public ResponseEntity<User> createUser(UserDto userDto );
 
 	public ResponseEntity<User> updateUserController(String id, UserDto userDto );
