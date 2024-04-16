@@ -1,0 +1,57 @@
+curl --location --request PUT 'http://localhost:8090/api/admin/v1/users-status/58bb0939-41e0-43b2-a8d2-5b83e00a5db4' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userId": "333",
+    "userType": "Toll Task",
+    "message": "Hello, Toll!",
+    "topic": "House Rent",
+    "link": "http://toll.example.com",
+    "readFlag": "read unread",
+    "triggeredBy": "Admin"
+}'
+
+
+
+
+curl --location 'http://localhost:8090/api/admin/v1/users-status' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userId": "377",
+    "userType": "Toll Husk",
+    "message": "Hello, Husk!",
+    "topic": "House Rent",
+    "link": "http://husk.example.com",
+    "readFlag": "read unread",
+    "triggeredBy": "Admin"
+}'
+
+
+
+
+curl --location --request DELETE 'http://localhost:8090/api/admin/v1/users-status/21999b1a-75a9-4f9e-9841-289b6f63cd99' \
+--header 'Content-Type: text/plain' \
+--data '{
+    "userId": "377",
+    "userType": "Toll Husk",
+    "message": "Hello, Husk!",
+    "topic": "House Rent",
+    "link": "http://husk.example.com",
+    "readFlag": "read unread",
+    "triggeredBy": "Admin"
+}'
+
+
+
+
+curl --location --request GET 'http://localhost:8090/api/admin/v1/users-status?page=0&size=10' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userId": "377",
+    "userType": "Toll Husk",
+    "message": "Hello, Husk!",
+    "topic": "House Rent",
+    "link": "http://husk.example.com",
+    "readFlag": "read unread",
+    "triggeredBy": "Admin"
+}'
+
