@@ -55,3 +55,10 @@ curl --location --request GET 'http://localhost:8090/api/admin/v1/users-status?p
     "triggeredBy": "Admin"
 }'
 
+
+
+curl --location 'http://localhost:8090/api/admin/v1/users-status/excelDownload'
+
+
+curl --location --request POST 'http:///localhost:8090/api/admin/v1/users-status/csvFileData?id=12d65117-93e2-480b-b174-907d72468cce%2Ca8900019-3556-4c79-88f9-ea08eda5c6ec%2C123-abc-337-rva&page=0&size=10%0A'
+
