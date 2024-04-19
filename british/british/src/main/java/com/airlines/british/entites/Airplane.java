@@ -1,6 +1,10 @@
 package com.airlines.british.entites;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.airlines.british.dto.FlightType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,40 +23,21 @@ import lombok.NoArgsConstructor;
 public class Airplane {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    private String id;
+    @Column(name = "airplaneId", nullable = false, unique = true)
+    private String airplaneId;
 
-    @Column(name = "origin")
-    private String origin;
+    private FlightType flightType;
+	
+	// private int numberofSeats; // should be in list or int is correct ?
+	private List<Integer> numberofSeats;
 
-    @Column(name = "destination")
-    private String destination;
 
-    @Column(name = "duration")
-    private String duration;
-
-    @Column(name = "flight_date")
-    private LocalDateTime flightDate;
-
-    @Column(name = "flight_number")
-    private String flightNumber;
-    
-    @Column(name = "flight_time")
-    private LocalDateTime flightTime;
-
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "fareId")
-    @Column(name = "fare")
-    private Fare fare;
-
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name="flightInfoid")
-    @Column(name = "flight_info")
-    private FlightInfo flightInfo;
-
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name="inventoryId")
-    @Column(name = "inventory")
-    private Inventory inventory;
+	private List<Integer> availbleSeats; // should be present or not ?
+	
+	// @ManyToOne
+	// @JoinTable(name = "flightsInfo", joinColumns = {
+	// 		@JoinColumn(name = "flightInfoid", referencedColumnName = "flightInfoid") }, inverseJoinColumns = {
+	// 				@JoinColumn(name = "airlineId", referencedColumnName = "airlineId") })
+	private AirlineInfo airlineInfo;
 
 }

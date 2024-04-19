@@ -24,5 +24,5 @@ public class AirlineInfo {
 	private String airlineLogo;
 
 	private String nameOfAirline;
-    
+
 }

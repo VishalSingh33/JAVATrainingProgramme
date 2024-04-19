@@ -22,21 +22,8 @@ public class Passenger {
 	@Column(name = "passengerId", nullable = false, unique = true)
 	private String passengerId;
 
-	private String emailAddress;
+	private User user;
 
-	private String firstName;
-
-	private String gender;
-
-	private String lastName;
-
-	private long mobileNumber;
-
-	private long bookingId;
+	private String bookingId;
 	
-	// @OneToOne(cascade =  CascadeType.ALL)
-	// @JoinColumn(name="checkinId")
-	// @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
-	private Checkin checkIn;
-    
 }

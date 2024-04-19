@@ -5,9 +5,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.airlines.british.dto.BookingStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,34 +22,38 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "bookingRecord")
-public class BookingRecord 
-// implements Serializable
+public class BookingRecord implements Serializable
 {
 
 	/**
 	 * 
 	 */
-	// private static final long serialVersionUID = -3103984818331012750L;
+	private static final long serialVersionUID = -3103984818331012750L;
 
 	@Id
 	@Column(name = "bookingId", nullable = false, unique = true)
 	private String bookingId;
 
-	private LocalDateTime bookingDate;
+	private LocalDateTime bookingDateTime;
 
-	private String destination;
+	private LocalDateTime updateBookingDateTime;
 
-	private double fare;
+	private Flight flight;
+	// private String flightId;
 
-	private LocalDateTime flightDate;
+	// private String origin;
 
-	private String flightNumber;
+	// private String destination;
 
-	private LocalDateTime flightTime;
+	// private double fare;
 
-	private String origin;
+	// private LocalDateTime originDateTime;
 
-	private String status;
+	// private LocalDateTime destinationDateTime;
+
+	private BookingStatus bookingStatus;
+
+	private int seatNumber;
 	
 	// @OneToMany(cascade = CascadeType.ALL)
 	// @JoinTable(name="bookingDetails", joinColumns = {@JoinColumn(name="bookingId")} , inverseJoinColumns = {@JoinColumn(name="passengerId")})

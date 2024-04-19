@@ -1,9 +1,9 @@
 package com.airlines.british.entites;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,35 +16,33 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="flight")
+@Table(name = "flight")
 public class Flight {
-	
+
 	@Id
 	@Column(name = "flightId", nullable = false, unique = true)
-	private String flightId;	
+	private String flightId;
+
+	private Airplane airplane;
+
+	private String origin;
 
 	private String destination;
 
-	private String duration;
-	
-	private LocalDateTime flightDate;
-	
-	private String flightNumber;
-	
-	private LocalDateTime flightTime; 
+	private LocalDateTime originDateTime;
 
-	private String origin;
-	
+	private LocalDateTime destinationDateTime;
+
+	private Duration duration;
+
+	private int seatLeftToBook;
+
 	// @OneToOne(cascade = CascadeType.ALL)
 	// @JoinColumn(name = "fareId")
-	private Fare fare;
-	
-	// @OneToOne(cascade = CascadeType.ALL)
-	// @JoinColumn(name="flightInfoid")
-	private FlightInfo flightInfo;
-	
-	// @OneToOne(cascade = CascadeType.ALL)
-	// @JoinColumn(name="inventoryId")
-	private Inventory inventory;
-    
+	private double fare;
+
+	public boolean isFullyBooked() {
+		return seatLeftToBook <= 0;
+	}
+
 }

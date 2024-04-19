@@ -1,9 +1,11 @@
 package com.airlines.british.entites;
 
 import java.time.LocalDateTime;
+
+import com.airlines.british.dto.FlightType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,7 @@ public class Fare {
 	@Column(name = "fareId", nullable = false, unique = true)
 	private String fareId;
 
-	private String currency;
-	
+	private FlightType flight;
+
 	private double fare;
 }

@@ -1,0 +1,44 @@
+package com.airlines.british.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import com.airlines.british.dto.AirplaneDto;
+import com.airlines.british.dto.FlightDto;
+import com.airlines.british.entites.AirlineInfo;
+import com.airlines.british.entites.Airplane;
+import com.airlines.british.entites.Flight;
+
+@Validated
+@CrossOrigin("*")
+@RequestMapping("/api/airplane/v1")
+public interface AirplaneController {
+
+	// @GetMapping(value = "/flight")
+	// public Page<AirlineInfo> createAirline(@RequestParam(defaultValue = "0") int
+	// page,
+	// @RequestParam(defaultValue = "10") int size);
+
+	// @GetMapping(value = "/users-status/{id}")
+	// public ResponseEntity<Airplane> createAirline(@PathVariable String id);
+
+	@PostMapping(value = "/airlineInfo")
+	public ResponseEntity<AirlineInfo> createAirline(@RequestBody String airlineLogo,
+			@RequestBody String nameOfAirline);
+
+	@PostMapping(value = "/airplane/{airlineId}")
+	public ResponseEntity<Airplane> createAirplane(@PathVariable String airlineId,
+			@RequestBody AirplaneDto airplaneDto);
+
+	@PutMapping("/airplane/{airplaneId}")
+	public ResponseEntity<Airplane> updateAirplane(@PathVariable String airplaneId,
+			@RequestBody AirplaneDto airplaneDto);
+
+	@PostMapping(value = "/flight//{airplaneId}")
+	public ResponseEntity<Flight> createFlight(@PathVariable String airplaneId, @RequestBody FlightDto flightDto);
+
+	// @DeleteMapping("/users-status/{id}")
+	// public void deleteUser(@PathVariable String id);
+
+}

@@ -1,32 +1,16 @@
-package com.airlines.british.entites;
+package com.airlines.british.dto;
 
-import java.time.LocalDateTime;
-
-import com.airlines.british.dto.Gender;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import jakarta.persistence.Column;
 import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.Pattern;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "user")
-public class User {
+@AllArgsConstructor
+public class UserDto {
 
-    @Id
-    @Column(name = "user_id", nullable = false, unique = true)
-    private String userId;
-
-    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "username", nullable = false)
@@ -42,11 +26,5 @@ public class User {
 
     @Column(name = "gender", nullable = false)
     private Gender gender;
-
-    @Column(name = "created", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated", nullable = false)
-    private LocalDateTime updatedAt;
 
 }

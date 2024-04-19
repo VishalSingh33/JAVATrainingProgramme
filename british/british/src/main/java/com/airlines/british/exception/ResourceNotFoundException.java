@@ -1,16 +1,16 @@
-// package com.spiceJet.spice.exception;
+package com.airlines.british.exception;
 
-// public class ResourceNotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException{
     
-//     // private static final long serialVersionUID = 779679767128057150L;
+    // private static final long serialVersionUID = 779679767128057150L;
 	
-//     public ResourceNotFoundException()
-//     {
-//      super();
-//     }
-//     public ResourceNotFoundException(String msg)
-//     {
-//      super(msg);
-//     }
+    public ResourceNotFoundException()
+    {
+     super();
+    }
+    public ResourceNotFoundException(String msg)
+    {
+     super(msg);
+    }
 
-// }
+}
