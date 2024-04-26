@@ -123,6 +123,8 @@ public class BookingService {
         return booking;
     }
 
+
+    
     public ResponseEntity<BookingRecord> updateBooking(String userId, String bookingId, BookingDto bookingDto) {
 
         BookingRecord booking = bookingRepository.findById(bookingId)
@@ -182,6 +184,7 @@ public class BookingService {
         flight.setSeatLeftToBook(noOfSeats);
         flightRepository.save(flight);
     }
+
 
     public void deleteUser(String bookingId) {
 

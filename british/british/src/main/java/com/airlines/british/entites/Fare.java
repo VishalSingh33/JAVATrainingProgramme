@@ -25,7 +25,7 @@ public class Fare {
 	@Column(name = "fareId", nullable = false, unique = true)
 	private String fareId;
 
-	private FlightType flight;
+	private LocalDateTime fareDateTime;
 
 	private double fare;
 }

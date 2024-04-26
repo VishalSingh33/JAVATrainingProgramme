@@ -24,10 +24,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "bookingRecord")
 public class BookingRecord implements Serializable
 {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3103984818331012750L;
 
 	@Id

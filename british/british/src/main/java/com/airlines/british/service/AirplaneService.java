@@ -1,6 +1,7 @@
 package com.airlines.british.service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -47,9 +48,9 @@ public class AirplaneService {
         AirlineInfo airline = airlineRepository.findById(airlineId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + airlineId));
 
-        // Check if the user exists
+        // Check if the airline exists
         if (airline == null) {
-            // Return 404 Not Found if user not found
+            // Return 404 Not Found if airline not found
             return ResponseEntity.notFound().build();
         }
         Airplane airplane = convertToAirplaneEntity(airplaneDto);
@@ -114,15 +115,12 @@ public class AirplaneService {
         String uniqueId = UUID.randomUUID().toString();
         flight.setFlightId(uniqueId);
         flight.setAirplane(airplane);
-        Duration timePeriod;
         if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null) {
-            timePeriod = Duration.between(flight.getOriginDateTime(), flight.getDestinationDateTime());
+            flight.setDuration(Duration.between(flight.getOriginDateTime(), flight.getDestinationDateTime()) );
         } else {
             // Handle the case where either origin or destination time is null
-            timePeriod = null;
+            flight.setDuration(null);
         }
-        flight.setDuration(timePeriod);
-
 
         if (FlightType.Business.equals(flightDto.getFlightType())) {
             flight.setFare(FlightType.Business.getFare());
@@ -144,12 +142,19 @@ public class AirplaneService {
     private Flight convertToFlightEntity(FlightDto flightDto) {
 
         Flight flight = new Flight();
-        // Map fields from airplaneDto to Airplane entity
+
+        if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null && 
+            flight.getOriginDateTime().isBefore(flight.getDestinationDateTime())) {
+        // Map fields from flightDto to Flight entity
         flight.setOrigin(flightDto.getOrigin());
         flight.setDestination(flightDto.getDestination());
-        flight.setOriginDateTime(flightDto.getOriginDateTime());
-        flight.setDestinationDateTime(flightDto.getDestinationDateTime());
+        flight.setOriginDateTime(flight.getOriginDateTime());
+        flight.setDestinationDateTime(flight.getDestinationDateTime());
         return flight;
+    } else {
+        // Throw an exception or handle the error in some way
+        throw new IllegalArgumentException("Origin time must be before destination time");
+    }
     }
 
 }

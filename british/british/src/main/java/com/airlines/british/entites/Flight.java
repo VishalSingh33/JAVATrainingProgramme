@@ -44,5 +44,8 @@ public class Flight {
 	public boolean isFullyBooked() {
 		return seatLeftToBook <= 0;
 	}
+	// public double getFare(){
+	// 	return airplane.getFlightType().getFare();
+	// }
 
 }

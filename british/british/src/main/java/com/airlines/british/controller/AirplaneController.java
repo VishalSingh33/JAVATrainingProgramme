@@ -15,14 +15,6 @@ import com.airlines.british.entites.Flight;
 @RequestMapping("/api/airplane/v1")
 public interface AirplaneController {
 
-	// @GetMapping(value = "/flight")
-	// public Page<AirlineInfo> createAirline(@RequestParam(defaultValue = "0") int
-	// page,
-	// @RequestParam(defaultValue = "10") int size);
-
-	// @GetMapping(value = "/users-status/{id}")
-	// public ResponseEntity<Airplane> createAirline(@PathVariable String id);
-
 	@PostMapping(value = "/airlineInfo")
 	public ResponseEntity<AirlineInfo> createAirline(@RequestBody String airlineLogo,
 			@RequestBody String nameOfAirline);
@@ -38,6 +30,14 @@ public interface AirplaneController {
 	@PostMapping(value = "/flight//{airplaneId}")
 	public ResponseEntity<Flight> createFlight(@PathVariable String airplaneId, @RequestBody FlightDto flightDto);
 
+	// @GetMapping(value = "/flight")
+	// public Page<AirlineInfo> createAirline(@RequestParam(defaultValue = "0") int
+	// page,
+	// @RequestParam(defaultValue = "10") int size);
+
+	// @GetMapping(value = "/users-status/{id}")
+	// public ResponseEntity<Airplane> createAirline(@PathVariable String id);
+	
 	// @DeleteMapping("/users-status/{id}")
 	// public void deleteUser(@PathVariable String id);
 
