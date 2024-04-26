@@ -2,9 +2,8 @@ package com.airlines.british.dto;
 
 public enum BookingStatus {
 
-  ACTIVE,
+  BOOKED,
   CANCELLED, 
-  BOOKED, 
-  INCOMPLETE;
+  FAILED;
 
 }

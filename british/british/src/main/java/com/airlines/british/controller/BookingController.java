@@ -13,21 +13,22 @@ import com.airlines.british.entites.BookingRecord;
 @RequestMapping("/api/booking/v1")
 public interface BookingController {
 
-    @GetMapping(value = "/booking")
+	@GetMapping(value = "/booking")
 	public Page<BookingRecord> getBooking(@RequestParam(defaultValue = "0") int page,
-			                                @RequestParam(defaultValue = "10") int size);
+			@RequestParam(defaultValue = "10") int size);
 
 	@GetMapping(value = "/booking/{bookingId}")
 	public ResponseEntity<BookingRecord> getBookingById(@PathVariable String bookingId);
 
 	@PostMapping(value = "/booking/{userId}/{flightId}")
-	public ResponseEntity<BookingRecord> createBooking(@PathVariable String userId, @PathVariable String flightId, @RequestBody BookingDto bookingDto);
+	public ResponseEntity<BookingRecord> createBooking(@PathVariable String userId,
+			@PathVariable String flightId, @RequestBody BookingDto bookingDto);
 
-    @PutMapping("/booking/{userId}/{bookingId}")
-	public ResponseEntity<BookingRecord> updateBooking(@RequestBody String userId, @PathVariable String bookingId, @RequestBody BookingDto bookingDto);
+	@PutMapping("/booking/{userId}/{bookingId}")
+	public ResponseEntity<BookingRecord> updateBooking(@RequestBody String userId,
+			@PathVariable String bookingId, @RequestBody BookingDto bookingDto);
 
 	@DeleteMapping("/booking/{bookingId}")
 	public void deleteUser(@PathVariable String bookingId);
 
-    
 }

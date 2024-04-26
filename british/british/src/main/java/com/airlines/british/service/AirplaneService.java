@@ -54,8 +54,8 @@ public class AirplaneService {
             return ResponseEntity.notFound().build();
         }
         Airplane airplane = convertToAirplaneEntity(airplaneDto);
-        String uniqueId = UUID.randomUUID().toString();
-        airplane.setAirplaneId(uniqueId);
+        airplane.setAirplaneId(UUID.randomUUID().toString());
+        airplane.setAvailbleSeats(airplane.getAllSeats());
         airplane.setAirlineInfo(airline);
         Airplane savedAirplane = airplaneRepository.save(airplane);
 
@@ -69,7 +69,7 @@ public class AirplaneService {
 
         Airplane airplane = new Airplane();
         // Map fields from airplaneDto to Airplane entity
-        airplane.setNumberofSeats(airplaneDto.getNumberofSeats());
+        airplane.setAllSeats(airplaneDto.getAllSeats());
         airplane.setFlightType(airplaneDto.getFlightType());
         return airplane;
     }
@@ -96,7 +96,7 @@ public class AirplaneService {
     private void updateAirplaneFromDto(Airplane airplane, AirplaneDto airplaneDto) {
         // Update user properties from UserDto
         airplane.setFlightType(airplaneDto.getFlightType());
-        airplane.setNumberofSeats(airplaneDto.getNumberofSeats());
+        airplane.setAllSeats(airplaneDto.getAllSeats());
     }
 
 

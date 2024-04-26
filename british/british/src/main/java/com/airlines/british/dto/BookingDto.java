@@ -15,15 +15,10 @@ public class BookingDto {
 
 	private Flight flight;
 	// private String flightId;
-
 	// private String origin;
-
 	// private String destination;
-
 	// private double fare;
-
 	// private LocalDateTime originDateTime;
-
 	// private LocalDateTime destinationDateTime;
 
 	private BookingStatus bookingStatus;
