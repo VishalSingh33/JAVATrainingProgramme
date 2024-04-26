@@ -29,8 +29,7 @@ public class Airplane {
     private FlightType flightType;
 	
 	// private int numberofSeats; // should be in list or int is correct ?
-	private List<Integer> numberofSeats;
-
+	private List<Integer> allSeats; //ask
 
 	private List<Integer> availbleSeats; // should be present or not ?
 	

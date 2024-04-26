@@ -10,6 +10,6 @@ import lombok.Data;
 public class AirplaneDto {
 
     private FlightType flightType;
-	private List<Integer> numberofSeats; // int or List ?
+	private List<Integer> allSeats;
 	
 }
