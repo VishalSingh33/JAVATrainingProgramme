@@ -60,6 +60,7 @@ public class ManageUserService {
     private User convertToUserEntity(UserDto userDto) {
         User user = new User();
         // Map fields from UserDto to User entity
+        user.setFullName(userDto.getFullName());
         user.setEmail(userDto.getEmail());
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setSubscriptionPlan(userDto.getSubscriptionPlan());

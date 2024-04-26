@@ -32,6 +32,9 @@ public class User
     @Column(name = "id", nullable = false, unique = true)
     private String id;
 
+	@Column(name = "name", nullable = false)
+    private String fullName;
+
 	@Pattern(regexp = "(^[\\w!#$%&’*+/=?`{|}~^-]+(?:.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+.)+([a-zA-Z]{2,6})$)*", message = "Please enter valid emailId")
     @Column(name = "email", nullable = false)
     private String email;
