@@ -27,7 +27,7 @@ public class User {
     private String userId;
 
     @Column(name = "name", nullable = false)
-    private String name;
+    private String fullName;
 
     @Column(name = "username", nullable = false)
     private String userName;

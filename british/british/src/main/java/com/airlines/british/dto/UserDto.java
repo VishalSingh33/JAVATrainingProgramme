@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Pattern;
 @AllArgsConstructor
 public class UserDto {
 
-    private String name;
+    private String fullName;
 
     @Column(name = "username", nullable = false)
     private String userName;

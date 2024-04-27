@@ -41,7 +41,7 @@ public class UserService {
     public ResponseEntity<User> createUser(UserDto userDto) {
         
         User user = new User();
-        user.setUserId(userDto.getName());
+        user.setFullName(userDto.getFullName());
         user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
         user.setMobileNumber(userDto.getMobileNumber());
@@ -69,7 +69,7 @@ public class UserService {
         if (existingUser == null) {
             return ResponseEntity.notFound().build();
         }
-        existingUser.setUserId(userDto.getName());
+        existingUser.setFullName(userDto.getFullName());
         existingUser.setUserName(userDto.getUserName());
         existingUser.setEmail(userDto.getEmail());
         existingUser.setMobileNumber(userDto.getMobileNumber());
