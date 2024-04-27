@@ -24,7 +24,9 @@ public class BookingDto {
 	private BookingStatus bookingStatus;
 
 	private int seatNumber;
+
+	private String flightType;
 	
 	private List<Passenger> passengers;
-    
+
 }

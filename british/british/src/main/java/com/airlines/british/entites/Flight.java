@@ -37,9 +37,9 @@ public class Flight {
 
 	private int seatLeftToBook;
 
-	// @OneToOne(cascade = CascadeType.ALL)
-	// @JoinColumn(name = "fareId")
-	private double fare;
+	// // @OneToOne(cascade = CascadeType.ALL)
+	// // @JoinColumn(name = "fareId")
+	// private int fare;   // ??
 
 	public boolean isFullyBooked() {
 		return seatLeftToBook <= 0;

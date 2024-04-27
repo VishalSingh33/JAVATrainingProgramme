@@ -28,7 +28,4 @@ public interface BookingController {
 	public ResponseEntity<BookingRecord> updateBooking(@RequestBody String userId,
 			@PathVariable String bookingId, @RequestBody BookingDto bookingDto);
 
-	@DeleteMapping("/booking/{bookingId}")
-	public void deleteUser(@PathVariable String bookingId);
-
 }

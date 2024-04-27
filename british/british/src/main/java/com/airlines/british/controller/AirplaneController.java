@@ -28,17 +28,7 @@ public interface AirplaneController {
 			@RequestBody AirplaneDto airplaneDto);
 
 	@PostMapping(value = "/flight//{airplaneId}")
-	public ResponseEntity<Flight> createFlight(@PathVariable String airplaneId, @RequestBody FlightDto flightDto);
-
-	// @GetMapping(value = "/flight")
-	// public Page<AirlineInfo> createAirline(@RequestParam(defaultValue = "0") int
-	// page,
-	// @RequestParam(defaultValue = "10") int size);
-
-	// @GetMapping(value = "/users-status/{id}")
-	// public ResponseEntity<Airplane> createAirline(@PathVariable String id);
-	
-	// @DeleteMapping("/users-status/{id}")
-	// public void deleteUser(@PathVariable String id);
+	public ResponseEntity<Flight> createFlight(@PathVariable String airplaneId,
+			@RequestBody FlightDto flightDto);
 
 }

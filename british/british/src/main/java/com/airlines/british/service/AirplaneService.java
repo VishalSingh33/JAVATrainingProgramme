@@ -13,6 +13,7 @@ import com.airlines.british.dto.FlightDto;
 import com.airlines.british.dto.FlightType;
 import com.airlines.british.entites.AirlineInfo;
 import com.airlines.british.entites.Airplane;
+import com.airlines.british.entites.Fare;
 import com.airlines.british.entites.Flight;
 import com.airlines.british.exception.ResourceNotFoundException;
 import com.airlines.british.repository.AirlineInfoRepository;
@@ -41,7 +42,6 @@ public class AirplaneService {
         return new ResponseEntity<>(savedAirline, HttpStatus.CREATED);
     }
 
-
     @SuppressWarnings("unused")
     public ResponseEntity<Airplane> createAirplane(String airlineId, AirplaneDto airplaneDto) {
 
@@ -65,6 +65,7 @@ public class AirplaneService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     private Airplane convertToAirplaneEntity(AirplaneDto airplaneDto) {
 
         Airplane airplane = new Airplane();
@@ -73,7 +74,6 @@ public class AirplaneService {
         airplane.setFlightType(airplaneDto.getFlightType());
         return airplane;
     }
-    
 
     public ResponseEntity<Airplane> updateAirplane(String airplaneId, AirplaneDto airplaneDto) {
 
@@ -93,12 +93,12 @@ public class AirplaneService {
         return ResponseEntity.ok(updatedaAirplane);
 
     }
+
     private void updateAirplaneFromDto(Airplane airplane, AirplaneDto airplaneDto) {
         // Update user properties from UserDto
         airplane.setFlightType(airplaneDto.getFlightType());
         airplane.setAllSeats(airplaneDto.getAllSeats());
     }
-
 
     @SuppressWarnings("unused")
     public ResponseEntity<Flight> createFlight(String airplaneId, FlightDto flightDto) {
@@ -116,21 +116,21 @@ public class AirplaneService {
         flight.setFlightId(uniqueId);
         flight.setAirplane(airplane);
         if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null) {
-            flight.setDuration(Duration.between(flight.getOriginDateTime(), flight.getDestinationDateTime()) );
+            flight.setDuration(Duration.between(flight.getOriginDateTime(), flight.getDestinationDateTime()));
         } else {
             // Handle the case where either origin or destination time is null
             flight.setDuration(null);
         }
 
-        if (FlightType.Business.equals(flightDto.getFlightType())) {
-            flight.setFare(FlightType.Business.getFare());
-        } else if (FlightType.Economy.equals(flightDto.getFlightType())) {
-            flight.setFare(FlightType.Economy.getFare());
-        } else if (FlightType.PremiumEconomy.equals(flightDto.getFlightType())) {
-            flight.setFare(FlightType.PremiumEconomy.getFare());
-        } else {
-            throw new ResourceNotFoundException("FlightType not Found");
-        }
+        // if (FlightType.Business.equals(flightDto.getFlightType())) {
+        // flight.setFare(FlightType.Business.getFare());
+        // } else if (FlightType.Economy.equals(flightDto.getFlightType())) {
+        // flight.setFare(FlightType.Economy.getFare());
+        // } else if (FlightType.PremiumEconomy.equals(flightDto.getFlightType())) {
+        // flight.setFare(FlightType.PremiumEconomy.getFare());
+        // } else {
+        // throw new ResourceNotFoundException("FlightType not Found");
+        // }
         Flight savedFlight = flightRepository.save(flight);
 
         if (savedFlight != null) {
@@ -139,22 +139,23 @@ public class AirplaneService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     private Flight convertToFlightEntity(FlightDto flightDto) {
 
         Flight flight = new Flight();
 
-        if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null && 
-            flight.getOriginDateTime().isBefore(flight.getDestinationDateTime())) {
-        // Map fields from flightDto to Flight entity
-        flight.setOrigin(flightDto.getOrigin());
-        flight.setDestination(flightDto.getDestination());
-        flight.setOriginDateTime(flight.getOriginDateTime());
-        flight.setDestinationDateTime(flight.getDestinationDateTime());
-        return flight;
-    } else {
-        // Throw an exception or handle the error in some way
-        throw new IllegalArgumentException("Origin time must be before destination time");
-    }
+        if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null &&
+                flight.getOriginDateTime().isBefore(flight.getDestinationDateTime())) {
+            // Map fields from flightDto to Flight entity
+            flight.setOrigin(flightDto.getOrigin());
+            flight.setDestination(flightDto.getDestination());
+            flight.setOriginDateTime(flight.getOriginDateTime());
+            flight.setDestinationDateTime(flight.getDestinationDateTime());
+            return flight;
+        } else {
+            // Throw an exception or handle the error in some way
+            throw new IllegalArgumentException("Origin time must be before destination time");
+        }
     }
 
 }

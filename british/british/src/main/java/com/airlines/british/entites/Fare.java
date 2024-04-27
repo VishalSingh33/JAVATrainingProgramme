@@ -27,5 +27,8 @@ public class Fare {
 
 	private LocalDateTime fareDateTime;
 
-	private double fare;
+	private String flightType;
+
+	private int fare;
+
 }

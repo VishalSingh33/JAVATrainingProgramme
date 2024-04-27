@@ -25,5 +25,7 @@ public class Passenger {
 	private User user;
 
 	private String bookingId;
+
+	private String fareId;
 	
 }

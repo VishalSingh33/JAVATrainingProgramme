@@ -26,7 +26,7 @@ public class Airplane {
     @Column(name = "airplaneId", nullable = false, unique = true)
     private String airplaneId;
 
-    private FlightType flightType;
+    private FlightType flightType; // ?? confusion on this code
 	
 	// private int numberofSeats; // should be in list or int is correct ?
 	private List<Integer> allSeats; //ask

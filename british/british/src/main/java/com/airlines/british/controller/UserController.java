@@ -14,8 +14,7 @@ import com.airlines.british.entites.User;
 public interface UserController {
 
 	@GetMapping(value = "/users")
-	public Page<User> getUsers(
-			@RequestParam(defaultValue = "0") int page,
+	public Page<User> getUsers(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size);
 
 	@GetMapping(value = "/users/{userId}")

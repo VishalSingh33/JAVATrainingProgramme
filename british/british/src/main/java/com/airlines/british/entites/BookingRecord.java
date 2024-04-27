@@ -45,6 +45,8 @@ public class BookingRecord implements Serializable
 	private BookingStatus bookingStatus;
 
 	private int seatNumber;
+
+	private int bookingFare;
 	
 	// @OneToMany(cascade = CascadeType.ALL)
 	// @JoinTable(name="bookingDetails", joinColumns = {@JoinColumn(name="bookingId")} , inverseJoinColumns = {@JoinColumn(name="passengerId")})
