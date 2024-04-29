@@ -31,4 +31,6 @@ public class Fare {
 
 	private int fare;
 
+	private String bookingId;
+
 }

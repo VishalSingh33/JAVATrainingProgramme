@@ -122,6 +122,7 @@ public class BookingService {
         fare.setFareDateTime(LocalDateTime.now());
         fare.setFlightType(bookingDto.getFlightType()); // recheck
         fare.setFare(booking.getBookingFare());
+        fare.setBookingId(booking.getBookingId());
         passenger.setFareId(fare.getFareId());
         // log.info("booking.getEntityLogo() entitiesList : {}", entitiesList);
         // Save the entity
