@@ -18,18 +18,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="fare")
+@Table(name = "fare")
 public class Fare {
-	
+
 	@Id
 	@Column(name = "fare_id", nullable = false, unique = true)
 	private String fareId;
+
 	@Column
 	private LocalDateTime fareDateTime;
+
 	@Column
 	private String flightType;
+
 	@Column
 	private int fare;
+
 	@Column
 	private String bookingId;
 

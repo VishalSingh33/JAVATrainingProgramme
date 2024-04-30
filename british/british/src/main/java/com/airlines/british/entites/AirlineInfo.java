@@ -14,14 +14,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="airline_info")
+@Table(name = "airline_info")
 public class AirlineInfo {
-	
+
 	@Id
 	@Column(name = "airline_id", nullable = false, unique = true)
 	private String airlineId;
+	
 	@Column
 	private String airlineLogo;
+	
 	@Column
 	private String nameOfAirline;
 

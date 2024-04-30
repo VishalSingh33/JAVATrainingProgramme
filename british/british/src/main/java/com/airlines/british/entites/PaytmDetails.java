@@ -18,10 +18,8 @@ import lombok.ToString;
 @ToString
 @Component
 @ConfigurationProperties("paytm.payment.sandbox")
-@Entity
 public class PaytmDetails {
 	
-    @Id
 	private String merchantId;
 
     private String merchantKey;

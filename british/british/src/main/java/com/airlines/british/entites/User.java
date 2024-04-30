@@ -6,6 +6,8 @@ import com.airlines.british.dto.Gender;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -40,6 +42,7 @@ public class User {
     @Column(name = "mobile", nullable = false)
     private long mobileNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     private Gender gender;
 
