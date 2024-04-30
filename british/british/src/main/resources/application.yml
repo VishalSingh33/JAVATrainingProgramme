@@ -1,6 +1,6 @@
 management.endpoints.web.exposure.include: '*'
 server:
-  port: 8090
+  port: 8080
 logging:
   file:
     # path: /home/ltb/web/logs
@@ -23,13 +23,10 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver 
     # org.postgresql.Driver  jdbc:postgresql://192.168.7.41:5432/postgres
   jpa:
-   properties:
-    hibernate.dialect: org.hibernate.dialect.MySQLDialect
-  database-platform: org.hibernate.dialect.MySQLDialect
-  database: mysql
-  show-sql: true
-  hibernate:
-    ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect # Update to MySQL 8 dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
 
 paytm.payment:
