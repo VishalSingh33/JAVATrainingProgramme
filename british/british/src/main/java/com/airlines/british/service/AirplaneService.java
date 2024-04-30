@@ -115,7 +115,11 @@ public class AirplaneService {
         flight.setFlightId(uniqueId);
         flight.setAirplane(airplane);
         if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null) {
-            flight.setDuration(Duration.between(flight.getOriginDateTime(), flight.getDestinationDateTime()));
+            Duration duration = Duration.between(flight.getOriginDateTime(), flight.getDestinationDateTime());
+            long hours = duration.toHours(); // Get the whole hours part
+            long minutes = duration.toMinutesPart(); // Get the remaining minutes part
+            String durationString = String.format("%02d:%02d", hours, minutes); // Format duration as "hours:minutes"
+            flight.setDuration(durationString);
         } else {
             // Handle the case where either origin or destination time is null
             flight.setDuration(null);

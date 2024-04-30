@@ -43,7 +43,7 @@ public class Flight {
 	private LocalDateTime destinationDateTime;
 
 	@Column
-	private Time duration;
+	private String duration;
 
 	@Column
 	private int seatLeftToBook;
