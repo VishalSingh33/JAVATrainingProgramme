@@ -23,20 +23,21 @@ import lombok.NoArgsConstructor;
 public class Airplane {
 
     @Id
-    @Column(name = "airplaneId", nullable = false, unique = true)
+    @Column(name = "airplane_id", nullable = false, unique = true)
     private String airplaneId;
-
+	@Column
     private FlightType flightType; // ?? confusion on this code
-	
+	@Column
 	// private int numberofSeats; // should be in list or int is correct ?
 	private List<Integer> allSeats; //ask
-
+	@Column
 	private List<Integer> availbleSeats; // should be present or not ?
 	
 	// @ManyToOne
 	// @JoinTable(name = "flightsInfo", joinColumns = {
 	// 		@JoinColumn(name = "flightInfoid", referencedColumnName = "flightInfoid") }, inverseJoinColumns = {
 	// 				@JoinColumn(name = "airlineId", referencedColumnName = "airlineId") })
+	@Column
 	private AirlineInfo airlineInfo;
 
 }

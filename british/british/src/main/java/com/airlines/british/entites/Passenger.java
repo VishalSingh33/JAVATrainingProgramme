@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 public class Passenger {
 
 	@Id
-	@Column(name = "passengerId", nullable = false, unique = true)
+	@Column(name = "passenger_id", nullable = false, unique = true)
 	private String passengerId;
-
+	@Column
 	private User user;
-
+	@Column
 	private String bookingId;
-
+	@Column
 	private String fareId;
 	
 }

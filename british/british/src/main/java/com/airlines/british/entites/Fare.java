@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 public class Fare {
 	
 	@Id
-	@Column(name = "fareId", nullable = false, unique = true)
+	@Column(name = "fare_id", nullable = false, unique = true)
 	private String fareId;
-
+	@Column
 	private LocalDateTime fareDateTime;
-
+	@Column
 	private String flightType;
-
+	@Column
 	private int fare;
-
+	@Column
 	private String bookingId;
 
 }

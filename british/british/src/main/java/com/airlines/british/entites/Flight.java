@@ -20,21 +20,21 @@ import lombok.NoArgsConstructor;
 public class Flight {
 
 	@Id
-	@Column(name = "flightId", nullable = false, unique = true)
+	@Column(name = "flight_id", nullable = false, unique = true)
 	private String flightId;
-
+	@Column
 	private Airplane airplane;
-
+	@Column
 	private String origin;
-
+	@Column
 	private String destination;
-
+	@Column
 	private LocalDateTime originDateTime;
-
+	@Column
 	private LocalDateTime destinationDateTime;
-
+	@Column
 	private Duration duration;
-
+	@Column
 	private int seatLeftToBook;
 
 	// // @OneToOne(cascade = CascadeType.ALL)

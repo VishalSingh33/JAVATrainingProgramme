@@ -21,19 +21,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "bookingRecord")
-public class BookingRecord implements Serializable
-{
+@Table(name = "booking_record")
+public class BookingRecord implements Serializable {
+	
 	private static final long serialVersionUID = -3103984818331012750L;
 
 	@Id
-	@Column(name = "bookingId", nullable = false, unique = true)
+	@Column(name = "booking_id", nullable = false, unique = true)
 	private String bookingId;
-
+	@Column
 	private LocalDateTime bookingDateTime;
-
+	@Column
 	private LocalDateTime updateBookingDateTime;
-
+	@Column
 	private Flight flight;
 	// private String flightId;
 	// private String origin;
@@ -41,15 +41,16 @@ public class BookingRecord implements Serializable
 	// private double fare;
 	// private LocalDateTime originDateTime;
 	// private LocalDateTime destinationDateTime;
-
+	@Column
 	private BookingStatus bookingStatus;
-
+	@Column
 	private int seatNumber;
-
+	@Column
 	private int bookingFare;
 	
 	// @OneToMany(cascade = CascadeType.ALL)
 	// @JoinTable(name="bookingDetails", joinColumns = {@JoinColumn(name="bookingId")} , inverseJoinColumns = {@JoinColumn(name="passengerId")})
+	@Column
 	private List<Passenger> passengers;
 	
     

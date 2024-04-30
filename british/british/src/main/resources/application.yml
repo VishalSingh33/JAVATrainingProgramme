@@ -32,20 +32,18 @@ spring:
     ddl-auto: update
 
 
-app:
-  api:
-    # states: http://store-service/api/v1/store/states/
-  topic:
-    # signup-phase-one: dev-signup-phase-one_1_4
-  store:
-    # user-overview: user-overview
-  paging:
-    connection-size: 8
-    recommendation-size: 5
-    profile-viewer: 8
-    user-connection: 5
-    user-industry: 8
-    followy-size: 10
-    user-initial: 10
-  size:
-    image: 3145728
+paytm.payment:
+  sandbox:
+    merchantId: sviaeV91055242769175
+    merchantKey: IIaDwHcg4Nc4xLIH
+    channelId: WEB
+    website: WEBSTAGING
+    industryTypeId: Retail
+    paytmUrl:  https://securegw-stage.paytm.in/order/process
+    callbackUrl: http://localhost:9090/pgresponse
+    details:
+      MID: ${paytm.payment.sandbox.merchantid}
+      CHANNEL_ID: ${paytm.payment.sandbox.channelid}
+      INDUSTRY_TYPE_ID: ${paytm.payment.sandbox.industrytypeid}
+      WEBSITE: ${paytm.payment.sandbox.website}
+      CALLBACK_URL: ${paytm.payment.sandbox.callbackUrl}

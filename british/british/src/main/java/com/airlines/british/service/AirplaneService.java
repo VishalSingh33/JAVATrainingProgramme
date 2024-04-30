@@ -106,7 +106,6 @@ public class AirplaneService {
         Airplane airplane = airplaneRepository.findById(airplaneId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + airplaneId));
 
-        // Check if the user exists
         if (airplane == null) {
             // Return 404 Not Found if user not found
             return ResponseEntity.notFound().build();
