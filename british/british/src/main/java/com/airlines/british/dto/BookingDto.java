@@ -27,6 +27,7 @@ public class BookingDto {
 
 	private String flightType;
 	
-	private List<Passenger> passengers;
+	private String passengerId;
+	// private List<Passenger> passengers;
 
 }
