@@ -24,9 +24,9 @@ public class ManageUserController implements UserController {
 	}
 
 	@Override
-	public ResponseEntity<User> getUserById(String id) {
+	public ResponseEntity<User> getUserById(String userId) {
 		
-		return userService.getUserById(id);
+		return userService.getUserById(userId);
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class ManageUserController implements UserController {
 	}
 
 	@Override
-	public ResponseEntity<User> updateUserController(String id, UserDto userDto) {
+	public ResponseEntity<User> updateUserController(String userId, UserDto userDto) {
 
-		return userService.updateUserController(id, userDto);
+		return userService.updateUserController(userId, userDto);
 	}
 
 	@Override

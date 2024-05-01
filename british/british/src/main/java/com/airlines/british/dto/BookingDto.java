@@ -1,11 +1,5 @@
 package com.airlines.british.dto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import com.airlines.british.entites.Flight;
-import com.airlines.british.entites.Passenger;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,21 +7,12 @@ import lombok.Data;
 @AllArgsConstructor
 public class BookingDto {
 
-	private Flight flight;
-	// private String flightId;
-	// private String origin;
-	// private String destination;
-	// private double fare;
-	// private LocalDateTime originDateTime;
-	// private LocalDateTime destinationDateTime;
+	private String userId; 
 
-	private BookingStatus bookingStatus;
+	private String flightId;
 
 	private int seatNumber;
 
 	private String flightType;
-	
-	private String passengerId;
-	// private List<Passenger> passengers;
 
 }

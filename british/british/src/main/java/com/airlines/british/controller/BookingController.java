@@ -20,12 +20,11 @@ public interface BookingController {
 	@GetMapping(value = "/booking/{bookingId}")
 	public ResponseEntity<BookingRecord> getBookingById(@PathVariable String bookingId);
 
-	@PostMapping(value = "/booking/{userId}/{flightId}")
-	public ResponseEntity<BookingRecord> createBooking(@PathVariable String userId,
-			@PathVariable String flightId, @RequestBody BookingDto bookingDto);
+	@PostMapping(value = "/booking")
+	public ResponseEntity<BookingRecord> createBooking(@RequestBody BookingDto bookingDto);
 
-	@PutMapping("/booking/{userId}/{bookingId}")
-	public ResponseEntity<BookingRecord> updateBooking(@RequestBody String userId,
-			@PathVariable String bookingId, @RequestBody BookingDto bookingDto);
+	@PutMapping("/booking/{bookingId}")
+	public ResponseEntity<BookingRecord> updateBooking(@PathVariable String bookingId,
+			@RequestBody BookingDto bookingDto);
 
 }

@@ -1,7 +1,6 @@
 package com.airlines.british.dto;
 
 import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -17,8 +16,4 @@ public class FlightDto {
 
 	private LocalDateTime destinationDateTime;
 
-	private int seatLeftToBook;
-
-	private FlightType flightType;
-    
 }

@@ -16,8 +16,8 @@ import com.airlines.british.entites.Flight;
 public interface AirplaneController {
 
 	@PostMapping(value = "/airlineInfo")
-	public ResponseEntity<AirlineInfo> createAirline(@RequestBody String airlineLogo,
-			@RequestBody String nameOfAirline);
+	public ResponseEntity<AirlineInfo> createAirline(@RequestParam String airlineLogo,
+			@RequestParam String nameOfAirline);
 
 	@PostMapping(value = "/airplane/{airlineId}")
 	public ResponseEntity<Airplane> createAirplane(@PathVariable String airlineId,
@@ -27,7 +27,7 @@ public interface AirplaneController {
 	public ResponseEntity<Airplane> updateAirplane(@PathVariable String airplaneId,
 			@RequestBody AirplaneDto airplaneDto);
 
-	@PostMapping(value = "/flight//{airplaneId}")
+	@PostMapping(value = "/flight/{airplaneId}")
 	public ResponseEntity<Flight> createFlight(@PathVariable String airplaneId,
 			@RequestBody FlightDto flightDto);
 

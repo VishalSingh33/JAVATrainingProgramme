@@ -65,7 +65,6 @@ public class AirplaneService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
     private Airplane convertToAirplaneEntity(AirplaneDto airplaneDto) {
 
         Airplane airplane = new Airplane();
@@ -78,9 +77,8 @@ public class AirplaneService {
     public ResponseEntity<Airplane> updateAirplane(String airplaneId, AirplaneDto airplaneDto) {
 
         Airplane airplane = airplaneRepository.findById(airplaneId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + airplaneId));
+                .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + airplaneId));
 
-        // Check if the user exists
         if (airplane == null) {
             // Return 404 Not Found if user not found
             return ResponseEntity.notFound().build();
@@ -93,7 +91,6 @@ public class AirplaneService {
         return ResponseEntity.ok(updatedaAirplane);
 
     }
-
     private void updateAirplaneFromDto(Airplane airplane, AirplaneDto airplaneDto) {
         // Update user properties from UserDto
         airplane.setFlightType(airplaneDto.getFlightType());
@@ -114,8 +111,8 @@ public class AirplaneService {
         String uniqueId = UUID.randomUUID().toString();
         flight.setFlightId(uniqueId);
         flight.setAirplane(airplane);
-        if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null) {
-            Duration duration = Duration.between(flight.getOriginDateTime(), flight.getDestinationDateTime());
+        if (flightDto.getOriginDateTime() != null && flightDto.getDestinationDateTime() != null) {
+            Duration duration = Duration.between(flightDto.getOriginDateTime(), flightDto.getDestinationDateTime());
             long hours = duration.toHours(); // Get the whole hours part
             long minutes = duration.toMinutesPart(); // Get the remaining minutes part
             String durationString = String.format("%02d:%02d", hours, minutes); // Format duration as "hours:minutes"
@@ -125,15 +122,6 @@ public class AirplaneService {
             flight.setDuration(null);
         }
 
-        // if (FlightType.Business.equals(flightDto.getFlightType())) {
-        // flight.setFare(FlightType.Business.getFare());
-        // } else if (FlightType.Economy.equals(flightDto.getFlightType())) {
-        // flight.setFare(FlightType.Economy.getFare());
-        // } else if (FlightType.PremiumEconomy.equals(flightDto.getFlightType())) {
-        // flight.setFare(FlightType.PremiumEconomy.getFare());
-        // } else {
-        // throw new ResourceNotFoundException("FlightType not Found");
-        // }
         Flight savedFlight = flightRepository.save(flight);
 
         if (savedFlight != null) {
@@ -142,13 +130,12 @@ public class AirplaneService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
     private Flight convertToFlightEntity(FlightDto flightDto) {
 
         Flight flight = new Flight();
 
-        if (flight.getOriginDateTime() != null && flight.getDestinationDateTime() != null &&
-                flight.getOriginDateTime().isBefore(flight.getDestinationDateTime())) {
+        if (flightDto.getOriginDateTime() != null && flightDto.getDestinationDateTime() != null &&
+        flightDto.getOriginDateTime().isBefore(flightDto.getDestinationDateTime())) {
             // Map fields from flightDto to Flight entity
             flight.setOrigin(flightDto.getOrigin());
             flight.setDestination(flightDto.getDestination());

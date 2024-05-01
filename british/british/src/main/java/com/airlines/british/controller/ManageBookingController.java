@@ -29,15 +29,15 @@ public class ManageBookingController implements BookingController {
 	}
 
 	@Override
-	public ResponseEntity<BookingRecord> createBooking(String userId, String flightId, BookingDto bookingDto) {
+	public ResponseEntity<BookingRecord> createBooking(BookingDto bookingDto) {
 
-		return bookingService.createBooking(userId, flightId, bookingDto);
+		return bookingService.createBooking(bookingDto);
 	}
 
 	@Override
-	public ResponseEntity<BookingRecord> updateBooking(String userId, String bookingId, BookingDto bookingDto) {
+	public ResponseEntity<BookingRecord> updateBooking(String bookingId, BookingDto bookingDto) {
 
-		return bookingService.updateBooking(userId, bookingId, bookingDto);
+		return bookingService.updateBooking(bookingId, bookingDto);
 	}
 
 }

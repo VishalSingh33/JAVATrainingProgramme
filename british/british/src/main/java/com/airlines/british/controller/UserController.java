@@ -23,10 +23,10 @@ public interface UserController {
 	@PostMapping(value = "/users")
 	public ResponseEntity<User> createUser(@RequestBody UserDto userDto);
 
-	@PutMapping("/users/{userId}")
+	@PutMapping(value = "/users/{userId}")
 	public ResponseEntity<User> updateUserController(@PathVariable String userId, @RequestBody UserDto userDto);
 
-	@DeleteMapping("/users/{userId}")
+	@DeleteMapping(value = "/users/{userId}")
 	public void deleteUser(@PathVariable String userId);
 
 }

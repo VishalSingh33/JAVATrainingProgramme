@@ -56,14 +56,15 @@ public class BookingService {
         }
     }
 
+
     // @SuppressWarnings("unused")
-    public ResponseEntity<BookingRecord> createBooking(String userId, String flightId, BookingDto bookingDto) {
+    public ResponseEntity<BookingRecord> createBooking(BookingDto bookingDto) {
 
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        User existingUser = userRepository.findById(bookingDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + bookingDto.getUserId()));
 
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + flightId));
+        Flight flight = flightRepository.findById(bookingDto.getFlightId())
+                .orElseThrow(() -> new RuntimeException("Flight not found with id: " + bookingDto.getFlightId()));
 
         if (existingUser == null || flight == null) {
             // Return 404 Not Found if user not found
@@ -75,23 +76,26 @@ public class BookingService {
 
         if (availableSeats.contains(bookingDto.getSeatNumber())) {
             booking.setSeatNumber(bookingDto.getSeatNumber());
+            booking.setBookingStatus(BookingStatus.BOOKED);
         } else {
             // If specific seat number is not provided , randomly assigna seat
             Random random = new Random();
             int randomSeatIndex = random.nextInt(availableSeats.size());
             int randomSeatNumber = availableSeats.get(randomSeatIndex);
             booking.setSeatNumber(randomSeatNumber);
+            booking.setBookingStatus(BookingStatus.BOOKED);
         }
         int noOfSeats = flight.getAirplane().getAllSeats().size();
+        availableSeats.remove(booking.getSeatNumber());
+        noOfSeats = flight.getAirplane().getAllSeats().size()-flight.getAirplane().getAvailbleSeats().size();
 
-        if (booking.getBookingStatus().equals(BookingStatus.BOOKED) && noOfSeats > 0) {
-            booking.setBookingStatus(BookingStatus.BOOKED);
-            availableSeats.remove(booking.getSeatNumber());
-            noOfSeats = flight.getAirplane().getAllSeats().size()-flight.getAirplane().getAvailbleSeats().size();
-        }
-        if (noOfSeats < 0) {
-            throw new BookingException("No Seat Left to Book");
-        }
+        // if (booking.getBookingStatus().equals(BookingStatus.BOOKED) && noOfSeats >= 0) {
+        //     availableSeats.remove(booking.getSeatNumber());
+        //     noOfSeats = flight.getAirplane().getAllSeats().size()-flight.getAirplane().getAvailbleSeats().size();
+        // }
+        // if (noOfSeats < 0) {
+        //     throw new BookingException("No Seat Left to Book");
+        // }
         flight.setSeatLeftToBook(noOfSeats);
 
         Passenger passenger = new Passenger();
@@ -133,16 +137,18 @@ public class BookingService {
 
     }
 
-    public ResponseEntity<BookingRecord> updateBooking(String userId, String bookingId, BookingDto bookingDto) {
+
+
+    public ResponseEntity<BookingRecord> updateBooking(String bookingId, BookingDto bookingDto) {
 
         BookingRecord booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + bookingId));
 
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        User existingUser = userRepository.findById(bookingDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + bookingDto.getUserId()));
         
-        Passenger passenger = passengerRepository.findById(bookingDto.getPassengerId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + bookingDto.getPassengerId()));
+        Passenger passenger = passengerRepository.findById(booking.getPassengerId())
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + booking.getPassengerId()));
 
         if (existingUser == null || booking == null || passenger == null) {
             // Return 404 Not Found if user not found
@@ -171,18 +177,18 @@ public class BookingService {
             throw new IllegalArgumentException("User ID provided does not match with Passenger");
         }
         String fareId = passenger.getFareId();
-        Fare fare = fareRepository.findById(passenger.getPassengerId())
+        Fare fare = fareRepository.findById(fareId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + fareId));
 
         fare.setFare(booking.getBookingFare());
 
-        booking.setBookingStatus(bookingDto.getBookingStatus());
+        booking.setBookingStatus(booking.getBookingStatus());
         List<Integer> availableSeats = flight.getAirplane().getAvailbleSeats();
         int noOfSeats = flight.getAirplane().getAllSeats().size();
         if (noOfSeats <= 0) {
             throw new BookingException("No Seat Left to Book");
         }
-        if (bookingDto.getBookingStatus().equals(BookingStatus.CANCELLED)) {
+        if (booking.getBookingStatus().equals(BookingStatus.CANCELLED)) {
             booking.setBookingStatus(BookingStatus.CANCELLED);
             availableSeats.add(booking.getSeatNumber());
             noOfSeats = flight.getSeatLeftToBook() + 1;
