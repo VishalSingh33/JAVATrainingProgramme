@@ -1,25 +1,18 @@
 package com.airlines.british.service;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.UUID;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import com.airlines.british.dto.AirplaneDto;
 import com.airlines.british.dto.FlightDto;
-import com.airlines.british.dto.FlightType;
 import com.airlines.british.entites.AirlineInfo;
 import com.airlines.british.entites.Airplane;
-import com.airlines.british.entites.Fare;
 import com.airlines.british.entites.Flight;
-import com.airlines.british.exception.ResourceNotFoundException;
 import com.airlines.british.repository.AirlineInfoRepository;
 import com.airlines.british.repository.AirplaneRepository;
 import com.airlines.british.repository.FlightRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -29,6 +22,7 @@ public class AirplaneService {
     private final FlightRepository flightRepository;
     private final AirlineInfoRepository airlineRepository;
     private final AirplaneRepository airplaneRepository;
+
 
     public ResponseEntity<AirlineInfo> createAirline(String airlineLogo, String nameOfAirline) {
 
@@ -42,18 +36,19 @@ public class AirplaneService {
         return new ResponseEntity<>(savedAirline, HttpStatus.CREATED);
     }
 
+    
     @SuppressWarnings("unused")
     public ResponseEntity<Airplane> createAirplane(String airlineId, AirplaneDto airplaneDto) {
 
         AirlineInfo airline = airlineRepository.findById(airlineId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + airlineId));
 
-        // Check if the airline exists
         if (airline == null) {
-            // Return 404 Not Found if airline not found
             return ResponseEntity.notFound().build();
         }
-        Airplane airplane = convertToAirplaneEntity(airplaneDto);
+        Airplane airplane = new Airplane();
+        airplane.setAllSeats(airplaneDto.getAllSeats());
+        airplane.setFlightType(airplaneDto.getFlightType());
         airplane.setAirplaneId(UUID.randomUUID().toString());
         airplane.setAvailbleSeats(airplane.getAllSeats());
         airplane.setAirlineInfo(airline);
@@ -65,14 +60,8 @@ public class AirplaneService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    private Airplane convertToAirplaneEntity(AirplaneDto airplaneDto) {
 
-        Airplane airplane = new Airplane();
-        // Map fields from airplaneDto to Airplane entity
-        airplane.setAllSeats(airplaneDto.getAllSeats());
-        airplane.setFlightType(airplaneDto.getFlightType());
-        return airplane;
-    }
+
 
     public ResponseEntity<Airplane> updateAirplane(String airplaneId, AirplaneDto airplaneDto) {
 
@@ -80,22 +69,18 @@ public class AirplaneService {
                 .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + airplaneId));
 
         if (airplane == null) {
-            // Return 404 Not Found if user not found
             return ResponseEntity.notFound().build();
         }
-        // Update the retrieved user entity with information from UserDto
-        updateAirplaneFromDto(airplane, airplaneDto);
+        airplane.setFlightType(airplaneDto.getFlightType());
+        airplane.setAllSeats(airplaneDto.getAllSeats());
         // Save the updated user entity
         Airplane updatedaAirplane = airplaneRepository.save(airplane);
         // Return ResponseEntity with the updated user
         return ResponseEntity.ok(updatedaAirplane);
 
     }
-    private void updateAirplaneFromDto(Airplane airplane, AirplaneDto airplaneDto) {
-        // Update user properties from UserDto
-        airplane.setFlightType(airplaneDto.getFlightType());
-        airplane.setAllSeats(airplaneDto.getAllSeats());
-    }
+
+
 
     @SuppressWarnings("unused")
     public ResponseEntity<Flight> createFlight(String airplaneId, FlightDto flightDto) {
@@ -107,7 +92,19 @@ public class AirplaneService {
             // Return 404 Not Found if user not found
             return ResponseEntity.notFound().build();
         }
-        Flight flight = convertToFlightEntity(flightDto);
+        Flight flight = new Flight();
+
+        if (flightDto.getOriginDateTime() != null && flightDto.getDestinationDateTime() != null &&
+        flightDto.getOriginDateTime().isBefore(flightDto.getDestinationDateTime())) {
+            // Map fields from flightDto to Flight entity
+            flight.setOrigin(flightDto.getOrigin());
+            flight.setDestination(flightDto.getDestination());
+            flight.setOriginDateTime(flightDto.getOriginDateTime());
+            flight.setDestinationDateTime(flightDto.getDestinationDateTime());
+        } else {
+            // Throw an exception or handle the error in some way
+            throw new IllegalArgumentException("Origin time must be before destination time");
+        }
         String uniqueId = UUID.randomUUID().toString();
         flight.setFlightId(uniqueId);
         flight.setAirplane(airplane);
@@ -119,32 +116,16 @@ public class AirplaneService {
             flight.setDuration(durationString);
         } else {
             // Handle the case where either origin or destination time is null
-            flight.setDuration(null);
+            throw new IllegalArgumentException("Origin time must be before destination time");
         }
-
+        int noOfSeats = flight.getAirplane().getAllSeats().size();
+        flight.setSeatLeftToBook(noOfSeats);
         Flight savedFlight = flightRepository.save(flight);
 
         if (savedFlight != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(savedFlight);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-    private Flight convertToFlightEntity(FlightDto flightDto) {
-
-        Flight flight = new Flight();
-
-        if (flightDto.getOriginDateTime() != null && flightDto.getDestinationDateTime() != null &&
-        flightDto.getOriginDateTime().isBefore(flightDto.getDestinationDateTime())) {
-            // Map fields from flightDto to Flight entity
-            flight.setOrigin(flightDto.getOrigin());
-            flight.setDestination(flightDto.getDestination());
-            flight.setOriginDateTime(flight.getOriginDateTime());
-            flight.setDestinationDateTime(flight.getDestinationDateTime());
-            return flight;
-        } else {
-            // Throw an exception or handle the error in some way
-            throw new IllegalArgumentException("Origin time must be before destination time");
         }
     }
 

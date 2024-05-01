@@ -30,19 +30,19 @@ public class Flight {
     @JoinColumn(name = "airplane_id") // Adjust the column name if needed
 	private Airplane airplane;
 
-	@Column
+	@Column(name = "origin")
 	private String origin;
 
-	@Column
+	@Column(name = "destination")
 	private String destination;
 
-	@Column
+	@Column(name = "origin_date_time")
 	private LocalDateTime originDateTime;
 
-	@Column
+	@Column(name = "destination_date_time")
 	private LocalDateTime destinationDateTime;
 
-	@Column
+	@Column(name = "duration")
 	private String duration;
 
 	@Column

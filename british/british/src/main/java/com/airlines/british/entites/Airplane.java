@@ -47,7 +47,3 @@ public class Airplane {
 	private AirlineInfo airlineInfo;
 
 }
-// @ManyToOne
-	// @JoinTable(name = "flightsInfo", joinColumns = {
-	// 		@JoinColumn(name = "flightInfoid", referencedColumnName = "flightInfoid") }, inverseJoinColumns = {
-	// 				@JoinColumn(name = "airlineId", referencedColumnName = "airlineId") })
