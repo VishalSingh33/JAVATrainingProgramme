@@ -1,4 +1,4 @@
-package com.airlines.british.controller;
+package com.paypal.payment.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;

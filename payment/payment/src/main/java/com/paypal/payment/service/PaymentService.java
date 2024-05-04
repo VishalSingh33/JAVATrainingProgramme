@@ -1,4 +1,4 @@
-package com.airlines.british.service;
+package com.paypal.payment.service;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -7,8 +7,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
-import com.airlines.british.entites.PaytmDetails;
 import lombok.RequiredArgsConstructor;
+import com.paypal.payment.entites.PaytmDetails;
 // import com.paytm.pg.merchant.CheckSumServiceHelper;
 import com.paytm.pg.merchant.PaytmChecksum;
 
