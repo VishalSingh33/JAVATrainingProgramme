@@ -21,6 +21,26 @@
     <h1 class="text-center mt-5">Paypal Payment Integration</h1>
 
     <form method="post" action="/payment/create" class="mt-5 card p-3">
+        <div class="mb-3">
+            <label for="method" class="form-label">Payment method</label>
+            <input id="method" type="text" class="form-control" id="method" name="method" value="PayPal" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input id="method" type="text" class="form-control" name="amount" value="10.0" readonly>
+        </div>
+        <label for="currency" class="form-label">Amount</label>
+        <select class="form-control" id="currency" name="currency">
+            <option value="USD" selected>USD</option>
+            <option value="INR">INR</option>
+            <option value="EUR">EUR</option>
+        </select>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Amount</label>
+            <input id="description" type="text" class="form-control" name="description">
+        </div>
+
         <div class="d-flex" justify-content-center>
             <button type="submit" class="btn btn-primary">
                 Pay with Paypal
