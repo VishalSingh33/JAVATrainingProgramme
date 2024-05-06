@@ -1,8 +1,8 @@
 package com.airlines.british.entites;
 
-import java.sql.Time;
-import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -44,6 +44,9 @@ public class Flight {
 
 	@Column(name = "duration")
 	private String duration;
+
+	@Column(name = "available_seats")
+	private List<Integer> availbleSeats;
 
 	@Column
 	private int seatLeftToBook;

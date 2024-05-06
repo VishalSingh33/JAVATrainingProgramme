@@ -6,7 +6,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.airlines.british.dto.BookingDto;
+import com.airlines.british.dto.SearchFlightDto;
 import com.airlines.british.entites.BookingRecord;
+import com.airlines.british.entites.Flight;
 
 @Validated
 @CrossOrigin("*")
@@ -26,5 +28,10 @@ public interface BookingController {
 	@PutMapping("/booking/{bookingId}")
 	public ResponseEntity<BookingRecord> updateBooking(@PathVariable String bookingId,
 			@RequestBody BookingDto bookingDto);
+
+	@GetMapping(value = "/search")
+	public Page<Flight> listOfFlights(@RequestBody SearchFlightDto searchFlightDto,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size);
 
 }

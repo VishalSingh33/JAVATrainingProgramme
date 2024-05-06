@@ -15,4 +15,24 @@ public class BookingDto {
 
 	private String flightType;
 
+	// TO get FlightId follow below
+	//SEARCH{ 
+	//from
+	//to
+	// departure dateTime
+
+	//extra:
+	// return 
+	// more than one user booking at a time
+    // }
+
+	// AFTER SEARCH
+
+	// List<Flights> 
+	//after selecting flight
+
+	// User Details
+	// a new entites: Seats -> 
+	
+
 }

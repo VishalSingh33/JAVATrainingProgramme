@@ -1,7 +1,9 @@
 package com.airlines.british.controller;
 
 import com.airlines.british.dto.BookingDto;
+import com.airlines.british.dto.SearchFlightDto;
 import com.airlines.british.entites.BookingRecord;
+import com.airlines.british.entites.Flight;
 import com.airlines.british.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,12 @@ public class ManageBookingController implements BookingController {
 	public ResponseEntity<BookingRecord> updateBooking(String bookingId, BookingDto bookingDto) {
 
 		return bookingService.updateBooking(bookingId, bookingDto);
+	}
+
+	@Override
+	public Page<Flight> listOfFlights(SearchFlightDto searchFlightDto, int page, int size) {
+		
+		return bookingService.listOfFlights(searchFlightDto, page, size);
 	}
 
 }

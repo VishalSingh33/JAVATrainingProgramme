@@ -8,8 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AirplaneDto {
-
-    private FlightType flightType;
+    
 	private List<Integer> allSeats;
 	
 }
