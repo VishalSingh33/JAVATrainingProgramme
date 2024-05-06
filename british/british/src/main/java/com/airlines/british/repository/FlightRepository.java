@@ -25,9 +25,11 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
         // String destination, Pageable pageable);
 
         @Query(nativeQuery = true, value = " SELECT * FROM flight WHERE DATE(origin_date_time) = :dateTime " +
-                        " AND origin LIKE CONCAT('%', :origin, '%') AND destination LIKE CONCAT('%', :destination, '%') " +
-                        " AND ( (:startTime IS NULL AND :endTime IS NULL)  OR ( TIME(origin_date_time) >= :startTime " +
-                        "        AND TIME(origin_date_time) <= :endTime ) )")
+                        " AND origin LIKE CONCAT('%', :origin, '%') " +
+                        " AND destination LIKE CONCAT('%', :destination, '%') " +
+                        " AND ( (:startTime IS NULL AND :endTime IS NULL) " +
+                        " OR ( TIME(origin_date_time) >= :startTime " +
+                        " AND TIME(origin_date_time) <= :endTime ) ) " )
         Page<Flight> findByOriginDateTimeBetween(String dateTime, String origin, String destination, String startTime,
                         String endTime, Pageable pageable);
 
