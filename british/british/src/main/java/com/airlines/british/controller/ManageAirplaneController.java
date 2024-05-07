@@ -1,7 +1,7 @@
 package com.airlines.british.controller;
 
-import com.airlines.british.dto.AirplaneDto;
 import com.airlines.british.dto.FlightDto;
+import com.airlines.british.dto.SeatDto;
 import com.airlines.british.entites.AirlineInfo;
 import com.airlines.british.entites.Airplane;
 import com.airlines.british.entites.Flight;
@@ -25,15 +25,15 @@ public class ManageAirplaneController implements AirplaneController {
 	}
 
 	@Override
-	public ResponseEntity<Airplane> createAirplane(String airlineId, AirplaneDto airplaneDto) {
+	public ResponseEntity<Airplane> createAirplane(String airlineId, SeatDto seatDto) {
 		
-		return airplaneService.createAirplane(airlineId, airplaneDto);
+		return airplaneService.createAirplane(airlineId, seatDto);
 	}
 
 	@Override
-	public ResponseEntity<Airplane> updateAirplane(String airplaneId, AirplaneDto airplaneDto) {
+	public ResponseEntity<Airplane> updateAirplane(String airplaneId, SeatDto seatDto) {
 		
-		return airplaneService.updateAirplane(airplaneId, airplaneDto);
+		return airplaneService.updateAirplane(airplaneId, seatDto);
 	}
 
 	@Override

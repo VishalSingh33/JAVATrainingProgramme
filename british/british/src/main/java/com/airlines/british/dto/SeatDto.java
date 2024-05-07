@@ -1,14 +1,15 @@
 package com.airlines.british.dto;
 
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class AirplaneDto {
+@NoArgsConstructor 
+public class SeatDto {
     
-	private List<Integer> allSeats;
+	private List<String> allSeats;
 	
 }

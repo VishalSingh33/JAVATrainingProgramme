@@ -51,7 +51,7 @@ public class BookingRecord implements Serializable {
 	private BookingStatus bookingStatus;
 	
 	@Column(name = "seat_number")
-    private int seatNumber;
+    private String seatNumber;
     
     @Column(name = "booking_fare")
     private int bookingFare;

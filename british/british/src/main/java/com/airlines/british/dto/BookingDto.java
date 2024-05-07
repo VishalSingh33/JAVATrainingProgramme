@@ -11,7 +11,7 @@ public class BookingDto {
 
 	private String flightId;
 
-	private int seatNumber;
+	private String seatNumber;
 
 	private String flightType;
 

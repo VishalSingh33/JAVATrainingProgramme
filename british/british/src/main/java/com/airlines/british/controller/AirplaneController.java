@@ -3,9 +3,8 @@ package com.airlines.british.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import com.airlines.british.dto.AirplaneDto;
 import com.airlines.british.dto.FlightDto;
+import com.airlines.british.dto.SeatDto;
 import com.airlines.british.entites.AirlineInfo;
 import com.airlines.british.entites.Airplane;
 import com.airlines.british.entites.Flight;
@@ -21,11 +20,11 @@ public interface AirplaneController {
 
 	@PostMapping(value = "/airplane/{airlineId}")
 	public ResponseEntity<Airplane> createAirplane(@PathVariable String airlineId,
-			@RequestBody AirplaneDto airplaneDto);
+			@RequestBody SeatDto seatDto);
 
 	@PutMapping("/airplane/{airplaneId}")
 	public ResponseEntity<Airplane> updateAirplane(@PathVariable String airplaneId,
-			@RequestBody AirplaneDto airplaneDto);
+			@RequestBody SeatDto seatDto);
 
 	@PostMapping(value = "/flight/{airplaneId}")
 	public ResponseEntity<Flight> createFlight(@PathVariable String airplaneId,

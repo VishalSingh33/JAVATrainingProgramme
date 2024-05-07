@@ -46,7 +46,7 @@ public class Flight {
 	private String duration;
 
 	@Column(name = "available_seats")
-	private List<Integer> availbleSeats;
+	private List<String> availbleSeats;
 
 	@Column
 	private int seatLeftToBook;
