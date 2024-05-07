@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -42,8 +42,4 @@ public class Seat {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updatedAt;
 
-    // @ManyToOne
-    // @JoinColumn(name = "passenger_id")
-    // Passenger passenger;
-    
 }

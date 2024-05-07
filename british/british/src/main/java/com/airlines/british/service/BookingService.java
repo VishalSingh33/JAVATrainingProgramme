@@ -1,6 +1,7 @@
 package com.airlines.british.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -11,17 +12,21 @@ import org.springframework.stereotype.Service;
 import com.airlines.british.dto.BookingDto;
 import com.airlines.british.dto.BookingStatus;
 import com.airlines.british.dto.FlightType;
+import com.airlines.british.dto.SearchFlightDto;
 import com.airlines.british.entites.BookingRecord;
 import com.airlines.british.entites.Fare;
 import com.airlines.british.entites.Flight;
 import com.airlines.british.entites.Passenger;
+import com.airlines.british.entites.Seat;
 import com.airlines.british.entites.User;
 import com.airlines.british.exception.BookingException;
 import com.airlines.british.exception.ResourceNotFoundException;
+import com.airlines.british.repository.AirplaneRepository;
 import com.airlines.british.repository.BookingRecordRepository;
 import com.airlines.british.repository.FareRepository;
 import com.airlines.british.repository.FlightRepository;
 import com.airlines.british.repository.PassengerRepository;
+import com.airlines.british.repository.SeatRepository;
 import com.airlines.british.repository.UserRepository;
 import com.airlines.british.service.BookingService;
 import org.springframework.data.domain.PageRequest;
@@ -32,11 +37,13 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class BookingService {
 
-    private final BookingRecordRepository bookingRepository;
-    private final FlightRepository flightRepository;
     private final UserRepository userRepository;
     private final FareRepository fareRepository;
+    private final SeatRepository seatRepository;
+    private final FlightRepository flightRepository;
+    private final AirplaneRepository airplaneRepository;
     private final PassengerRepository passengerRepository;
+    private final BookingRecordRepository bookingRepository;
 
     public Page<BookingRecord> getBooking(int page, int size) {
 
@@ -57,7 +64,8 @@ public class BookingService {
     }
 
 
-    // @SuppressWarnings("unused")
+    //not sure : if same user tries to book a seat in same flight he should be allowed or not
+    // -> doing above thing is cretaing a new passengerId again in bookingRecord table
     public ResponseEntity<BookingRecord> createBooking(BookingDto bookingDto) {
 
         User existingUser = userRepository.findById(bookingDto.getUserId())
@@ -72,31 +80,22 @@ public class BookingService {
         }
         BookingRecord booking = new BookingRecord();
 
-        List<Integer> availableSeats = flight.getAirplane().getAvailbleSeats();
-
+        List<String> availableSeats = flight.getAvailbleSeats();
+       
         if (availableSeats.contains(bookingDto.getSeatNumber())) {
             booking.setSeatNumber(bookingDto.getSeatNumber());
             booking.setBookingStatus(BookingStatus.BOOKED);
+            
         } else {
             // If specific seat number is not provided , randomly assigna seat
             Random random = new Random();
             int randomSeatIndex = random.nextInt(availableSeats.size());
-            int randomSeatNumber = availableSeats.get(randomSeatIndex);
+            String randomSeatNumber = availableSeats.get(randomSeatIndex);
             booking.setSeatNumber(randomSeatNumber);
             booking.setBookingStatus(BookingStatus.BOOKED);
         }
-        int noOfSeats = flight.getAirplane().getAllSeats().size();
         availableSeats.remove(booking.getSeatNumber());
-        noOfSeats = flight.getAirplane().getAllSeats().size()-flight.getAirplane().getAvailbleSeats().size();
-
-        // if (booking.getBookingStatus().equals(BookingStatus.BOOKED) && noOfSeats >= 0) {
-        //     availableSeats.remove(booking.getSeatNumber());
-        //     noOfSeats = flight.getAirplane().getAllSeats().size()-flight.getAirplane().getAvailbleSeats().size();
-        // }
-        // if (noOfSeats < 0) {
-        //     throw new BookingException("No Seat Left to Book");
-        // }
-        flight.setSeatLeftToBook(noOfSeats);
+        flight.setSeatLeftToBook(flight.getAvailbleSeats().size());
 
         Passenger passenger = new Passenger();
         booking.setBookingId(UUID.randomUUID().toString());
@@ -128,6 +127,10 @@ public class BookingService {
         passenger.setFareId(fare.getFareId());
         // log.info("booking.getEntityLogo() entitiesList : {}", entitiesList);
         // Save the entity
+        Seat seat = seatRepository.findById(booking.getSeatNumber())
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + booking.getSeatNumber()));
+        seat.toBuilder().isBooked(true).build();
+        seatRepository.save(seat);
         fareRepository.save(fare);
         bookingRepository.save(booking);
         passengerRepository.save(passenger);
@@ -137,8 +140,7 @@ public class BookingService {
 
     }
 
-
-
+    
     public ResponseEntity<BookingRecord> updateBooking(String bookingId, BookingDto bookingDto) {
 
         BookingRecord booking = bookingRepository.findById(bookingId)
@@ -146,16 +148,18 @@ public class BookingService {
 
         User existingUser = userRepository.findById(bookingDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + bookingDto.getUserId()));
-        
+
         Passenger passenger = passengerRepository.findById(booking.getPassengerId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + booking.getPassengerId()));
+                .orElseThrow(() -> new RuntimeException("Passenger not found with id: " + booking.getPassengerId()));
+
+        Flight flight = flightRepository.findById(bookingDto.getFlightId())
+                .orElseThrow(() -> new RuntimeException("Flight not found with id: " + bookingDto.getFlightId()));
 
         if (existingUser == null || booking == null || passenger == null) {
             // Return 404 Not Found if user not found
             return ResponseEntity.notFound().build();
         }
 
-        Flight flight = new Flight();
         String flightType = bookingDto.getFlightType();
         if ("Business".equals(flightType)) {
             booking.setBookingFare(FlightType.Business.getFare());
@@ -166,13 +170,7 @@ public class BookingService {
         } else {
             throw new ResourceNotFoundException("FlightType not Found");
         }
-       
-        // for (int i = 0; i < booking.getPassengers().size(); i++) {
-            // if (existingUser.getUserId() == booking.getPassengers().get(i).getUser().getUserId()) {
-            //     passenger = passengerRepository.findById(booking.getPassengers().get(i).getPassengerId())
-            //             .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-            // }
-        // }
+
         if (!existingUser.getUserId().equals(passenger.getUser().getUserId())) {
             throw new IllegalArgumentException("User ID provided does not match with Passenger");
         }
@@ -183,7 +181,7 @@ public class BookingService {
         fare.setFare(booking.getBookingFare());
 
         booking.setBookingStatus(booking.getBookingStatus());
-        List<Integer> availableSeats = flight.getAirplane().getAvailbleSeats();
+        List<String> availableSeats = flight.getAvailbleSeats();
         int noOfSeats = flight.getAirplane().getAllSeats().size();
         if (noOfSeats <= 0) {
             throw new BookingException("No Seat Left to Book");
@@ -203,7 +201,7 @@ public class BookingService {
                 // If specific seat number is not provided , randomly assigna seat
                 Random random = new Random();
                 int randomSeatIndex = random.nextInt(availableSeats.size());
-                int randomSeatNumber = availableSeats.get(randomSeatIndex);
+                String randomSeatNumber = availableSeats.get(randomSeatIndex);
                 availableSeats.add(booking.getSeatNumber());
                 booking.setSeatNumber(randomSeatNumber);
                 availableSeats.remove(booking.getSeatNumber());
@@ -222,6 +220,14 @@ public class BookingService {
         // Return ResponseEntity with the updated BookingRecord
         return ResponseEntity.ok(updatedBooking);
 
+    }
+
+    public Page<Flight> listOfFlights(SearchFlightDto searchFlightDto, int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        Page<Flight> flights =  flightRepository.findByOriginDateTimeBetween(searchFlightDto.getDateTime(), searchFlightDto.getOrigin(), searchFlightDto.getDestination(), searchFlightDto.getStartTime(), searchFlightDto.getEndTime(), pageRequest);
+        return flights;
     }
 
 }

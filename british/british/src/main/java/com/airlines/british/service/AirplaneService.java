@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class AirplaneService {
         return new ResponseEntity<>(savedAirline, HttpStatus.CREATED);
     }
 
-    @SuppressWarnings("unused") // need correction in logic
+    @SuppressWarnings("unused")
     public ResponseEntity<Airplane> createAirplane(String airlineId, SeatDto seatDto) {
 
         AirlineInfo airline = airlineRepository.findById(airlineId)
@@ -79,29 +80,37 @@ public class AirplaneService {
         }
     }
 
+    // identify what needs to be done here?
     public ResponseEntity<Airplane> updateAirplane(String airplaneId, SeatDto seatDto) {
 
-        Airplane airplane = airplaneRepository.findById(airplaneId)
-                .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + airplaneId));
+        // Airplane airplane = airplaneRepository.findById(airplaneId)
+        //         .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + airplaneId));
 
+        Optional<List<Airplane>> airplane = airplaneRepository.airplaneById(airplaneId);
         if (airplane == null) {
             return ResponseEntity.notFound().build();
         }
-        List<Seat> seats = new ArrayList<>();
-        for (String seatNumber : seatDto.getAllSeats()) {
-            Seat seat = new Seat(); // Create a new Seat object in each iteration
+        for(Airplane airp: airplane.get()){
 
-            seat.setSeatNumber(seatNumber);
-            seat.setAirplane(airplane);
-            seats.add(seat);
-            seat.setUpdatedAt(LocalDateTime.now());
+
         }
-        airplane.setAllSeats(seats);
+        // List<Seat> seats = new ArrayList<>();
+        // for (String seatNumber : seatDto.getAllSeats()) {
+        //     Seat seat = new Seat(); // Create a new Seat object in each iteration
 
-        // Save the updated airplane and seats
-        Airplane updatedAirplane = airplaneRepository.save(airplane);
-        seatRepository.saveAll(seats);
-        return ResponseEntity.ok(updatedAirplane);
+        //     seat.setSeatNumber(seatNumber);
+        //     seat.setAirplane(airplane);
+        //     seats.add(seat);
+        //     seat.setUpdatedAt(LocalDateTime.now());
+        // }
+        // airplane.setAllSeats(seats);
+
+        // // Save the updated airplane and seats
+        // Airplane updatedAirplane = airplaneRepository.save(airplane);
+        // seatRepository.saveAll(seats);
+        // return ResponseEntity.ok(updatedAirplane);
+
+        return null;
 
     }
 

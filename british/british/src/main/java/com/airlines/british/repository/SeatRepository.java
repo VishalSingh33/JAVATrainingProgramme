@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.airlines.british.entites.Seat;
 
 @Repository
-public interface SeatRepository extends JpaRepository<Seat, Integer> {
+public interface SeatRepository extends JpaRepository<Seat, String> {
 
     @Query(nativeQuery = true, value = " Select * from seat where airplane_id = :airplaneId  ")
     List<Seat> seatByAirplane(String airplaneId);
