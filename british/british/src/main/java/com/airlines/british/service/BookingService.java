@@ -65,7 +65,7 @@ public class BookingService {
 
 
     //not sure : if same user tries to book a seat in same flight he should be allowed or not
-    // -> doing above thing is cretaing a new passengerId again in bookingRecord table
+    // -> doing above thing is cretaing a new passengerId again in booking-Record table
     public ResponseEntity<BookingRecord> createBooking(BookingDto bookingDto) {
 
         User existingUser = userRepository.findById(bookingDto.getUserId())
@@ -129,7 +129,7 @@ public class BookingService {
         // Save the entity
         Seat seat = seatRepository.findById(booking.getSeatNumber())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + booking.getSeatNumber()));
-        seat.toBuilder().isBooked(true).build();
+        seat.toBuilder().isFeature(true).build();
         seatRepository.save(seat);
         fareRepository.save(fare);
         bookingRepository.save(booking);

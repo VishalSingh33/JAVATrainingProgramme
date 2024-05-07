@@ -28,6 +28,7 @@ public class Passenger {
     @JoinColumn(name = "user_id")
 	private User user;
 
+	//many to one to fetch all booking details
 	@Column
 	private String bookingId;
 

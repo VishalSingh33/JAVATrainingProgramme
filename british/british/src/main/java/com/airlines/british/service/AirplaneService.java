@@ -80,7 +80,7 @@ public class AirplaneService {
         }
     }
 
-    // identify what needs to be done here?
+    // identify what needs to be done here ?
     public ResponseEntity<Airplane> updateAirplane(String airplaneId, SeatDto seatDto) {
 
         // Airplane airplane = airplaneRepository.findById(airplaneId)
@@ -161,7 +161,7 @@ public class AirplaneService {
         List<String> availableSeatIds = new ArrayList<>();
         List<Seat> seatsToSave = new ArrayList<>();
         for (Seat seat : listOfseats) {
-            if (!seat.isBooked()) {
+            if (!seat.isFeature()) {
                 availableSeatIds.add(seat.getSeatNumber());
                 seat.setFlight(flight);
                 seatsToSave.add(seat);

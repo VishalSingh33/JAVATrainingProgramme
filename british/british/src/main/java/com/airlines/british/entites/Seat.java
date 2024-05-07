@@ -34,7 +34,7 @@ public class Seat {
     
     @Builder.Default
     @Column(name = "features")
-    boolean isBooked = false;
+    boolean isFeature = false;
 
     @Column(name = "created", nullable = false)
     private LocalDateTime createdAt;
