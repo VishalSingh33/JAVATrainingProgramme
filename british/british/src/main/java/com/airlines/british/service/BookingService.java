@@ -1,7 +1,7 @@
 package com.airlines.british.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -63,9 +63,7 @@ public class BookingService {
         }
     }
 
-
-    //not sure : if same user tries to book a seat in same flight he should be allowed or not
-    // -> doing above thing is cretaing a new passengerId again in booking-Record table
+   
     public ResponseEntity<BookingRecord> createBooking(BookingDto bookingDto) {
 
         User existingUser = userRepository.findById(bookingDto.getUserId())
@@ -74,6 +72,18 @@ public class BookingService {
         Flight flight = flightRepository.findById(bookingDto.getFlightId())
                 .orElseThrow(() -> new RuntimeException("Flight not found with id: " + bookingDto.getFlightId()));
 
+        String userId = bookingDto.getUserId();
+        LocalDate today = LocalDate.now();
+        // Count the number of bookings made by the user on the current day
+        long count = passengerRepository.countByUserId(userId, today);
+        // Check if the user has already made 3 bookings on the current day
+        int bookingLimitPerDay = 3;
+        if (count >= bookingLimitPerDay) {
+            // Return a response indicating that the user has exceeded the booking limit
+            throw new ResourceNotFoundException("User has already booked the maximum number of tickets for today.");
+            // return ResponseEntity.badRequest().body("User has already booked the maximum number of tickets for today.");
+        }
+
         if (existingUser == null || flight == null) {
             // Return 404 Not Found if user not found
             return ResponseEntity.notFound().build();
@@ -81,11 +91,11 @@ public class BookingService {
         BookingRecord booking = new BookingRecord();
 
         List<String> availableSeats = flight.getAvailbleSeats();
-       
+
         if (availableSeats.contains(bookingDto.getSeatNumber())) {
             booking.setSeatNumber(bookingDto.getSeatNumber());
             booking.setBookingStatus(BookingStatus.BOOKED);
-            
+
         } else {
             // If specific seat number is not provided , randomly assigna seat
             Random random = new Random();
@@ -105,6 +115,8 @@ public class BookingService {
         passenger.setPassengerId(UUID.randomUUID().toString());
         passenger.setUser(existingUser);
         passenger.setBookingId(booking.getBookingId());
+        passenger.setCreatedAt(LocalDateTime.now());
+        passenger.setUpdatedAt(LocalDateTime.now());
         booking.setPassengerId(passenger.getPassengerId());
 
         String flightType = bookingDto.getFlightType();
@@ -140,7 +152,7 @@ public class BookingService {
 
     }
 
-    
+
     public ResponseEntity<BookingRecord> updateBooking(String bookingId, BookingDto bookingDto) {
 
         BookingRecord booking = bookingRepository.findById(bookingId)
@@ -211,9 +223,11 @@ public class BookingService {
         if (noOfSeats < 0) {
             throw new BookingException("No Seat Left to Book");
         }
+        passenger.setUpdatedAt(LocalDateTime.now());
         flight.setSeatLeftToBook(noOfSeats);
         flightRepository.save(flight);
         fareRepository.save(fare);
+        passengerRepository.save(passenger);
         booking.setUpdateBookingDateTime(LocalDateTime.now());
         // Save the updated BookingRecord entity
         BookingRecord updatedBooking = bookingRepository.save(booking);
@@ -226,7 +240,9 @@ public class BookingService {
 
         PageRequest pageRequest = PageRequest.of(page, size);
 
-        Page<Flight> flights =  flightRepository.findByOriginDateTimeBetween(searchFlightDto.getDateTime(), searchFlightDto.getOrigin(), searchFlightDto.getDestination(), searchFlightDto.getStartTime(), searchFlightDto.getEndTime(), pageRequest);
+        Page<Flight> flights = flightRepository.findByOriginDateTimeBetween(searchFlightDto.getDateTime(),
+                searchFlightDto.getOrigin(), searchFlightDto.getDestination(), searchFlightDto.getStartTime(),
+                searchFlightDto.getEndTime(), pageRequest);
         return flights;
     }
 

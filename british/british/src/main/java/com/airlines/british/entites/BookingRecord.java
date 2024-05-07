@@ -36,12 +36,6 @@ public class BookingRecord implements Serializable {
 	@Column(name = "booking_id", nullable = false, unique = true)
 	private String bookingId;
 	
-	@Column
-	private LocalDateTime bookingDateTime;
-	
-	@Column
-	private LocalDateTime updateBookingDateTime;
-	
 	@ManyToOne
     @JoinColumn(name = "flight_id")
 	private Flight flight;
@@ -58,7 +52,12 @@ public class BookingRecord implements Serializable {
     
     @Column(name = "passenger_id")
 	private String passengerId;
-    // private List<Passenger> passengers;
+
+	@Column
+	private LocalDateTime bookingDateTime;
+	
+	@Column
+	private LocalDateTime updateBookingDateTime;
 	
     
 }

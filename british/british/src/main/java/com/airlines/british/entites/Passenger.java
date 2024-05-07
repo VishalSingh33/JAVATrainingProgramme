@@ -28,11 +28,17 @@ public class Passenger {
     @JoinColumn(name = "user_id")
 	private User user;
 
-	//many to one to fetch all booking details
+	//many to one to fetch all bookingDetails
 	@Column
 	private String bookingId;
 
 	@Column
 	private String fareId;
+
+	@Column(name = "created", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated", nullable = false)
+    private LocalDateTime updatedAt;
 
 }
