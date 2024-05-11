@@ -3,8 +3,8 @@ package com.paypal.payment.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.paypal.base.rest.APIContext;
+import com.paypal.core.PayPalEnvironment;
+import com.paypal.core.PayPalHttpClient;
 
 @Configuration
 public class PaypalConfig {
@@ -19,8 +19,12 @@ public class PaypalConfig {
     private String mode;
 
     @Bean
-    public APIContext apiContext(){
-        return new APIContext(clientId, clientSecret, mode);
+    public PayPalEnvironment payPalEnvironment() {
+        return new PayPalEnvironment.Sandbox(clientId, clientSecret);
     }
-    
+
+    @Bean
+    public PayPalHttpClient payPalHttpClient(PayPalEnvironment environment) {
+        return new PayPalHttpClient(environment);
+    }
 }

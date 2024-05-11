@@ -1,0 +1,37 @@
+package com.paypal.payment.entites;
+
+import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "fare")
+public class Fare {
+
+	@Id
+	@Column(name = "fare_id", nullable = false, unique = true)
+	private String fareId;
+
+	@Column
+	private LocalDateTime fareDateTime;
+
+	@Column
+	private String flightType;
+
+	@Column
+	private int fare;
+
+	@Column
+	private String bookingId;
+
+}

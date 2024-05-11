@@ -6,12 +6,6 @@ logging:
     # path: /home/ltb/web/logs
 spring:
   application.name: payment
-#   cloud.config.uri: http://localhost:7010
-  servlet:
-    multipart:
-      max-file-size: 3MB
-      max-request-size: 3MB
-      enabled: true
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
@@ -21,31 +15,12 @@ spring:
     username: root
     password:
     driverClassName: com.mysql.cj.jdbc.Driver 
-    # org.postgresql.Driver  jdbc:postgresql://192.168.7.41:5432/postgres
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect # Update to MySQL 8 dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect # Updated to MySQL 8 dialect
     show-sql: true
     hibernate:
       ddl-auto: update
 
-
-paytm.payment:
-  sandbox:
-    merchantId: sviaeV91055242769175
-    merchantKey: IIaDwHcg4Nc4xLIH
-    channelId: WEB
-    website: WEBSTAGING
-    industryTypeId: Retail
-    paytmUrl:  https://securegw-stage.paytm.in/order/process
-    callbackUrl: http://localhost:9090/pgresponse
-    details:
-      MID: ${paytm.payment.sandbox.merchantid}
-      CHANNEL_ID: ${paytm.payment.sandbox.channelid}
-      INDUSTRY_TYPE_ID: ${paytm.payment.sandbox.industrytypeid}
-      WEBSITE: ${paytm.payment.sandbox.website}
-      CALLBACK_URL: ${paytm.payment.sandbox.callbackUrl}
-
 paypal:
-  paypal_client_id: CLIENT_ID
-  paypal_secret: CLIENT_SECRET
-  paypal_mode: sandbox # or 'live' depending on your environment
+  clientId: AUrWd2yvnMBVfF3X3d_gCrVMK3kjKbNoV8tz0Rj5QNIglJVK-_ZLrVI3W5rEF19YJWbG_5Tq0CybSstK
+  clientSecret: EDarqlbIjTzlRWvtViP5jSmAET4PRyWN-CF1e_xaxddTcFEAhGgazoRAWgVTaUkVrVMaSyaKZj3ViDKK
