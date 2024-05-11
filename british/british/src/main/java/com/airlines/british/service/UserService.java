@@ -1,14 +1,21 @@
 package com.airlines.british.service;
 
 import java.time.LocalDateTime;
+
+import com.airlines.british.config.PaymentRestClient;
 import com.airlines.british.dto.UserDto;
+import com.airlines.british.entites.Todo;
 import com.airlines.british.entites.User;
 import com.airlines.british.repository.UserRepository;
 import com.airlines.british.service.UserService;
+
+import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RestClient restClient;
 
     public Page<User> getUsers(int page, int size) {
 
@@ -39,7 +47,7 @@ public class UserService {
 
     @SuppressWarnings("unused")
     public ResponseEntity<User> createUser(UserDto userDto) {
-        
+
         User user = new User();
         user.setFullName(userDto.getFullName());
         user.setUserName(userDto.getUserName());
@@ -62,7 +70,7 @@ public class UserService {
     }
 
     public ResponseEntity<User> updateUserController(String userId, UserDto userDto) {
-        
+
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
@@ -85,5 +93,16 @@ public class UserService {
 
         userRepository.deleteById(userId);
     }
-    
+
+   
+    // public List<Todo> getSingleTodo() {
+    //     List<Todo> body = restClient.get()
+    //             .uri("/todos")
+    //             .retrieve()
+    //             .body(new ParameterizedTypeReference<List<Todo>>() {
+    //             });
+
+    //     return body;
+    // }
+
 }

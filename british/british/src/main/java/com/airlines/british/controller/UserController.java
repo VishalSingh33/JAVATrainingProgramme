@@ -10,7 +10,7 @@ import com.airlines.british.entites.User;
 
 @Validated
 @CrossOrigin("*")
-@RequestMapping("/api/user/v1")
+@RequestMapping("/todos")
 public interface UserController {
 
 	@GetMapping(value = "/users")
@@ -28,5 +28,10 @@ public interface UserController {
 
 	@DeleteMapping(value = "/users/{userId}")
 	public void deleteUser(@PathVariable String userId);
+
+
+	// // http://localhost:8080/api/user/v1/1
+	// @GetMapping(value = "/")
+	// public List<Todo> getSingleTodo();
 
 }

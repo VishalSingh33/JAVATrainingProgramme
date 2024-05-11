@@ -1,6 +1,6 @@
 management.endpoints.web.exposure.include: '*'
 server:
-  port: 8080
+  port: 8070
 logging:
   file:
     # path: /home/ltb/web/logs

@@ -3,7 +3,6 @@ package com.airlines.british.controller;
 import com.airlines.british.dto.UserDto;
 import com.airlines.british.entites.User;
 import com.airlines.british.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +45,10 @@ public class ManageUserController implements UserController {
 
 		userService.deleteUser(id);
 	}
+
+	// @Override
+	// public List<Todo> getSingleTodo() {
+	// 	return this.userService.getSingleTodo();
+	// }
 
 }

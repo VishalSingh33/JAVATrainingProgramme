@@ -80,37 +80,39 @@ public class AirplaneService {
         }
     }
 
-    // identify what needs to be done here ?
+    //1 identify what needs to be done here?
+    //2 update Airplnae should exist or not as it we can create new seat with same AirplaneId from POST method
     public ResponseEntity<Airplane> updateAirplane(String airplaneId, SeatDto seatDto) {
 
-        // Airplane airplane = airplaneRepository.findById(airplaneId)
-        //         .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + airplaneId));
+        Airplane airplane = airplaneRepository.findById(airplaneId)
+                .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + airplaneId));
 
-        Optional<List<Airplane>> airplane = airplaneRepository.airplaneById(airplaneId);
+        List<Seat> seats = new ArrayList<>();
+        
+        // List<Seat> listOfSeat = seatRepository.seatByAirplane(airplaneId);
+        // for(Seat seatInfo: listOfSeat){
+        //     if(!seatInfo.isFeature()){
+        //         // if want to remove any unbooked seat
+        //     }
+        // }
+
         if (airplane == null) {
             return ResponseEntity.notFound().build();
         }
-        for(Airplane airp: airplane.get()){
+        for (String seatNumber : seatDto.getAllSeats()) {
+            Seat seat = new Seat(); // Create a new Seat object in each iteration
 
-
+            seat.setSeatNumber(seatNumber);
+            seat.setAirplane(airplane);
+            seats.add(seat);
+            seat.setUpdatedAt(LocalDateTime.now());
         }
-        // List<Seat> seats = new ArrayList<>();
-        // for (String seatNumber : seatDto.getAllSeats()) {
-        //     Seat seat = new Seat(); // Create a new Seat object in each iteration
+        airplane.setAllSeats(seats);
 
-        //     seat.setSeatNumber(seatNumber);
-        //     seat.setAirplane(airplane);
-        //     seats.add(seat);
-        //     seat.setUpdatedAt(LocalDateTime.now());
-        // }
-        // airplane.setAllSeats(seats);
-
-        // // Save the updated airplane and seats
-        // Airplane updatedAirplane = airplaneRepository.save(airplane);
-        // seatRepository.saveAll(seats);
-        // return ResponseEntity.ok(updatedAirplane);
-
-        return null;
+        // Save the updated airplane and seats
+        Airplane updatedAirplane = airplaneRepository.save(airplane);
+        seatRepository.saveAll(seats);
+        return ResponseEntity.ok(updatedAirplane);
 
     }
 
@@ -156,7 +158,6 @@ public class AirplaneService {
         flight.setSeatLeftToBook(seatsId.size());
         Flight savedFlight = flightRepository.save(flight);
 
-        // how to get list of booked seats
         List<Seat> listOfseats = seatRepository.seatByAirplane(airplaneId);
         List<String> availableSeatIds = new ArrayList<>();
         List<Seat> seatsToSave = new ArrayList<>();

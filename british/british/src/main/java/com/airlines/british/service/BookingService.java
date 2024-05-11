@@ -130,6 +130,13 @@ public class BookingService {
             throw new ResourceNotFoundException("FlightType not Found");
         }
 
+
+        // PayPalPayment payment = restClient.get()
+        //         .uri("/order")
+        //         .retrieve()
+        //         .body(PayPalPayment.class);
+
+
         Fare fare = new Fare();
         fare.setFareId(UUID.randomUUID().toString());
         fare.setFareDateTime(LocalDateTime.now());
