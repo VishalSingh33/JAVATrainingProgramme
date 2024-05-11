@@ -25,7 +25,7 @@ public class OrderController {
         this.paymentService = paymentService;
     }
 
-    private String orderId = "access_token$sandbox$29d475krxcrg3z2n$0aa956a870bc4b695d1b30fff93230e9";
+    private String orderId = "";
 
     @GetMapping
     public String orderPage(Model model){
