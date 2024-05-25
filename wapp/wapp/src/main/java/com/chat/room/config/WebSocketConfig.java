@@ -1,11 +1,16 @@
 package com.chat.room.config;
 
+import java.util.List;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.converter.DefaultContentTypeResolver;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.messaging.converter.MessageConverter;
 
 @SuppressWarnings("null")
 @Configuration
@@ -13,41 +18,28 @@ import org.springframework.web.socket.config.annotation.WebSocketTransportRegist
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").
-        setAllowedOriginPatterns("*").withSockJS();
-
-    }
-
-    @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker("/user");
         registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/chatroom", "/user");
         registry.setUserDestinationPrefix("/user");
-
     }
 
     @Override
-    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
-        registry.setSendTimeLimit(60 * 1000)
-                .setSendBufferSizeLimit(50 * 1024 * 1024)
-                .setMessageSizeLimit(50 * 1024 * 1024);
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/ws")
+                .setAllowedOrigins("*")
+                .withSockJS();
     }
 
+    @Override
+    public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
+        DefaultContentTypeResolver resolver = new DefaultContentTypeResolver();
+        resolver.setDefaultMimeType(MimeTypeUtils.APPLICATION_JSON);
+        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        converter.setObjectMapper(new ObjectMapper());
+        converter.setContentTypeResolver(resolver);
+        messageConverters.add(converter);
+        return false;
+    }
 
-
-
-    // @Override
-    // public void registerStompEndpoints(StompEndpointRegistry registry) {
-    //     registry.addEndpoint("/stomp-endpoint")
-    //             .withSockJS();
-    // }
-
-    // @Override
-    // public void configureMessageBroker(MessageBrokerRegistry registry) {
-    //     registry.enableSimpleBroker("/topic");
-    //     registry.setApplicationDestinationPrefixes("/app");
-
-    // }
-    
 }

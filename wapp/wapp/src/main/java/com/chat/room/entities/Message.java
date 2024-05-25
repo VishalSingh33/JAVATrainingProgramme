@@ -1,24 +1,44 @@
 package com.chat.room.entities;
 
-import lombok.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import com.chat.room.dto.MessageStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-// @NoArgsConstructor
-@RequiredArgsConstructor
+@Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-public class Message {
-    private String senderName;
+@Entity
+@Table(name = "message")
+public class Message implements Serializable {
 
-    private String receiverName;
+  @Id
+  @Column(name = "message_id")
+  private String messageId;
 
-    private String message;
+  @Column(name = "sender_id", nullable = false)
+  private String senderId;
 
-    private String media;
+  @Column(name = "receiver_id", nullable = false)
+  private String receiverId;
 
-    private Status status;
-    
-    private String mediaType;
+  @Column(name = "content", nullable = false)
+  private String message;
 
+  @Column(name = "created_on", nullable = false)
+  private LocalDateTime createdOn;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "status", nullable = false)
+  private MessageStatus status;
 }
