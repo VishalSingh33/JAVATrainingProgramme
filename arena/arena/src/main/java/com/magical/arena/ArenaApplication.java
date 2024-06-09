@@ -1,8 +1,6 @@
 package com.magical.arena;
 
 import java.util.Random;
-
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
@@ -30,7 +28,7 @@ public class ArenaApplication {
 		}
 	}
 
-	private static void fight(Player attacker, Player defender) {
+	public static void fight(Player attacker, Player defender) {
 		int attackRoll = rollDice();
 		int defendRoll = rollDice();
 
@@ -38,17 +36,16 @@ public class ArenaApplication {
 		int defendStrength = defender.getStrength() * defendRoll;
 
 		int damageToDefender = attackDamage - defendStrength;
-
 		if (damageToDefender > 0) {
-
-			int defHealth = defender.getHealth(); 
-			defHealth -= damageToDefender;
-			System.out.println("Attacker hits for " + attackDamage + ", Defender defends " + defendStrength
-					+ ", Defender takes " + damageToDefender + " damage. Defender health: " + defender.getHealth());
+			defender.setHealth(defender.getHealth() - damageToDefender);
+			System.out.println("Attacker hits for " + attackDamage + ", Defender defends " +
+					defendStrength + ", Defender takes " + damageToDefender + 
+					" damage. Defender health: " + defender.getHealth() );
 		} else {
-			System.out.println("Attacker hits for " + attackDamage + ", Defender defends " + defendStrength
-					+ ", No damage dealt. Defender health: " + defender.getHealth());
+			System.out.println("Attacker hits for " + attackDamage + ", Defender defends " +
+					defendStrength + ", No damage dealt. Defender health: " + defender.getHealth());
 		}
+
 	}
 
 	private static int rollDice() {

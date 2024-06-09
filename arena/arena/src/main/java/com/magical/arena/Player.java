@@ -3,7 +3,6 @@ package com.magical.arena;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,11 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "player")
 public class Player {
 
-    // @Id
-    // private int id;
     @Column(name = "health", nullable = false)
     private int health;
     @Column(name = "strength", nullable = false)
