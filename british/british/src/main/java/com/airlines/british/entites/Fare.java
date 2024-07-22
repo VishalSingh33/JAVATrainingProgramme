@@ -2,6 +2,8 @@ package com.airlines.british.entites;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.redis.core.RedisHash;
+
 import com.airlines.british.dto.FlightType;
 
 import jakarta.persistence.Column;
@@ -19,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "fare")
+// @RedisHash("fare")
 public class Fare {
 
 	@Id

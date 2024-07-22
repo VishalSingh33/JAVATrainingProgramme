@@ -1,5 +1,7 @@
 package com.airlines.british.entites;
 
+import org.springframework.data.redis.core.RedisHash;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "airline_info")
+// @RedisHash("airline_info")
 public class AirlineInfo {
 
 	@Id

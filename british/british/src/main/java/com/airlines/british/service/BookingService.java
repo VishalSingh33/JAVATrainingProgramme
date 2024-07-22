@@ -6,9 +6,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+// import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
+// import org.apache.commons.collections4.map.MultiValueMap;
+import org.apache.commons.collections4.MultiMap;
 import com.airlines.british.dto.BookingDto;
 import com.airlines.british.dto.BookingStatus;
 import com.airlines.british.dto.FlightType;
@@ -32,11 +42,17 @@ import com.airlines.british.service.BookingService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.MultiValueMap;
+// import reactor.core.publisher.Mono;
 
+@SuppressWarnings("deprecation")
 @RequiredArgsConstructor
 @Service
 public class BookingService {
 
+    // private final WebClient webClient;
+    // private final RestClient restClient;
+    // private final RestTemplate restTemplate;
     private final UserRepository userRepository;
     private final FareRepository fareRepository;
     private final SeatRepository seatRepository;
@@ -63,7 +79,6 @@ public class BookingService {
         }
     }
 
-   
     public ResponseEntity<BookingRecord> createBooking(BookingDto bookingDto) {
 
         User existingUser = userRepository.findById(bookingDto.getUserId())
@@ -81,7 +96,8 @@ public class BookingService {
         if (count >= bookingLimitPerDay) {
             // Return a response indicating that the user has exceeded the booking limit
             throw new ResourceNotFoundException("User has already booked the maximum number of tickets for today.");
-            // return ResponseEntity.badRequest().body("User has already booked the maximum number of tickets for today.");
+            // return ResponseEntity.badRequest().body("User has already booked the maximum
+            // number of tickets for today.");
         }
 
         if (existingUser == null || flight == null) {
@@ -130,13 +146,6 @@ public class BookingService {
             throw new ResourceNotFoundException("FlightType not Found");
         }
 
-
-        // PayPalPayment payment = restClient.get()
-        //         .uri("/order")
-        //         .retrieve()
-        //         .body(PayPalPayment.class);
-
-
         Fare fare = new Fare();
         fare.setFareId(UUID.randomUUID().toString());
         fare.setFareDateTime(LocalDateTime.now());
@@ -149,6 +158,30 @@ public class BookingService {
         Seat seat = seatRepository.findById(booking.getSeatNumber())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + booking.getSeatNumber()));
         seat.toBuilder().isFeature(true).build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.set("totalAmount", "10.0");
+
+        // Set form data
+        MultiValueMap<String, Double> body = new LinkedMultiValueMap<>();
+        body.add("totalAmount", 10.00);
+
+        // Combine headers and form data into an HttpEntity
+        HttpEntity<MultiValueMap<String, Double>> requestEntity = new HttpEntity<>(body, headers);
+
+        // Make the POST request
+        // ResponseEntity<BookingDto> responseEntity = restTemplate
+        //         .exchange("http://localhost:8080/orders/payment", HttpMethod.POST, requestEntity, BookingDto.class);
+
+        // // Check for a successful response
+        // if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        //     System.out.println(responseEntity);
+        // } else {
+        //     // Handle error response
+        //     throw new RuntimeException("Failed to make payment: " + responseEntity.getStatusCode());
+        // }
+
         seatRepository.save(seat);
         fareRepository.save(fare);
         bookingRepository.save(booking);
@@ -158,7 +191,6 @@ public class BookingService {
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
 
     }
-
 
     public ResponseEntity<BookingRecord> updateBooking(String bookingId, BookingDto bookingDto) {
 

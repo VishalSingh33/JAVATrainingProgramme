@@ -3,6 +3,8 @@ package com.airlines.british.entites;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.redis.core.RedisHash;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,6 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "flight")
+// @RedisHash("flight")
 public class Flight {
 
 	@Id

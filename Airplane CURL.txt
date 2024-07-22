@@ -1,0 +1,125 @@
+
+------------------------------------Users Service-------------------------------------------------------
+
+curl --location 'http://localhost:8080/api/user/v1/users' \
+--header 'Content-Type: application/json'
+
+curl --location --request GET 'http://localhost:8080/api/user/v1/users/523c5d7f-e232-42c4-9c3f-2c2ed62cea0a' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "fullName": "Paul Heyman ",
+    "userName": "Tribal Manager",
+    "email": "chief33@gmail.com",
+    "mobileNumber": "9789520221",
+    "gender": "MALE"
+}'
+
+curl --location 'http://localhost:8080/api/user/v1/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "fullName": "Paul Heyman",
+    "userName": "CHief",
+    "email": "chief33@gmail.com",
+    "mobileNumber": "9789520221",
+    "gender": "MALE"
+}'
+
+
+curl --location --request PUT 'http://localhost:8080/api/user/v1/users/523c5d7f-e232-42c4-9c3f-2c2ed62cea0a' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "fullName": "Paul Leveque ",
+    "userName": "WWE Manager",
+    "email": "wwe@gmail.com",
+    "mobileNumber": "9789520221",
+    "gender": "MALE"
+}'
+
+
+------------------------------------Airplane Flight Service-------------------------------------------------------
+
+curl --location --request POST 'http://localhost:8080/api/airplane/v1/airlineInfo?airlineLogo=BERRY&nameOfAirline=Berry Airlines' \
+--header 'Content-Type: application/json'
+
+
+curl --location 'http://localhost:8080/api/airplane/v1/airplane/96920b56-c2df-428e-9ff0-8e8fc615cc24' \
+--header 'Content-Type: application/json' \
+--data '{
+    "allSeats": [
+        "1C",
+        "2C",
+        "3C",
+        "4C",
+        "5C",
+        "6C"
+    ]
+}'
+
+
+curl --location --request PUT 'http://localhost:8080/api/airplane/v1/airplane/96920b56-c2df-428e-9ff0-8e8fc615cc24' \
+--header 'Content-Type: application/json' \
+--data '{
+    "allSeats": [
+        "1C",
+        "2C",
+        "3C",
+        "4C"
+    ]
+}'
+
+
+
+
+curl --location 'http://localhost:8080/api/airplane/v1/flight/4e287d1b-3b7d-4615-aecc-da33645e1182' \
+--header 'Content-Type: application/json' \
+--data '{
+    "origin": "Varanasi",
+    "destination": "Pune",
+    "originDateTime": "2024-05-30T17:54:40",
+    "destinationDateTime": "2024-05-31T17:54:40"
+}
+'
+
+
+--------------------------------------------Booking Service----------------------------------------------------
+
+curl --location 'http://localhost:8080/api/booking/v1/booking' \
+--header 'Content-Type: application/json'
+
+
+
+curl --location 'http://localhost:8080/api/booking/v1/booking/dc306d00-97a1-4022-a60b-8c0deb27914b' \
+--header 'Content-Type: application/json'
+
+
+
+curl --location 'http://localhost:8080/api/booking/v1/booking' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userId": "153680ef-0ecf-4b5d-b57c-5d7c8df95a0b",
+    "flightId": "3b93ab64-b4a2-4c59-a847-56f5d3f7d120",
+    "seatNumber": "1C",
+    "flightType": "Business"
+}'
+
+
+curl --location --request PUT 'http://localhost:8080/api/booking/v1/booking/9e693f8a-261f-4d14-ba55-ed5527ab5834' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userId": "153680ef-0ecf-4b5d-b57c-5d7c8df95a0b",
+    "flightId": "3b93ab64-b4a2-4c59-a847-56f5d3f7d120",
+    "seatNumber": "1C",
+    "flightType": "Business"
+}'
+
+
+curl --location --request GET 'http://localhost:8080/api/booking/v1/search' \
+--header 'Content-Type: application/json' \
+--data '{
+    "origin": "V",
+    "destination": "P",
+    "dateTime": "2024-05-30",
+    "startTime": "00:00:00",
+    "endTime": "23:59:59"
+}'
+

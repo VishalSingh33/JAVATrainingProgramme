@@ -23,7 +23,7 @@ public class ManageUserController implements UserController {
 	}
 
 	@Override
-	public ResponseEntity<User> getUserById(String userId) {
+	public ResponseEntity<?> getUserById(String userId) {
 		
 		return userService.getUserById(userId);
 	}

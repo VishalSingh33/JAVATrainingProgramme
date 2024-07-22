@@ -1,6 +1,6 @@
 management.endpoints.web.exposure.include: '*'
 server:
-  port: 8070
+  port: 8080
 logging:
   file:
     # path: /home/ltb/web/logs
@@ -27,3 +27,33 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  # kafka:
+  #   bootstrap-servers: localhost:9092
+  #   consumer:
+  #     group-id: jt-group
+  #     auto-offset-reset: earliest
+  #     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  #     value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  #     properties:
+  #         spring:
+  #           deserializer:
+  #             key:
+  #               delegate:
+  #                 class: org.apache.kafka.common.serialization.StringDeserializer
+  #             value:
+  #               delegate:
+  #                 class: org.springframework.kafka.support.serializer.JsonDeserializer
+  #               json:
+  #                 trusted:
+  #                   packages: com.chat.room.entities, com.airlines.british.entities
+  #   producer:
+  #     key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  #     value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  # redis:
+  #   host: localhost
+  #   port: 6379
+  #   password: wsl
+  #   ssl: true
+  #   tls-enabled: true
+    
+      

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.airlines.british.entites.BookingRecord;
 
-
 @Repository
 public interface BookingRecordRepository extends JpaRepository<BookingRecord, String>{
     

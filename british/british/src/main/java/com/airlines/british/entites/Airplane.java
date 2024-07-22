@@ -2,6 +2,8 @@ package com.airlines.british.entites;
 
 import java.util.List;
 
+import org.springframework.data.redis.core.RedisHash;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "airplane")
+// @RedisHash("airplane")
 public class Airplane {
 
     @Id

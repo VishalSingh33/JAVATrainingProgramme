@@ -10,7 +10,7 @@ import com.airlines.british.entites.User;
 
 @Validated
 @CrossOrigin("*")
-@RequestMapping("/todos")
+@RequestMapping("/api/user/v1")
 public interface UserController {
 
 	@GetMapping(value = "/users")
@@ -18,7 +18,7 @@ public interface UserController {
 			@RequestParam(defaultValue = "10") int size);
 
 	@GetMapping(value = "/users/{userId}")
-	public ResponseEntity<User> getUserById(@PathVariable String userId);
+	public ResponseEntity<?> getUserById(@PathVariable String userId);
 
 	@PostMapping(value = "/users")
 	public ResponseEntity<User> createUser(@RequestBody UserDto userDto);

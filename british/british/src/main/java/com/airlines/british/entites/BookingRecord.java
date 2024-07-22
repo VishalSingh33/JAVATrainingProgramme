@@ -2,6 +2,9 @@ package com.airlines.british.entites;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import org.springframework.data.redis.core.RedisHash;
+
 import com.airlines.british.dto.BookingStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "booking_record")
+// @RedisHash("booking_record")
 public class BookingRecord implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

@@ -1,9 +1,8 @@
 package com.airlines.british.entites;
 
 import java.time.LocalDateTime;
-
+import org.springframework.data.redis.core.RedisHash;
 import com.airlines.british.dto.Gender;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-// import jakarta.validation.constraints.Pattern;
 
 @Data
 @Builder
@@ -22,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
+// @RedisHash("user")
 public class User {
 
     @Id
