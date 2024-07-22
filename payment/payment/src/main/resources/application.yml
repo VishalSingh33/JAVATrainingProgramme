@@ -22,5 +22,5 @@ spring:
       ddl-auto: update
 
 paypal:
-  clientId: 
-  clientSecret: 
+  clientId: AUrWd2yvnMBVfF3X3d_gCrVMK3kjKbNoV8tz0Rj5QNIglJVK-_ZLrVI3W5rEF19YJWbG_5Tq0CybSstK
+  clientSecret: EDarqlbIjTzlRWvtViP5jSmAET4PRyWN-CF1e_xaxddTcFEAhGgazoRAWgVTaUkVrVMaSyaKZj3ViDKK

@@ -2,9 +2,7 @@ package com.paypal.payment.entites;
 
 import java.net.URI;
 import java.time.LocalDateTime;
-
 import com.paypal.payment.dto.PaymentStatus;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,7 +24,7 @@ public class PayPalPayment {
 
     @Id
     @Column(name = "payment_id", nullable = false, unique = true)
-    private String paymentId;
+    private String paymentId; //fareId
 
     @Column
     private String transactionId;
@@ -46,10 +44,13 @@ public class PayPalPayment {
     private String clientSecret;
 
     @Column
+    private String orderId;
+
+    @Column
     private URI approvalLink;
 
     @Column
-	private String bookingId; // orderId
+	private String bookingId;
 
     @Column
     private String userId;
@@ -63,9 +64,6 @@ public class PayPalPayment {
 
     // @Column
     // private String currency; enum typre or String 
-
-    @Column
-	private String fareId; // can fare entity be replaced with this entity
 
     @Column(name = "created", nullable = false)
     private LocalDateTime createdAt;
