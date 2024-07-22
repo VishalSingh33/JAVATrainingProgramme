@@ -1,0 +1,28 @@
+management.endpoints.web.exposure.include: '*'
+server:
+  port: 8075
+spring:
+  application.name: wapp
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  datasource:
+    url: jdbc:mysql://localhost:3306/airplane
+    hikari.schema: localschema
+    username: root
+    password:
+    driverClassName: com.mysql.cj.jdbc.Driver 
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect # Update to MySQL 8 dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: jt-group
+      auto-offset-reset: earliest
+      keyDeserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+      value-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+      # valueDeserializer: "io.confluent.kafka.serializers.KafkaDeserializer"
+      autoOffsetReset: "earliest"

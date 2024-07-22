@@ -31,9 +31,13 @@ public class ChatController {
     // private SimpMessagingTemplate simpMessagingTemplate;
     private final ChatMessageService chatMessageService;
 
-    @MessageMapping("/chat")
-    @SendTo("/user/chatMessage")
-    public ResponseEntity<?> processMessage(@Payload ChatMessageResquestDto chatMessage) {
+    // @MessageMapping("/chat")
+    // public ResponseEntity<?> processMessage(@Payload ChatMessageResquestDto chatMessage) {
+
+    //     return chatMessageService.newProcess(chatMessage);
+    // }
+    @PostMapping("/chat")
+    public ResponseEntity<?> processMessage(@RequestBody ChatMessageResquestDto chatMessage) {
 
         return chatMessageService.newProcess(chatMessage);
     }
