@@ -8,7 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.util.Base64; 
 import java.util.Date;
 import java.util.Optional;
 import jakarta.annotation.PostConstruct;
