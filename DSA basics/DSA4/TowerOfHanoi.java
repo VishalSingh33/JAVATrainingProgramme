@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class TowerOfHanoi {
     ArrayList<String> moves; // To store the moves
-    
+
     public TowerOfHanoi() {
         moves = new ArrayList<>();
     }
