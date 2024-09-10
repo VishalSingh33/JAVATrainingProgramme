@@ -1,0 +1,24 @@
+management.endpoints.web.exposure.include: '*'
+server:
+  port: 8080
+logging:
+  file:
+    # path: /home/ltb/web/logs
+spring:
+  application.name: order
+#   cloud.config.uri: http://localhost:7010
+  servlet:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  datasource:
+    url: jdbc:mysql://localhost:3306/invoice
+    hikari.schema: localschema
+    username: root
+    password:
+    driverClassName: com.mysql.cj.jdbc.Driver 
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect # Update to MySQL 8 dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
