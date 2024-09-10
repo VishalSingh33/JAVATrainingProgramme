@@ -2,13 +2,10 @@ package com.example.fruitShake.entities;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
-import org.hibernate.annotations.GenericGenerator;
-import jakarta.persistence.Id;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,11 +19,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "customer")
 public class DrinkCustomer {
 
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "customer_uuid", columnDefinition = "BINARY(16)")
-    @Id
-    private UUID cId;
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(name = "drink_cus")
+    private String cId;
 
     @Column(name = "name")
     private String cName;

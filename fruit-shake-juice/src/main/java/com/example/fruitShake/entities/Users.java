@@ -1,8 +1,6 @@
 package com.example.fruitShake.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
-import jakarta.persistence.GeneratedValue;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Data
 @AllArgsConstructor
@@ -24,11 +19,10 @@ import jakarta.persistence.OneToMany;
 @Table(name = "users")
 public class Users {
 
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "user_uuid", columnDefinition = "BINARY(16)")
-    @Id
-    private UUID userId;
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(name = "users_id")
+    private String userId;
 
     @Column(name = "user_name")
     private String userName;

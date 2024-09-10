@@ -1,5 +1,6 @@
 package com.example.fruitShake.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,13 +15,13 @@ import com.example.fruitShake.entities.DrinkBar;
 @Repository
 public interface DrinkBarRepository extends JpaRepository<DrinkBar, String> {
 
-//    @Query("SELECT * FROM drinks"
-//            + " WHERE (:dName IS NULL OR name ILIKE CONCAT('%',:dName,'%'))"
-//            + " AND (:status IS NULL OR status=:status)")
-//    DrinkBar findAll(@Param("dID") String dID, @Param("status") String status);
+//    @Query("SELECT * FROM drinks d"
+//            + " WHERE (:name IS NULL OR d.name LIKE CONCAT('%',:name,'%'))"
+//            + " AND (:status IS NULL OR d.status=:status)")
+//    List<DrinkBar> findAll(@Param("name") String name, @Param("status") String status);
 
-    // @Query("UPDATE books SET status='INACTIVE', updated_date=NOW(), updated_by =
-    // :curUserId WHERE id = :id")
-    // ResponseEntity<Optional<Books>> getUnblockId(String bookId);
+//     @Query("UPDATE books SET status='INACTIVE', updated_date=NOW(), "
+//            + " updated_by = :curUserId WHERE id = :id ")
+//     ResponseEntity<Optional<Books>> getUnblockId(String bookId);
 
 }

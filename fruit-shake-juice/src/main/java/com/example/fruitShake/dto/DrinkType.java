@@ -13,14 +13,11 @@ public enum DrinkType {
   MOCKTAIL("MOCKTAIL");
 
 
-
-  private final String status;
-
-  DrinkType(String status) {
-    this.status = status;
+  private final String type;
+  DrinkType(String type) {
+    this.type = type;
   }
-
-  public String status() {
-    return status;
+  public String type() {
+    return type;
   }
 }

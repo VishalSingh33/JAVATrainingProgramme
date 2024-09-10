@@ -2,6 +2,7 @@ package com.example.fruitShake.dto;
 
 import java.time.OffsetDateTime;
 import com.example.fruitShake.entities.Books;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DrinkBarRequestDto {
 
-  private String dType;
+  private DrinkType dType;
   private String dName;
-  private String dStatus;
+  private DrinkStatus dStatus;
   private OffsetDateTime createdOn;
   private OffsetDateTime updatedOn;
 

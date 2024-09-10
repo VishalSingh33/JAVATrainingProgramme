@@ -5,16 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,11 +20,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "drink_ordered")
 public class DrinkOrdered {
 
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "bc_uuid", columnDefinition = "BINARY(16)")
-    @Id
-    private UUID oId;
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(name = "drink_order")
+    private String oId;
 
     // @ManyToOne
     // @JoinColumn(name = "dId", nullable = false)

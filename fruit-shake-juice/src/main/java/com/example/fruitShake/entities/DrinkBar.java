@@ -2,13 +2,12 @@ package com.example.fruitShake.entities;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
-import org.hibernate.annotations.GenericGenerator;
-import jakarta.persistence.Id;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,16 +16,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonSerialize
 @Entity
 @Builder
 @Table(name = "drinks")
 public class DrinkBar {
 
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "drink_uuid", columnDefinition = "BINARY(16)")
-    @Id
-    private UUID dId;
+    @Id @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(name = "drink_bar")
+    private String dId;
 
     @Column(name = "type")
     private String dType;

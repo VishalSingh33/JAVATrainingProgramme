@@ -17,7 +17,5 @@ public class DrinkCusRequestDto {
   private String cName;
   private String cPhoneNo;
   private String cAddress;
-  private OffsetDateTime createdOn;
-  private OffsetDateTime updatedOn;
 
 }
