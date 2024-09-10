@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.Mapping;
 import com.example.fruitShake.dto.AddUserRequestDto;
 import com.example.fruitShake.entities.Books;
 
-import jakarta.persistence.MappedSuperclass;
-
-// import org.mapstruct.Mapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * Products mapper
  * 
  */
-// @Mapping
-public interface BookMapper {
+ @Mapper
+public interface DrinkBarMapper  {
 
     // @Mapping(target = "bookId", source = "bookId")
     // @Mapping(target = "createdOn", source = "createdOn")
