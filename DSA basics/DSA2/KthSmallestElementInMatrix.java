@@ -18,9 +18,11 @@ public class KthSmallestElementInMatrix {
             flatMatrix.addAll(row);
         }
         Collections.sort(flatMatrix);
+        System.out.println(flatMatrix);
         // Return the kth smallest element
         // return flatMatrix.get(k - 1);
         System.out.println(flatMatrix.get(k - 1));
+        System.out.println(flatMatrix.get(flatMatrix.size()-k));
 
     }
 }

@@ -14,13 +14,16 @@ public class LargestSubarraySumZero {
         for (int i = 0; i < n; i++) {
             sum += arr[i];
             prefixSum[i] = sum;
-        }
-        for (int i = 0; i < n; i++) {
+
             if (prefixSum[i] == 0) {
                 start = 0;
                 end = i;
                 maxLength = i + 1;
-            } else if (map.containsKey(prefixSum[i])) {
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (map.containsKey(prefixSum[i])) {
+                System.out.println("123 : " + map.get(prefixSum[i]));
                 int len = i - map.get(prefixSum[i]);
                 if (len > maxLength) {
                     start = map.get(prefixSum[i]) + 1;
