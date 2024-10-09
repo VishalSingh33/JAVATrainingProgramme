@@ -35,7 +35,7 @@ public class RedisConfiguration {
 	private String password;
 
 	@Value("${spring.redis.cluster.nodes}")
-	private String nodes;
+	private List<String> clusterNodes;
 
 	@Value("${spring.redis.lettuce.pool.max-active}")
 	private int maxActive;
@@ -57,7 +57,7 @@ public class RedisConfiguration {
 	@Bean
 	public LettuceConnectionFactory redisClusterConnectionFactory() {
 
-		RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(Arrays.asList("127.0.0.1:6379", "127.0.0.1:6380", "127.0.0.1:6381", "127.0.0.1:6382"));
+		RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(clusterNodes);
 
 		redisClusterConfiguration.setMaxRedirects(maxActive);
 		redisClusterConfiguration.setPassword(password);
