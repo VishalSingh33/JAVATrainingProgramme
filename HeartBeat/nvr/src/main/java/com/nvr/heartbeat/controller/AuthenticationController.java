@@ -27,7 +27,7 @@ public class AuthenticationController {
 
     private final JwtService jwtService;
     
-    @Qualifier("customRedisTemplate")
+    @Qualifier("redisTemplate")
     private final RedisTemplate<String, String> redisTokenTemplate;
     
     private final AuthenticationService authenticationService;

@@ -50,10 +50,11 @@ import io.micrometer.core.instrument.Timer;
 public class NvrService {
 
 	@Autowired
+	@Qualifier("redisTemplate")
 	private RedisTemplate<String, List<Map<String, Object>>> redisTemplate;
 
 	@Autowired
-	@Qualifier("customRedisTemplate")
+	@Qualifier("redisTokenTemplate")
 	private RedisTemplate<String, String> redisTokenTemplate;
 
 	@Autowired
@@ -72,16 +73,21 @@ public class NvrService {
 	private final Timer requestTimer;
 	private final Timer redisOpsTimer;
 
-	public NvrService(MeterRegistry meterRegistry, RedisTemplate<String, List<Map<String, Object>>> redisTemplate) {
+	public NvrService(MeterRegistry meterRegistry,
+			@Qualifier("redisTemplate") RedisTemplate<String, List<Map<String, Object>>> redisTemplate,
+			@Qualifier("redisTokenTemplate") RedisTemplate<String, String> redisTokenTemplate) {
+
 		this.requestCounter = meterRegistry.counter("nvr_live_status_requests_total");
 		this.successCounter = meterRegistry.counter("nvr_live_status_success_total");
 		this.failureCounter = meterRegistry.counter("nvr_live_status_failures_total");
 		this.requestTimer = meterRegistry.timer("nvr_live_status_seconds");
-		this.redisTemplate = redisTemplate;
 		// Counter to track the number of Redis operations
 		this.redisOpsCounter = meterRegistry.counter("redis_operations_total", "type", "all");
 		// Timer to measure latency of Redis operations
 		this.redisOpsTimer = meterRegistry.timer("redis_operation_latency_seconds", "type", "all");
+
+		this.redisTemplate = redisTemplate;
+		this.redisTokenTemplate = redisTokenTemplate;
 	}
 
 	Response<?> response = null;
@@ -115,7 +121,7 @@ public class NvrService {
 
 	//// NVR GET LIVE STATUS
 	public Response<?> nvrLiveStatus(List<String> nvrIds, LoginUserDto loginUserDto) {
-		
+
 		User authenticatedUser = authenticationService.authenticate(loginUserDto);
 		String token = redisTokenTemplate.opsForValue().get(loginUserDto.getEmail());
 		jwtUtil.isTokenValid(token, authenticatedUser); // Validate token
@@ -340,11 +346,18 @@ public class NvrService {
 		}
 		// Fetch all keys (NVR IDs) from Redis
 		Set<String> nvrIds = new HashSet<>();
+		String macAddressRegex = "^[0-9A-Fa-f]{2}([-:])[0-9A-Fa-f]{2}(\\1[0-9A-Fa-f]{2}){4}$";
+		Pattern macPattern = Pattern.compile(macAddressRegex);
+
 		try (Cursor<byte[]> cursor = redisTemplate.executeWithStickyConnection(
 				(RedisConnection connection) -> connection.scan(
 						ScanOptions.scanOptions().match("*").count(1000).build()))) {
 			while (cursor.hasNext()) {
-				nvrIds.add(new String(cursor.next()));
+				String key = new String(cursor.next());
+				// Add only keys that match the MAC address pattern
+				if (macPattern.matcher(key).matches()) {
+					nvrIds.add(key);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("NHB_NS_OO3 - Error scanning keys from Redis: {}", e.getMessage(), e);

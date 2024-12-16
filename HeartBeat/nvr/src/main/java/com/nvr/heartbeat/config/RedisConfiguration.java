@@ -72,7 +72,8 @@ public class RedisConfiguration {
 		return new LettuceConnectionFactory(redisClusterConfiguration, lettuceClientConfiguration);
 	}
 
-	@Bean(name = "defaultRedisTemplate")
+	@Primary
+	@Bean(name = "redisTemplate")
 	public RedisTemplate<String, List<Map<String, Object>>> redisClusterTemplate(
 			@Qualifier("redisClusterConnectionFactory") LettuceConnectionFactory redisConnectionFactory) {
 		Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -98,8 +99,7 @@ public class RedisConfiguration {
 		return redisTemplate;
 	}
 
-	@Bean(name = "customRedisTemplate")
-	@Primary
+	@Bean(name = "redisTokenTemplate")
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
