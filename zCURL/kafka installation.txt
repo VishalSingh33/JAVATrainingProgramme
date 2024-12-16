@@ -1,0 +1,56 @@
+Install Kafka At local windows:
+
+1-Install wsl(ubuntu) and get update
+
+2- download through ubuntu or if not possible the do it manually
+
+https://kafka.apache.org/downloads from this : Source download: kafka-3.7.0-src.tgz (asc, sha512)
+
+locate same at local : cd /mnt/c/Users/visha/Downloads
+Use the ls command to confirm that the Kafka tarball is present in that directory: ls
+
+You should see kafka-3.7.0-src.tgz listed.
+// vishal33@DESKTOP-421LRF9:/mnt/c/Users/visha/Desktop/kafka-3.7.0-src$ = bash
+Extract the Tarball: Once you're in the correct directory, extract the .tgz file:
+bash : tar -xvzf kafka-3.7.0-src.tgz
+
+After extraction, navigate into the Kafka directory (the name may vary based on the contents of the tarball):
+bash: cd kafka-3.7.0-src
+
+bash: ls -al
+total 324
+
+
+--------------------------------------------TRIED & TESTED---------------------------------------------------------
+this is installation of kafka kraft
+
+C:\WINDOWS\system32>wsl
+export DISPLAY=nameserver 172.19.144.1:0
+vishal33@DESKTOP-421LRF9:/mnt/c/WINDOWS/system32$
+// below command will take time to setup kafka kraft
+vishal33@DESKTOP-421LRF9:/mnt/c/users/visha/Desktop$ tar -xvzf kafka_2.12-3.8.0.tgz
+vishal33@DESKTOP-421LRF9:/mnt/c/users/visha/Desktop$ cd kafka_2.12-3.8.0
+
+// for setting uuid, this is clusterID - e4f78dcb-5a54-4a6d-bf45-b0569a12071a
+vishal33@DESKTOP-421LRF9:/mnt/c/users/visha/Desktop/kafka_2.12-3.8.0$ bin/kafka-storage.sh format -t e4f78dcb-5a54-4a6d-bf45-b0569a12071a -c config/kraft/server.properties
+Formatting /tmp/kraft-combined-logs with metadata.version 3.8-IV0.
+
+// for kafka server start
+vishal33@DESKTOP-421LRF9:/mnt/c/users/visha/Desktop/kafka_2.12-3.8.0$ bin/kafka-server-start.sh config/kraft/server.properties
+
+// once server is started open new terminal with WSL and come to kafka folder then create topic
+
+vishal33@DESKTOP-421LRF9:/mnt/c/users/visha/desktop/kafka_2.12-3.8.0$ bin/kafka-topics.sh --create --topic my-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+Created topic my-topic.
+// start pub then send messgae once sub(consumer) is ready
+vishal33@DESKTOP-421LRF9:/mnt/c/users/visha/desktop/kafka_2.12-3.8.0$ bin/kafka-console-producer.sh --topic my-topic --bootstrap-server localhost:9092
+hell>o
+>kafka started
+
+// open new terminal with WSL and come to kafka folder then start sub
+vishal33@DESKTOP-421LRF9:/mnt/c/users/visha/desktop/kafka_2.12-3.8.0$ bin/kafka-console-consumer.sh --topic my-topic --from-beginning --bootstrap-server localhost:9092
+
+hello
+kafka started
+
+>

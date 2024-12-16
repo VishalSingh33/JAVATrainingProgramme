@@ -1,0 +1,56 @@
+curl --location 'http://localhost:8080/mcc/nvr/1a:cf:61:60:79:91' \
+--header 'Content-Type: application/json' \
+--data '{
+    "cameras": [
+        {
+            "cctvId": "789546123566",
+            "status": "online"
+        },
+        {
+            "cctvId": "123456217895",
+            "status": "online"
+        },
+        {
+            "cctvId": "4561237812356",
+            "status": "offline"
+        }
+    ]
+}'
+
+----------------------------------------------------------------------------------------------------------
+
+curl --location 'http://localhost:8080/mcc/nvr/status' \
+--header 'Content-Type: application/json' \
+--header 'email: onnet@gmail.com' \
+--header 'password: onnet@123' \
+--data '[
+    "2c:cf:67:61:58:b0",
+    "d8:3a:dd:a2:84:33",
+    "d8:3a:dd:a2:84:73",
+    "d8:3a:dd:a2:84:76",
+    "d8:3a:dd:a2:84:75",
+    "d8:3a:dd:a2:84:74",
+    "2c:cf:67:60:71:40"
+]'
+
+-------------------------------------------------------------------------------------------------------
+
+curl --location 'http://localhost:8080/mcc/auth/signup' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email":"vis@gmail.com",
+    "password":"vis@123",
+    "fullName":"vishal"
+}'
+
+
+-----------------------------------------------------------------------------------------------------
+
+curl --location 'http://localhost:8080/mcc/auth/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email":"onnet@gmail.com",
+    "password":"onnet@123"
+}'
+-------------------------------------------------------------------------------------------------
+

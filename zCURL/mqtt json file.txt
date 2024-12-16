@@ -1,0 +1,38 @@
+{
+  "topic": "my/topic",
+  "message": "Hello, MQTT!",
+  "retained": true,
+  "qos": 2,
+  "mqttMessage": {
+    "key1": "value1",
+    "key2": "value2"
+  }
+}
+
+
+
+
+{
+  "status": "SUCCESS",
+  "statusCode": 200,
+  "message": "Operation successful",
+  "data": {
+    "topic": "my/topic",
+    "message": "Hello, MQTT!",
+    "retained": true,
+    "qos": 2,
+    "mqttMessage": {
+      "key1": "value1",
+      "key2": "value2"
+    }
+  }
+}
+
+
+
+// .\mosquitto_pub.exe -h 106.51.64.251 -p 11883 -t topic1 -m "h"
+// .\mosquitto_sub.exe -h 106.51.64.251 -p 11883 -t topic1
+
+
+
+

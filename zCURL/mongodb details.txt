@@ -1,0 +1,152 @@
+URL : mongodb://localhost:27017
+
+
+1. Create
+Insert Single Document:
+db.books.insertOne({
+    "title": "Spider Man",
+    "author": "Haanah",
+    "pages": 250,
+    "genre": ["Fiction"],
+    "rating": 4.2
+});
+
+
+Insert Multiple Documents:
+db.books.insertMany([
+    { title: "Man", author: "Haanah", pages: 250, genre: ["Fiction"], rating: 4.2 },
+    { title: "Antman", author: "Aditi", pages: 300, genre: ["Non-Fiction"], rating: 4.5 }
+]);
+
+Insert Multiple Documents:
+db.books.insertMany([
+    { "title": "Spider Man", "author": "Haanah", "pages": 250, "genre": ["Fiction"], "rating": 4.2 },
+    { "title": "Iron Man", "author": "Aditi", "pages": 300, "genre": ["Non-Fiction"], "rating": 4.5 },
+    { "title": "Hulk", "author": "Aman", "pages": 150, "genre": ["Science Fiction"], "rating": 4.7 },
+    { "title": "Loki", "author": "Amith", "pages": 200, "genre": ["Fantasy"], "rating": 4.0 },
+    { "title": "Thanos", "author": "Abhinav", "pages": 320, "genre": ["Romance"], "rating": 4.3 },
+    { "title": "Flash", "author": "Austin", "pages": 280, "genre": ["Mystery"], "rating": 4.6 },
+    { "title": "Hawkeye", "author": "Basvaraj", "pages": 340, "genre": ["Thriller"], "rating": 4.1 },
+    { "title": "Black Widow", "author": "Cali", "pages": 190, "genre": ["Historical"], "rating": 4.8 },
+    { "title": "Batman", "author": "Karan", "pages": 230, "genre": ["Biography"], "rating": 4.4 },
+    { "title": "Thor", "author": "Vijay", "pages": 270, "genre": ["Adventure"], "rating": 4.9 }
+]);
+
+
+2. Read
+Find All Documents:
+db.books.find().pretty();
+
+Find Document by Title:
+db.books.find({ "title": "Spider Man" }).pretty();
+
+Find Documents with Rating Greater than 4.5:
+db.books.find({ "rating": { $gt: 4.5 } }).pretty();
+
+
+Find Document by Title and Project Specific Fields:
+db.books.find(
+    { "title": "Spider Man" },
+    { "title": 1, "author": 1, "_id": 0 }
+).pretty();
+
+
+3. Update
+Update a Single Document by Title:
+db.books.updateOne(
+    { "title": "Spider Man" },
+    { $set: { "rating": 4.3 } }
+);
+
+
+Update Multiple Documents:
+db.books.updateMany(
+    { "genre": "Fiction" },
+    { $set: { "rating": 4.7 } }
+);
+
+
+Add a New Field to All Documents:
+db.books.updateMany(
+    {},
+    { $set: { "available": true } }
+);
+
+Replace a Document:
+db.books.replaceOne(
+    { "title": "Spider Man" },
+    { "title": "Spider Man", "author": "Haanah", "pages": 250, "genre": ["Fiction"], "rating": 4.5, "available": true }
+);
+
+
+4. Delete
+Delete a Single Document by Title:
+db.books.deleteOne({ "title": "Spider Man" });
+
+Delete Multiple Documents:
+db.books.deleteMany({ "rating": { $lt: 4.5 } });
+
+
+Drop the Collection:
+db.books.drop();
+
+5. Aggregation:
+For all 
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "authors",            // Collection to join
+            localField: "authorId",     // Field from `books`
+            foreignField: "_id",        // Field from `authors`
+            as: "authorDetails"         // Alias for the resulting array
+        }
+    },
+    {
+        $unwind: "$authorDetails"       // Deconstruct the array to output a document for each element
+    },
+    {
+        $project: {                     // Specify the fields to include or exclude
+            title: 1,
+            pages: 1,
+            genre: 1,
+            rating: 1,
+            "authorDetails.name": 1,
+            "authorDetails.country": 1,
+            "authorDetails.birthYear": 1
+        }
+    }
+]).pretty();
+
+
+For particular data
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "authors",
+            localField: "authorId",
+            foreignField: "_id",
+            as: "authorDetails"
+        }
+    },
+    {
+        $unwind: "$authorDetails"
+    },
+    {
+        $match: {
+            "title": "Iron Man",          // Filter by title
+            "authorDetails.name": "Aditi"  // Filter by author name
+        }
+    },
+    {
+        $project: {
+            title: 1,
+            pages: 1,
+            genre: 1,
+            rating: 1,
+            "authorDetails.name": 1,
+            "authorDetails.country": 1,
+            "authorDetails.birthYear": 1
+        }
+    }
+]).pretty();
+

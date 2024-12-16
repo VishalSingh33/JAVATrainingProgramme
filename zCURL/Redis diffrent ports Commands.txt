@@ -1,0 +1,107 @@
+sudo ufw enable
+sudo ufw allow 6379
+sudo ufw allow 6380
+.
+.
+
+redis-cli -p 6379 cluster reset
+
+vishal33@MSI:/mnt/c/Users/raguv$ sudo nano /etc/redis/redis.conf    // Rename it redis-6382, it will automatically create a copy
+
+# redis-6382.conf   make below changes
+port 6380
+bind 127.0.0.1
+dir /var/lib/redis/6382
+logfile "/var/log/redis/redis-6382.log"
+
+vishal33@MSI:/mnt/c/Users/raguv$ sudo mkdir -p /var/lib/redis/6382
+vishal33@MSI:/mnt/c/Users/raguv$ sudo chown redis:redis /var/lib/redis/6382
+vishal33@MSI:/mnt/c/Users/raguv$ sudo mkdir -p /var/log/redis
+vishal33@MSI:/mnt/c/Users/raguv$ sudo chown redis:redis /var/log/redis
+vishal33@MSI:/mnt/c/Users/raguv$ sudo redis-server /etc/redis/redis-6382.conf
+vishal33@MSI:/mnt/c/Users/raguv$ ps aux
+
+redis      49928  0.0  0.2  66824 22384 ?        Ssl  14:24   0:01 /usr/bin/redis-server 127.0.0.1:6379 [cluster]
+root       52583  0.0  0.2  69896 19316 ?        Ssl  14:35   0:00 redis-server 127.0.0.1:6380 [cluster]
+root       57925  0.0  0.1  66824 15616 ?        Ssl  14:57   0:00 redis-server 127.0.0.1:6381 [cluster]
+root       58129  0.0  0.1  66824 15540 ?        Ssl  14:58   0:00 redis-server 127.0.0.1:6382 [cluster]
+vishal33   58160  0.0  0.0   7484  3244 pts/0    R+   14:58   0:00 ps aux
+vishal33@MSI:/mnt/c/Users/raguv$ redis-cli -p 6379 ping
+PONG
+vishal33@MSI:/mnt/c/Users/raguv$ redis-cli -p 6380 ping
+PONG
+vishal33@MSI:/mnt/c/Users/raguv$ redis-cli -p 6381 ping
+PONG
+vishal33@MSI:/mnt/c/Users/raguv$ redis-cli -p 6382 ping
+PONG
+
+redis-cli --cluster create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 --cluster-replicas 1   // this is not tested, below command is working
+
+
+vishal33@MSI:/mnt/c/Users/raguv$ redis-cli --cluster create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 --cluster-replicas 0
+Can I set the above configuration? (type 'yes' to accept): yes// type yes to hash slots allocation 
+[OK] All 16384 slots covered.// in last we get this.
+
+redis-cli -p 6379 CLUSTER SLOTS
+redis-cli -p 6379 CLUSTER NODES
+
+
+Linux part DONE.
+
+
+------------------------------------------------------------------------------------------------------------------
+
+if you start redis after few months and its failed to start then follw below:
+
+The error [ERR] Node 127.0.0.1:6380 is not empty indicates that one or more of your Redis nodes already contain data or are part of a previous cluster setup.
+Redis requires that nodes be empty before they can be added to a new cluster.
+
+Here’s how to fix this issue:
+
+1. Flush Data on Each Node
+You can clear all keys from each node to make sure they're empty:
+
+redis-cli -p 6379 FLUSHALL
+redis-cli -p 6380 FLUSHALL
+redis-cli -p 6381 FLUSHALL
+redis-cli -p 6382 FLUSHALL
+2. Reset the Cluster Configuration on Each Node
+To remove any existing cluster configuration on each node, run:
+
+redis-cli -p 6379 cluster reset
+redis-cli -p 6380 cluster reset
+redis-cli -p 6381 cluster reset
+redis-cli -p 6382 cluster reset
+Use cluster reset with caution, as this will remove any cluster configuration on the nodes.
+If you're using redis-cli cluster reset in a production environment, ensure that this data and configuration can be safely cleared.
+
+3. Retry Cluster Creation
+Now, try creating the cluster again with the redis-cli --cluster create command:
+
+redis-cli --cluster create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 --cluster-replicas 0
+This should proceed without errors if all nodes are empty and reset.
+
+4. Verify the Cluster
+After creating the cluster, verify its status with:
+
+redis-cli -p 6379 cluster nodes
+redis-cli -p 6379 cluster info
+This should show all nodes as connected, and cluster_state:ok.
+
+============================================================================================================================================================
+Install Redis Exporter inside redis-cluster
+
+// vishal33@DESKTOP-421LRF9:/mnt/c/WINDOWS/system32/redis_exporter-v1.52.0.linux-amd64$
+// netstat -tuln | grep 9121
+// sudo netstat -tulvnp
+// ps aux | grep redis_exporter
+// vishal33     995  0.0  0.0   4092  1880 pts/4    S+   06:44   0:00 grep --color=auto redis_exporter
+// ./redis_exporter   --redis.addr="redis://127.0.0.1:6379,redis://127.0.0.1:6380,redis://127.0.0.1:6381,redis://127.0.0.1:6382,redis://127.0.0.1:6383"   --web.listen-address="0.0.0.0:9121"
+
+// vishal33@MSI:/mnt/c/Users/raguv$
+// in other terminal
+//  sudo systemctl  status ufw.service
+//  sudo systemctl stop  ufw.service
+//  sudo netstat -tulvnp
+
+
