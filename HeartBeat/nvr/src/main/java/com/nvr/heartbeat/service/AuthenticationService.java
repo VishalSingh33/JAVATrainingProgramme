@@ -23,15 +23,15 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // public User signup(RegisterUserDto input) {
-    // logger.info("NHB_SER_01 - Attempting to register user with email: {}", input.getEmail());
-    //     User user = new User()
-    //             .setFullName(input.getFullName())
-    //             .setEmail(input.getEmail())
-    //             .setPassword(passwordEncoder.encode(input.getPassword()));
-    // logger.info("USER_SIGNUP_SUCCESS - User registered successfully with email: {}", user.getEmail());
-    //     return userRepository.save(user);
-    // }
+    public User signup(RegisterUserDto input) {
+    logger.info("NHB_SER_01 - Attempting to register user with email: {}", input.getEmail());
+        User user = new User()
+                .setFullName(input.getFullName())
+                .setEmail(input.getEmail())
+                .setPassword(passwordEncoder.encode(input.getPassword()));
+    logger.info("USER_SIGNUP_SUCCESS - User registered successfully with email: {}", user.getEmail());
+        return userRepository.save(user);
+    }
 
     public User authenticate(LoginUserDto input) {
 

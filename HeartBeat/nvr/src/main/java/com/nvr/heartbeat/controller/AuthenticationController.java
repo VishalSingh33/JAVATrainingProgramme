@@ -32,14 +32,13 @@ public class AuthenticationController {
     
     private final AuthenticationService authenticationService;
 
-    // @PostMapping("/signup")
-    // public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+    @PostMapping("/signup")
+    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
        
-    //     User registeredUser = authenticationService.signup(registerUserDto);
-    //     return ResponseEntity.ok(registeredUser);
-    // }
+        User registeredUser = authenticationService.signup(registerUserDto);
+        return ResponseEntity.ok(registeredUser);
+    }
 
-    // @Scheduled(cron = "0 0 8 * * *")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> authenticate(@RequestBody LoginUserDto loginUserDto) {
         
@@ -50,6 +49,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(loginResponse);
     }
 }
-//     "email":"onnet@gmail.com",
-//     "password":"onnet@123",
-//     "fullName":"onnet"
+//     "email":"vis@gmail.com",
+//     "password":"vis@123",
+//     "fullName":"vishal"
