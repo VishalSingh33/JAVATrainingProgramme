@@ -54,3 +54,60 @@ curl --location 'http://localhost:8080/mcc/auth/login' \
 }'
 -------------------------------------------------------------------------------------------------
 
+rocksDB HB :
+
+curl --location 'http://localhost:8080/mcc/device/register' \
+--header 'Content-Type: application/json' \
+--data '
+// {
+//     "apiKey": "9d8f5715-2e7c-4e64-8e34-35f510c1266",
+//     "clientServiceName": "Skypro-IPTV",
+//     "deviceId": "1a:cf:61:60:79:91"
+// }
+// {
+//     "apiKey": "550e8400-e29b-41d4-a716-446655440000",
+//     "deviceId": "d8:3a:dd:a2:84:33",
+//     "clientServiceName": "Pionner-Pisho"
+// }
+{
+    "apiKey": "acde070d-8c4c-4f0d-9d8a-162843c10333",
+    "deviceId": "2c:cf:67:61:58:b0",
+    "clientServiceName": "Skypro-Vsas"
+}'
+
+
+----------------------------------------------------------------------------------------------------
+
+curl --location 'http://localhost:8080/mcc/device/status' \
+--header 'Content-Type: application/json' \
+--header 'email: onnet@gmail.com' \
+--header 'password: onnet@123' \
+--data '[
+    "2c:cf:67:61:58:b0",
+    "d8:3a:dd:a2:84:33",
+    "1a:cf:61:60:79:91"
+]'
+
+-------------------------------------------------------------------------------------------------
+
+curl --location 'http://localhost:8080/mcc/auth/signup' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email":"onnet@gmail.com",
+    "password":"onnet@123",
+    "fullName":"onnet"
+}'
+
+---------------------------------------------------------------------------------------------
+
+
+curl --location 'http://localhost:8080/mcc/auth/login' \
+--header 'Content-Type: application/json' \
+--data '
+// {
+//     "email":"onnet@gmail.com",
+//     "password":"onnet@123"
+// }
+'
+
+

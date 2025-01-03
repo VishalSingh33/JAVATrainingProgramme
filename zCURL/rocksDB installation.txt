@@ -1,0 +1,198 @@
+1. Install RocksDB on WSL (Ubuntu)
+Step 1.1: Update and Install Dependencies
+Run the following commands to update your system and install the required dependencies:
+sudo apt update
+sudo apt install -y build-essential libsnappy-dev zlib1g-dev libbz2-dev libgflags-dev liblz4-dev libzstd-dev
+
+Step 1.2: Download RocksDB Source Code
+wget https://github.com/facebook/rocksdb/archive/refs/heads/main.zip
+or Download from https://sourceforge.net/projects/rocksdb.mirror/
+unzip main.zip
+cd rocksdb-main
+
+
+Step 1.3: Compile and Install
+make static_lib
+(to make above command fast(use all threads/processor) -> make static_lib -j$(nproc)
+If your machine has 8 cores, the full command would be ->  make static_lib -j8)
+sudo make install
+
+
+Step 1.4: Verify Installation
+Ensure the installation was successful:
+ldconfig -p | grep rocksdb
+You should see something like:
+librocksdb.so.6 (libc6,x86-64) => /usr/local/lib/librocksdb.so.6
+
+2. Add RocksDB JNI for Java
+
+Step 2.1: Download and Install RocksDB JNI
+Download the RocksDB Java bindings from Maven Central:
+wget https://repo1.maven.org/maven2/org/rocksdb/rocksdbjni/8.2.0/rocksdbjni-8.2.0-linux64.jar -P ~/rocksdb-libs/
+
+Step 2.2: Add RocksDB JNI to Your Spring Boot Project
+Include the Maven dependency in your pom.xml:
+
+xml
+<dependency>
+    <groupId>org.rocksdb</groupId>
+    <artifactId>rocksdbjni</artifactId>
+    <version>8.2.0</version>
+</dependency>
+
+3. Set Up RocksDB in Spring Boot
+
+Step 3.1: Update application.properties
+Add the path for the RocksDB database:
+
+properties
+rocksdb.path=/mnt/c/Users/visha/Desktop/rocksDB/facebook-rocksdb-3515c6d
+
+Step 3.2: Create a RocksDB Configuration
+
+import org.rocksdb.RocksDBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.rocksdb.Options;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.rocksdb.RocksDB;
+
+@Configuration
+public class RocksDBConfig {
+    private static final Logger logger = LoggerFactory.getLogger(RocksDBConfig.class);
+    @Value("${rocksdb.path}")
+    private String dbPath;
+
+    static {
+        RocksDB.loadLibrary();
+    }
+
+    @Bean
+    public RocksDB rocksDB() {
+        try {
+            // Create the RocksDB directory if it doesn't exist
+            File dbDir = new File(dbPath);
+            if (!dbDir.exists() && !dbDir.mkdirs()) {
+                throw new IOException("HB_CONF_RDB - Failed to create RocksDB directory at: " + dbPath);
+            }
+
+            // Set up RocksDB options
+        @SuppressWarnings("resource")
+        Options options = new Options().setCreateIfMissing(true);
+        
+        logger.info("HB_CONF_RDB - DB Path: {}", new File(dbPath).getAbsolutePath());
+        
+        // Return the RocksDB instance
+        return RocksDB.open(options, dbPath);
+        } catch (IOException | RocksDBException e) {
+            logger.error("HB_CONF_RDB - RocksDB initialization error: {}", e.getMessage(), e);
+            throw new IllegalStateException("Failed to initialize RocksDB", e);
+        }
+    }
+
+}
+
+-------------------------------------------------DONE----------------------------------------------------------------
+Above this setup is done and now springboot coding part
+
+
+4. Interact with RocksDB
+
+Step 4.1: Write and Read Operations
+Create a service for CRUD operations:
+
+import org.rocksdb.RocksDB;
+import org.rocksdb.RocksDBException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RocksDBService {
+
+    private final RocksDB rocksDB;  // important line
+
+    public RocksDBService(RocksDB rocksDB) {
+        this.rocksDB = rocksDB;
+    }
+
+    public void put(String key, String value) throws RocksDBException {
+        rocksDB.put(key.getBytes(), value.getBytes());
+    }
+
+    public String get(String key) throws RocksDBException {
+        byte[] value = rocksDB.get(key.getBytes());
+        return value != null ? new String(value) : null;
+    }
+
+    public void delete(String key) throws RocksDBException {
+        rocksDB.delete(key.getBytes());
+    }
+}
+Step 4.2: Example REST Controller
+java
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/rocksdb")
+public class RocksDBController {
+
+    private final RocksDBService rocksDBService;
+
+    public RocksDBController(RocksDBService rocksDBService) {
+        this.rocksDBService = rocksDBService;
+    }
+
+    @PostMapping("/put")
+    public String put(@RequestParam String key, @RequestParam String value) {
+        try {
+            rocksDBService.put(key, value);
+            return "Key-Value pair saved successfully!";
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    @GetMapping("/get")
+    public String get(@RequestParam String key) {
+        try {
+            return rocksDBService.get(key);
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public String delete(@RequestParam String key) {
+        try {
+            rocksDBService.delete(key);
+            return "Key deleted successfully!";
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+}
+5. Test Your Setup
+Run the Spring Boot application:
+
+
+./mvnw spring-boot:run
+Test the endpoints using curl or Postman:
+Add a key-value:
+
+
+curl -X POST "http://localhost:8080/rocksdb/put?key=testKey&value=testValue"
+Retrieve the value:
+
+
+curl -X GET "http://localhost:8080/rocksdb/get?key=testKey"
+Delete the key:
+
+
+curl -X DELETE "http://localhost:8080/rocksdb/delete?key=testKey"
+Let me know if you encounter any issues or need additional guidance! 🚀
