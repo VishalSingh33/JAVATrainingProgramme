@@ -1,0 +1,34 @@
+curl --location 'http://localhost:8080/api/bill/setup' \
+--header 'Content-Type: application/json' \
+--data '{
+    "gateId": "GATE2",
+    "gateType": "ENTRY",
+    "gateNumber": 3,
+    "vehicleNumber": "JK05AB1234",
+    "vehicleType": "MEDIUM_WEIGHT",
+    "floorId": "2A",
+    "levelNumber": 12,
+    "parkingId": "f71d4fae",
+    "spotType": "HEAVY_WEIGHT",
+    "spotStatus": "AVAILABLE"
+}'
+
+
+
+
+curl --location 'http://localhost:8080/api/bill/generate' \
+--header 'Content-Type: application/json' \
+--data '{
+    "vehicleNumber": "KA05AB1234",
+    "gateId": "GATE1"
+}'
+
+
+
+curl --location 'http://localhost:8080/api/ticket/generate' \
+--header 'Content-Type: application/json' \
+--data '{
+    "vehicleNumber": "KA05AB1234",
+    "vehicleType": "HEAVY_WEIGHT",
+    "gateId": "GATE1"
+}'
