@@ -1,0 +1,22 @@
+User [id=1]
+User [id=2]
+User [id=3]
+User [id=4]
+User [id=5]
+Restaurant [id=1]
+Restaurant [id=2]
+Review [id=1] added successfully for Restaurant [id=1] by User [id=1]!
+Review [id=2] added successfully for Restaurant [id=1] by User [id=2]!
+Review [id=3] added successfully for Restaurant [id=1] by User [id=3]!
+Review [id=4] added successfully for Restaurant [id=1] by User [id=4]!
+Review [id=5] added successfully for Restaurant [id=2] by User [id=2]!
+Review [id=6] added successfully for Restaurant [id=2] by User [id=1]!
+Review [id=7] added successfully for Restaurant [id=2] by User [id=3]!
+Review [id=8] added successfully for Restaurant [id=2] by User [id=4]!
+Review [id=9] added successfully for Restaurant [id=1] by User [id=5]!
+[Review [id=7], Review [id=5], Review [id=6], Review [id=8]]
+[Review [id=8], Review [id=6], Review [id=5]]
+[Review [id=3], Review [id=1]]
+Restaurant [id=2, name=A2Z, rating=2.5]
+Restaurant [id=1, name=A2B, rating=2.6]
+[Restaurant [id=1], Restaurant [id=2]]

@@ -1,0 +1,31 @@
+Song [id=1]
+Song [id=2]
+Song [id=3]
+Song [id=4]
+Song [id=5]
+Song [id=6]
+Song [id=7]
+Song [id=8]
+Song [id=9]
+Song [id=10]
+[Song [id=1], Song [id=2], Song [id=3], Song [id=4], Song [id=5], Song [id=6], Song [id=7], Song [id=8], Song [id=9], Song [id=10]]
+Playlist [id=1]
+Playlist [id=2]
+Playlist PLAYLIST_1 is loaded!
+Song [id=2] is playing!
+Song [id=4] is playing!
+Song [id=6] is playing!
+Song [id=8] is playing!
+Song [id=6] is playing!
+Song [id=4] is playing!
+Song [id=2] is playing!
+Song [id=2] is paused!
+Song [id=2] is stopped!
+Playlist PLAYLIST_1 is deleted!
+Playlist PLAYLIST_2 is revised with [Song [id=1], Song [id=3], Song [id=5], Song [id=7], Song [id=9], Song [id=8]]
+Playlist PLAYLIST_2 is revised with [Song [id=1], Song [id=3], Song [id=5], Song [id=7], Song [id=8]]
+Playlist PLAYLIST_2 is loaded!
+Song [id=1] is playing!
+Song [id=3] is playing!
+Song [id=5] is playing!
+Song [id=3] is playing!
